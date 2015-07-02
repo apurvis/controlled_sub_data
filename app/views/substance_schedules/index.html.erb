@@ -1,0 +1,19 @@
+<table id="main_table" border="1">
+   <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>Classification</td>
+      <td>Start Date</td>
+      <td>Schedule Level</td>
+   </tr>
+
+   <% @substance_schedules.each do |ss| %>
+      <tr>
+         <td><%= ss.id %></td>
+         <td><%= ss.substance.name %></td>
+         <td><%= ss.substance.classification %></td>
+         <td><%= ss.schedule.start_date %></td>
+         <td><%= ss.schedule_level %></td>
+      <tr>
+   <% end %>
+</table>

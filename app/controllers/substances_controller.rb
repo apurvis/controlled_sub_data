@@ -10,7 +10,7 @@ class SubstancesController < ApplicationController
   end
 
   def new
-      @substance = Substance.new
+    @substance = Substance.new
   end
 
   def create
@@ -18,6 +18,7 @@ class SubstancesController < ApplicationController
   end
 
   private
+
   def substance_params
     params.require(:substance).permit(:name, :classification, :chemical_formula, :chemical_formula_smiles_format)
   end
