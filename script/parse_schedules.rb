@@ -1,7 +1,10 @@
 require 'csv'
 
 def parse_schedule_file(schedule_level)
-  csv_text = File.read("script/schedule_#{schedule_level}.csv").encode("UTF-8", invalid: :replace, undef: :replace, replace: "?")
+  puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
+  puts "=======================================\n"
+
+  csv_text = File.read("script/schedule_data/schedule_#{schedule_level}.csv").encode("UTF-8", invalid: :replace, undef: :replace, replace: "?")
   csv_rows = CSV.parse(csv_text, headers: true)
 
   # Create the schedules
@@ -15,26 +18,37 @@ def parse_schedule_file(schedule_level)
     end
   end
 
+  current_classification = nil
   csv_rows.each do |row|
     row.to_hash.each do |k,v|
-      if v.nil? || v == ""
+      if v.nil? || v == "" || v =~ /^\d+$/
         next
+      elsif k =~ /Controlled Substances Schedule \w/
+        # Special handling for the I and II schedule files which include classifications
+        puts "THE RAWEST Raw: #{k} => #{v}"
+        current_classification = v.strip
       else
+        puts "Raw: #{k} => #{v}"
         if v =~ /Effective/i
-          substance_name = v.split(" Effective ")[0]
+          substance_name = v.strip.split(" Effective ")[0]
         else
-          substance_name = v
+          substance_name = v.strip
         end
 
-        substance = Substance.find_or_create_substance(substance_name)
-        schedule = Schedule.where(state: 'FEDERAL', start_date: "#{k}-01-01".to_date).first
-
-        puts "SCHEDULE: #{schedule}"
-        ss = SubstanceSchedule.new(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level)
-        ss.save
+        substance = Substance.find_or_create_substance(substance_name, classification: current_classification)
+        if schedule = Schedule.where(state: 'FEDERAL', start_date: "#{k.strip}-01-01".to_date).first
+          if SubstanceSchedule.where(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level).size > 0
+            puts "Already have a schedule for #{substance_name}, #{schedule.start_date}, #{schedule_level}"
+          else
+            ss = SubstanceSchedule.new(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level)
+            ss.save
+          end
+        else
+          raise "Schedule not found for #{k}!"
+        end
       end
     end
   end
 end
 
-[3,4].each { |i| parse_schedule_file(i) }
+[1,2,3,4,5].each { |i| parse_schedule_file(i) }
