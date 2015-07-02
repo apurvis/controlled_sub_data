@@ -22,7 +22,7 @@
       <tr>
          <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
-         <td><%= ss.schedule_level %></td>
+         <td><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
       </tr>
    <% end %>
 </table>
