@@ -1,0 +1,18 @@
+<h2>Classification: <%= @classification.name %></h2>
+
+<h3>Substances in this Classification</h3>
+<table border="1">
+   <tr>
+      <td>Substance ID</td>
+      <td>Name</td>
+      <td>DEA Code</td>
+   </tr>
+
+   <% @classification.substances.each do |s| %>
+      <tr>
+         <td><%= link_to "#{s.id}", substance_path(s) %></td>
+         <td><%= link_to s.name, substance_path(s) %></td>
+         <td><%= s.dea_code %></td>
+      </tr>
+   <% end %>
+</table>

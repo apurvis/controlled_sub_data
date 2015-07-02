@@ -1,0 +1,11 @@
+<table id="main_table" border="1">
+   <tr>
+      <td>Level</td>
+   </tr>
+
+   <% @levels.each do |k,v| %>
+      <tr>
+         <td><%= link_to k, { controller: "schedule_levels", action: :show, id: v } %></td>
+      <tr>
+   <% end %>
+</table>

@@ -1,0 +1,18 @@
+<h2>Schedule <%= params[:id] %></h2>
+<br/>
+<h3>Substances Scheduled at this Level and Where</h3>
+<table border="1">
+   <tr>
+      <td>Substance ID</td>
+      <td>Substance Name</td>
+      <td>Statute</td>
+   </tr>
+
+   <% @substance_statutes.each do |ss| %>
+      <tr>
+         <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
+         <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
+         <td><%= link_to "#{ss.statute.state} / #{ss.statute.start_date.strftime('%Y-%m-%d')}", statute_path(ss.statute) %></td>
+      </tr>
+   <% end %>
+</table>

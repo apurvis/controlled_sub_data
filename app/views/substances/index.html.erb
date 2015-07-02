@@ -10,7 +10,11 @@
       <tr>
          <td><%= link_to "#{substance.id}", substance_path(substance) %></td>
          <td><%= link_to substance.name, substance_path(substance) %></td>
-         <td><%= substance.substance_classification.try(:name) %></td>
+         <% if substance.substance_classification.try(:name) %>
+            <td><%= link_to substance.substance_classification.name, substance_classification_path(substance.substance_classification) %></td>
+         <% else %>
+            <td></td>
+         <% end %>
          <td><%= substance.dea_code %>
       <tr>
    <% end %>

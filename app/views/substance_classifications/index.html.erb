@@ -1,0 +1,15 @@
+<table id="main_table" border="1">
+   <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>Number of Substances In Category</td>
+   </tr>
+
+   <% @classifications.each do |c| %>
+      <tr>
+         <td><%= link_to "#{c.id}", substance_classification_path(c) %></td>
+         <td><%= link_to c.name, substance_classification_path(c) %></td>
+         <td><%= c.substances.size %>
+      <tr>
+   <% end %>
+</table>
