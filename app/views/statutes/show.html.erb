@@ -1,6 +1,9 @@
 <h2><%= @statute.state + " / " + @statute.start_date.strftime('%Y-%m-%d') %></h2>
-
-<h3>Substances Affected</h3>
+<h3>Blue Book Code: <%= @statute.blue_book_code %></h3>
+<h3>Title: <%= @statute.name%> </h3>
+<h3>Expiration Date: <%= @statute.expiration_date %>
+<br/><br/>
+<h3>Substances Scheduled</h3>
 <table border="1">
    <tr>
       <td>Substance ID</td>
