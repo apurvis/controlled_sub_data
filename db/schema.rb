@@ -11,19 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702163842) do
+ActiveRecord::Schema.define(version: 20150702185257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "schedules", force: :cascade do |t|
-    t.string   "state",                   comment: "2 Character State Code or FEDERAL"
-    t.date     "start_date",              comment: "Date the schedule became The Law"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "statutes", force: :cascade do |t|
+    t.string   "state",                        comment: "2 Character State Code or FEDERAL"
+    t.date     "start_date",                   comment: "Date the schedule became The Law"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "blue_book_code"
+    t.string   "name"
+    t.date     "expiration_date"
   end
 
-  add_index "schedules", ["state", "start_date"], name: "index_schedules_on_state_and_start_date", unique: true, using: :btree
+  add_index "statutes", ["state", "start_date"], name: "index_statutes_on_state_and_start_date", unique: true, using: :btree
 
   create_table "substance_classifications", force: :cascade do |t|
     t.string   "name"
@@ -33,16 +36,16 @@ ActiveRecord::Schema.define(version: 20150702163842) do
 
   add_index "substance_classifications", ["name"], name: "index_substance_classifications_on_name", unique: true, using: :btree
 
-  create_table "substance_schedules", force: :cascade do |t|
+  create_table "substance_statutes", force: :cascade do |t|
     t.integer  "substance_id"
-    t.integer  "schedule_id"
+    t.integer  "statute_id"
     t.integer  "schedule_level",              comment: "1, 2, 3, 4, or 5"
     t.string   "penalty"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
-  add_index "substance_schedules", ["substance_id", "schedule_id", "schedule_level"], name: "idx_substance_schedule_level", unique: true, using: :btree
+  add_index "substance_statutes", ["substance_id", "statute_id", "schedule_level"], name: "idx_substance_schedule_level", unique: true, using: :btree
 
   create_table "substances", force: :cascade do |t|
     t.string   "name"

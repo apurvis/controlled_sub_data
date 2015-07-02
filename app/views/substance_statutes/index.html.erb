@@ -9,13 +9,13 @@
       <td>DEA Code</td>
    </tr>
 
-   <% @substance_schedules.each do |ss| %>
+   <% @substance_statutes.each do |ss| %>
       <tr>
          <td><%= ss.id %></td>
          <td><%= ss.substance.name %></td>
          <td><%= ss.substance.substance_classification.try(:name) %></td>
-         <td><%= ss.schedule.state %></td>
-         <td><%= ss.schedule.start_date %></td>
+         <td><%= ss.statute.state %></td>
+         <td><%= ss.statute.start_date %></td>
          <td><%= ss.schedule_level %></td>
          <td><%= ss.substance.dea_code %></td>
       <tr>
