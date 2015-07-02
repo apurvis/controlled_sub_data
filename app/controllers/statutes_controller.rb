@@ -14,7 +14,13 @@ class StatutesController < ApplicationController
   end
 
   def create
-    render plain: params[:statute].inspect
+    @statute = Statute.new(statute_params)
+
+    if @statute.save
+      redirect_to @statute
+    else
+      render 'new'
+    end
   end
 
   private
