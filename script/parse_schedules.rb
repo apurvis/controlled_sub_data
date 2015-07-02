@@ -28,14 +28,25 @@ def parse_schedule_file(schedule_level)
         puts "THE RAWEST Raw: #{k} => #{v}"
         current_classification = v.strip
       else
+        v = v.strip
         puts "Raw: #{k} => #{v}"
+
+        if v =~ /\(\d\d\d\d\)/
+          dea_code = /\((\d\d\d\d)\)/.match(v)[1].to_i
+          v.gsub!(/\((\d\d\d\d)\)/, "")
+        elsif v =~ /\d\d\d\d$/
+          dea_code = /\d\d\d\d$/.match(v)[0].to_i
+          v.gsub!(/#{dea_code}$/, "")
+          v = v.strip
+        end
+
         if v =~ /Effective/i
           substance_name = v.strip.split(" Effective ")[0]
         else
           substance_name = v.strip
         end
 
-        substance = Substance.find_or_create_substance(substance_name, classification: current_classification)
+        substance = Substance.find_or_create_substance(substance_name, classification: current_classification, dea_code: dea_code)
         if schedule = Schedule.where(state: 'FEDERAL', start_date: "#{k.strip}-01-01".to_date).first
           if SubstanceSchedule.where(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level).size > 0
             puts "Already have a schedule for #{substance_name}, #{schedule.start_date}, #{schedule_level}"

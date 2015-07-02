@@ -9,6 +9,7 @@ class Substance < ActiveRecord::Base
     end
 
     s.classification = options[:classification] if options[:classification]
+    s.dea_code = options[:dea_code] if options[:dea_code]
     s.save
     s
   end

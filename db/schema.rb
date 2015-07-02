@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702140917) do
+ActiveRecord::Schema.define(version: 20150702161315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150702140917) do
     t.string   "chemical_formula_smiles_format",              comment: "Follows the SMILE standard: https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
   end
 
   add_index "substances", ["chemical_formula_smiles_format"], name: "index_substances_on_chemical_formula_smiles_format", unique: true, using: :btree

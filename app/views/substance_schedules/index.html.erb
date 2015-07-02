@@ -6,6 +6,7 @@
       <td>State</td>
       <td>Start Date</td>
       <td>Schedule Level</td>
+      <td>DEA Code</td>
    </tr>
 
    <% @substance_schedules.each do |ss| %>
@@ -16,6 +17,7 @@
          <td><%= ss.schedule.state %></td>
          <td><%= ss.schedule.start_date %></td>
          <td><%= ss.schedule_level %></td>
+         <td><%= ss.substance.dea_code %></td>
       <tr>
    <% end %>
 </table>

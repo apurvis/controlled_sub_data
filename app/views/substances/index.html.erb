@@ -3,6 +3,7 @@
       <td>ID</td>
       <td>Name</td>
       <td>Classification</td>
+      <td>DEA Code</td>
    </tr>
 
    <% @substances.each do |substance| %>
@@ -10,6 +11,7 @@
          <td><%= substance.id %></td>
          <td><%= substance.name %></td>
          <td><%= substance.classification %></td>
+         <td><%= substance.dea_code %>
       <tr>
    <% end %>
 </table>
