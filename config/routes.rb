@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
 
   resources :substances
+  resources :statutes
   resources :substance_statutes
 end

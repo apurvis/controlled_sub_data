@@ -1,0 +1,21 @@
+<table id="main_table" border="1">
+   <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>State</td>
+      <td>Start Date</td>
+      <td>Expiration Date</td>
+      <td>Blue Book Code</td>
+   </tr>
+
+   <% @statutes.each do |statute| %>
+      <tr>
+         <td><%= statute.id %></td>
+         <td><%= statute.name %></td>
+         <td><%= statute.state %></td>
+         <td><%= statute.start_date %></td>
+         <td><%= statute.expiration_date %></td>
+         <td><%= statute.blue_book_code %></td>
+      <tr>
+   <% end %>
+</table>
