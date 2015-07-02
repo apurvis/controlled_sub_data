@@ -4,6 +4,7 @@ class CreateSubstanceSchedules < ActiveRecord::Migration
       t.integer :substance_id
       t.integer :schedule_id
       t.integer :schedule_level, comment: '1, 2, 3, 4, or 5'
+      t.string :penalty
 
       t.timestamps null: false
     end

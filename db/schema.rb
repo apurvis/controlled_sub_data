@@ -27,14 +27,15 @@ ActiveRecord::Schema.define(version: 20150702053128) do
     t.integer  "substance_id"
     t.integer  "schedule_id"
     t.integer  "schedule_level",              comment: "1, 2, 3, 4, or 5"
+    t.string   "penalty"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
   create_table "substances", force: :cascade do |t|
     t.string   "name"
-    t.string   "classification"
-    t.string   "chemical_formula"
+    t.string   "classification",                comment: "e.g. opioid, stimulant, depressant"
+    t.string   "chemical_formula",              comment: "Follows the SMILE standard: https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
