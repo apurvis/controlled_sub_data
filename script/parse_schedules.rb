@@ -1,6 +1,6 @@
 require 'csv'
 
-def parse_schedule_file(schedule_level)
+def parse_statute_csv(schedule_level)
   puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
   puts "=======================================\n"
 
@@ -10,10 +10,10 @@ def parse_schedule_file(schedule_level)
   # Create the schedules
   csv_rows.first.to_hash.keys.select { |k| k =~ /^\d+$/ }.each do |year|
     effective_date = "#{year}-01-01".to_date
-    if s = Schedule.where(state: 'FEDERAL', start_date: effective_date).first
+    if s = Statute.where(state: 'FEDERAL', start_date: effective_date).first
       puts "  Already found year #{year}..."
     else
-      s = Schedule.new(state: 'FEDERAL', start_date: effective_date)
+      s = Statute.new(state: 'FEDERAL', start_date: effective_date)
       s.save
     end
   end
@@ -47,19 +47,19 @@ def parse_schedule_file(schedule_level)
         end
 
         substance = Substance.find_or_create_substance(substance_name, classification: current_classification, dea_code: dea_code)
-        if schedule = Schedule.where(state: 'FEDERAL', start_date: "#{k.strip}-01-01".to_date).first
-          if SubstanceSchedule.where(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level).size > 0
-            puts "Already have a schedule for #{substance_name}, #{schedule.start_date}, #{schedule_level}"
+        if statute = Statute.where(state: 'FEDERAL', start_date: "#{k.strip}-01-01".to_date).first
+          if SubstanceStatute.where(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level).size > 0
+            puts "Already have a statute for #{substance_name}, #{statute.start_date}, #{schedule_level}"
           else
-            ss = SubstanceSchedule.new(substance_id: substance.id, schedule_id: schedule.id, schedule_level: schedule_level)
+            ss = SubstanceStatute.new(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level)
             ss.save
           end
         else
-          raise "Schedule not found for #{k}!"
+          raise "Statute not found for #{k}!"
         end
       end
     end
   end
 end
 
-[1,2,3,4,5].each { |i| parse_schedule_file(i) }
+[1,2,3,4,5].each { |i| parse_statute_csv(i) }
