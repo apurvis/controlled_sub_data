@@ -10,7 +10,7 @@
 
    <% @statute.substance_statutes.each do |ss| %>
       <tr>
-         <td><%= ss.substance.id %></td>
+         <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= ss.substance.name %></td>
          <td><%= ss.schedule_level %></td>
       </tr>
