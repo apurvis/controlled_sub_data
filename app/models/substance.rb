@@ -1,4 +1,6 @@
 class Substance < ActiveRecord::Base
+  belongs_to :substance_classification
+
   def self.find_or_create_substance(name, options = {})
     s = nil
     if s = Substance.where(name: name).first
@@ -8,7 +10,9 @@ class Substance < ActiveRecord::Base
       s = Substance.new(name: name)
     end
 
-    s.classification = options[:classification] if options[:classification]
+    if options[:classification]
+      s.substance_classification_id = SubstanceClassification.find_or_create_substance_classification(options[:classification]).id
+    end
     s.dea_code = options[:dea_code] if options[:dea_code]
     s.save
     s

@@ -10,7 +10,7 @@
       <tr>
          <td><%= substance.id %></td>
          <td><%= substance.name %></td>
-         <td><%= substance.classification %></td>
+         <td><%= substance.substance_classification.try(:name) %></td>
          <td><%= substance.dea_code %>
       <tr>
    <% end %>

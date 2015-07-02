@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702161315) do
+ActiveRecord::Schema.define(version: 20150702163842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20150702161315) do
   end
 
   add_index "schedules", ["state", "start_date"], name: "index_schedules_on_state_and_start_date", unique: true, using: :btree
+
+  create_table "substance_classifications", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "substance_classifications", ["name"], name: "index_substance_classifications_on_name", unique: true, using: :btree
 
   create_table "substance_schedules", force: :cascade do |t|
     t.integer  "substance_id"
@@ -38,12 +46,12 @@ ActiveRecord::Schema.define(version: 20150702161315) do
 
   create_table "substances", force: :cascade do |t|
     t.string   "name"
-    t.string   "classification",                              comment: "e.g. opioid, stimulant, depressant"
     t.string   "chemical_formula",                            comment: "In a readable format, e.g. N-ethyl-3-piperidyl benzilat"
     t.string   "chemical_formula_smiles_format",              comment: "Follows the SMILE standard: https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
+    t.integer  "substance_classification_id"
   end
 
   add_index "substances", ["chemical_formula_smiles_format"], name: "index_substances_on_chemical_formula_smiles_format", unique: true, using: :btree

@@ -13,7 +13,7 @@
       <tr>
          <td><%= ss.id %></td>
          <td><%= ss.substance.name %></td>
-         <td><%= ss.substance.classification %></td>
+         <td><%= ss.substance.substance_classification.try(:name) %></td>
          <td><%= ss.schedule.state %></td>
          <td><%= ss.schedule.start_date %></td>
          <td><%= ss.schedule_level %></td>
