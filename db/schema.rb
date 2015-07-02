@@ -11,10 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702044837) do
+ActiveRecord::Schema.define(version: 20150702053128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "schedules", force: :cascade do |t|
+    t.string   "state",                   comment: "2 Character State Code or FEDERAL"
+    t.integer  "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "substance_schedules", force: :cascade do |t|
+    t.integer  "substance_id"
+    t.integer  "schedule_id"
+    t.integer  "schedule_level",              comment: "1, 2, 3, 4, or 5"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "substances", force: :cascade do |t|
+    t.string   "name"
+    t.string   "classification"
+    t.string   "chemical_formula"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
