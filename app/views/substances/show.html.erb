@@ -1,0 +1,22 @@
+<h2>Name: <%= @substance.name %></h2>
+<h3>Chemical Name: <%= @substance.chemical_formula %>
+<h3>SMILES: <%= @substance.chemical_formula_smiles_format %>
+
+<h3>Affected by Statutes</h3>
+<table border="1">
+   <tr>
+      <td>Statute ID</td>
+      <td>State</td>
+      <td>Start Date</td>
+      <td>Scheduled Level</td>
+   </tr>
+
+   <% @substance.substance_statutes.each do |ss| %>
+      <tr>
+         <td><%= ss.statute.id %></td>
+         <td><%= ss.statute.state %></td>
+         <td><%= ss.statute.start_date %></td>
+         <td><%= ss.schedule_level %></td>
+      </tr>
+   <% end %>
+</table>

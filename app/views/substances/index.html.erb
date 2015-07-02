@@ -8,6 +8,7 @@
 
    <% @substances.each do |substance| %>
       <tr>
+         <td><%= link_to "#{substance.id}", substance_path(substance) %></td>
          <td><%= substance.id %></td>
          <td><%= substance.name %></td>
          <td><%= substance.substance_classification.try(:name) %></td>

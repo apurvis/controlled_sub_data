@@ -1,5 +1,6 @@
 class Substance < ActiveRecord::Base
   belongs_to :substance_classification
+  has_many :substance_statutes
 
   def self.find_or_create_substance(name, options = {})
     s = nil

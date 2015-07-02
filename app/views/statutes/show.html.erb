@@ -1,0 +1,18 @@
+<h2><%= @statute.state + " / " + @statute.start_date.strftime('%Y-%m-%d') %></h2>
+
+<h3>Substances Affected</h3>
+<table border="1">
+   <tr>
+      <td>Substance ID</td>
+      <td>Substance Name</td>
+      <td>Scheduled Level</td>
+   </tr>
+
+   <% @statute.substance_statutes.each do |ss| %>
+      <tr>
+         <td><%= ss.substance.id %></td>
+         <td><%= ss.substance.name %></td>
+         <td><%= ss.schedule_level %></td>
+      </tr>
+   <% end %>
+</table>
