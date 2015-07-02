@@ -1,6 +1,5 @@
 class ScheduleLevelsController < ApplicationController
   before_action :authenticate_user!
-  helper ScheduleLevelsHelper
 
   LEVELS = {
     'I' => 1,
