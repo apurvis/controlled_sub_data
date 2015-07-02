@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20150702053128) do
 
   create_table "schedules", force: :cascade do |t|
     t.string   "state",                   comment: "2 Character State Code or FEDERAL"
-    t.integer  "year"
+    t.date     "start_date",              comment: "Date the schedule became The Law"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

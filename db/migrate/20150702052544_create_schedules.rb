@@ -2,7 +2,7 @@ class CreateSchedules < ActiveRecord::Migration
   def change
     create_table :schedules do |t|
       t.string :state, comment: '2 Character State Code or FEDERAL'
-      t.integer :year
+      t.date :start_date, comment: 'Date the schedule became The Law'
 
       t.timestamps null: false
     end
