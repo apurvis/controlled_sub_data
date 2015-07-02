@@ -2,6 +2,10 @@ class Substance < ActiveRecord::Base
   belongs_to :substance_classification
   has_many :substance_statutes
 
+  validates_uniqueness_of :name
+  validates_uniqueness_of :chemical_formula
+  validates_uniqueness_of :chemical_formula_smiles_format
+
   def self.find_or_create_substance(name, options = {})
     s = nil
     if s = Substance.where(name: name).first
