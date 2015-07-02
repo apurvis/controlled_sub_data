@@ -16,7 +16,6 @@ gem 'simple_form'
 gem 'uglifier', '>= 1.3.0'
 gem 'upmin-admin'
 
-
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
