@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  authenticate :user, lambda { |u| u.id == 2 } do # TODO real auth
-    Rails.logger.info("AUTHING #{u}")
+  authenticate :user, lambda { |u| Rails.logger.info("AUTHING #{u}"); u.id == 2 } do # TODO real auth
+
     mount Upmin::Engine => '/admin'
   end
 
