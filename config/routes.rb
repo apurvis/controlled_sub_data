@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   resources :users
 
   authenticate :user, lambda { |u| Rails.logger.info("AUTHING #{u}"); u.id == 2 } do # TODO real auth
-
     mount Upmin::Engine => '/admin'
   end
 
   root to: 'visitors#index'
+
+  resources :substances
 end
