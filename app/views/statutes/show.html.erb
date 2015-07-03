@@ -14,24 +14,26 @@
 <h3>Substances Scheduled By This Statute</h3>
 <table border="1">
    <tr>
-      <td>Substance ID</td>
-      <td>Substance Name</td>
-      <td>Classification</td>
-      <td>Scheduled Level</td>
-      <td></td>
+      <th>Substance ID</th>
+      <th>Substance Name</th>
+      <th>Classification</th>
+      <th>Scheduled Level</th>
+      <th></th>
    </tr>
 
    <% @statute.substance_statutes.each do |ss| %>
       <tr>
          <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
+
          <% if ss.substance.substance_classification.try(:name) %>
             <td><%= link_to ss.substance.substance_classification.name, substance_classification_path(ss.substance.substance_classification) %></td>
          <% else %>
             <td></td>
          <% end %>
+
          <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
-            <td><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
+            <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
          <% else %>
             <td></td>
          <% end %>
