@@ -6,11 +6,11 @@ class StatutesController < ApplicationController
   end
 
   def show
-    @statute = Statute.where(id: params["id"]).first
+    @statute = Statute.where(id: params['id']).first
   end
 
   def edit
-    @statute = Statute.where(id: params["id"]).first
+    @statute = Statute.where(id: params['id']).first
   end
 
   def new
@@ -24,6 +24,16 @@ class StatutesController < ApplicationController
       redirect_to @statute
     else
       render 'new'
+    end
+  end
+
+  def update
+    @statute = Statute.where(id: params['id']).first
+
+    if @statute.update(statute_params)
+      redirect_to @statute
+    else
+      render 'edit'
     end
   end
 

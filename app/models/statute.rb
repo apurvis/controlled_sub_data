@@ -2,7 +2,15 @@ class Statute < ActiveRecord::Base
   has_many :substance_statutes
 
   validates :state, presence: true, length: { minimum: 2 }
-  validate :has_valid_start_date
+  validates :start_date, presence: true
+
+  def formatted_name
+    if start_date
+      "#{state}/#{start_date.strftime('%Y-%m-%d')}"
+    else
+      "#{state}/XXXX-XX-XX"
+    end
+  end
 
   private
   def has_valid_start_date

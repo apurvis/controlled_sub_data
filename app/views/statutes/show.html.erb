@@ -8,6 +8,7 @@
 <h3>Expiration Date: <%= @statute.expiration_date %>
 
 <br/>
+<h3><%= link_to 'edit statute', edit_statute_path(@statute) %></h3>
 <br/>
 
 <h3>Substances Scheduled By This Statute</h3>
@@ -27,5 +28,5 @@
    <% end %>
 </table>
 
-<h3><%= link_to 'edit', edit_statute_path(@statute) %></h3>
+<h3><%= link_to 'add a substance to this statute', new_substance_statute_path %></h3>
 <h3><%= link_to 'back', statutes_path %></h3>

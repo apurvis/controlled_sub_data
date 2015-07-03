@@ -14,12 +14,18 @@ class SubstanceStatutesController < ApplicationController
   end
 
   def create
-    render plain: params[:substance_statute].inspect
+    @substance_statute = SubstanceStatute.new(substance_statutes_params)
+
+    if @substance_statute.save
+      redirect_to @substance_statute
+    else
+      render 'new'
+    end
   end
 
   private
 
   def substance_statutes_params
-    params.require(:substance_statute).permit(:substance, :statute, :schedule_level)
+    params.require(:substance_statute).permit(:substance_id, :statute_id, :schedule_level)
   end
 end

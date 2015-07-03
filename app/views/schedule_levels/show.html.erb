@@ -13,7 +13,7 @@
       <tr>
          <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
-         <td><%= link_to "#{ss.statute.state} / #{ss.statute.start_date.strftime('%Y-%m-%d')}", statute_path(ss.statute) %></td>
+         <td><%= link_to ss.statute.formatted_name, statute_path(ss.statute) %></td>
       </tr>
    <% end %>
 </table>

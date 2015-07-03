@@ -27,6 +27,16 @@ class SubstanceClassificationsController < ApplicationController
     end
   end
 
+  def update
+    @classification = SubstanceClassification.where(id: params["id"]).first
+
+    if @classification.update(substance_classification_params)
+      redirect_to @classification
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def substance_classification_params

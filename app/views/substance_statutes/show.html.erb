@@ -1,0 +1,21 @@
+<h2>Substance Statute Link: <%= @substance_statute.substance.name + " / " + @substance_statute.statute.formatted_name %></h2>
+
+<h3>Substances in this Classification</h3>
+<table border="1">
+   <tr>
+      <td>Substance ID</td>
+      <td>Name</td>
+      <td>DEA Code</td>
+   </tr>
+
+   <% @classification.substances.each do |s| %>
+      <tr>
+         <td><%= link_to "#{s.id}", substance_path(s) %></td>
+         <td><%= link_to s.name, substance_path(s) %></td>
+         <td><%= s.dea_code %></td>
+      </tr>
+   <% end %>
+</table>
+
+<h3><%= link_to 'edit', edit_substance_classification_path(@classification) %></h3>
+<h3><%= link_to 'back', substance_classifications_path %></h3>

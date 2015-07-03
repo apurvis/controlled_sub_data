@@ -1,0 +1,38 @@
+<%= form_for @substance_statute do |f| %>
+   <% if @substance_statute.errors.any? %>
+      <div id="error_explanation">
+         <h2>
+            <%= pluralize(@substance_statute.errors.count, "error") %> prohibited this substance-statute link from being saved:
+         </h2>
+         <ul>
+            <% @substance_statute.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+            <% end %>
+         </ul>
+      </div>
+   <% end %>
+
+   <p>
+      <%= f.label :substance %><br>
+      <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :statute %><br>
+      <%= select(:substance_statute, :statute_id, Statute.all.map { |s| [s.formatted_name, s.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :schedule_level %><br>
+      <%= number_field(:substance_statute, :schedule_level, in: 1.0..5, step: 1) %>
+   </p>
+
+   <p>
+      <%= f.label :penalty %><br/>
+      <%= f.text_area :penalty, :cols => "50", :rows => "10" %>
+   </p>
+
+   <p>
+      <%= f.submit %>
+   </p>
+<% end %>
