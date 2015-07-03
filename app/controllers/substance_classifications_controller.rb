@@ -3,14 +3,15 @@ class SubstanceClassificationsController < ApplicationController
 
   def index
     @classifications = SubstanceClassification.all
+    @unclassified_count = Substance.where(substance_classification_id: nil).size
   end
 
   def show
-    @classification = SubstanceClassification.where(id: params["id"]).first
+    @classification = SubstanceClassification.where(id: params['id']).first
   end
 
   def edit
-    @classification = SubstanceClassification.where(id: params["id"]).first
+    @classification = SubstanceClassification.where(id: params['id']).first
   end
 
   def new
@@ -28,7 +29,7 @@ class SubstanceClassificationsController < ApplicationController
   end
 
   def update
-    @classification = SubstanceClassification.where(id: params["id"]).first
+    @classification = SubstanceClassification.where(id: params['id']).first
 
     if @classification.update(substance_classification_params)
       redirect_to @classification

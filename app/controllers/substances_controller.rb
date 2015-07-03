@@ -6,11 +6,11 @@ class SubstancesController < ApplicationController
   end
 
   def show
-    @substance = Substance.where(id: params["id"]).first
+    @substance = Substance.where(id: params['id']).first
   end
 
   def edit
-    @substance = Substance.where(id: params["id"]).first
+    @substance = Substance.where(id: params['id']).first
   end
 
   def new
@@ -28,7 +28,7 @@ class SubstancesController < ApplicationController
   end
 
   def update
-    @substance = Substance.where(id: params["id"]).first
+    @substance = Substance.where(id: params['id']).first
 
     if @substance.update(substance_params)
       redirect_to @substance
