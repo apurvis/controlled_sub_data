@@ -1,4 +1,6 @@
 class Substance < ActiveRecord::Base
+  acts_as_paranoid
+
   belongs_to :substance_classification
   has_many :substance_statutes
 

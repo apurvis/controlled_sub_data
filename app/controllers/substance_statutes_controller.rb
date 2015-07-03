@@ -37,6 +37,9 @@ class SubstanceStatutesController < ApplicationController
     end
   end
 
+  def destroy
+  end
+
   private
 
   def substance_statutes_params
