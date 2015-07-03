@@ -7,6 +7,7 @@ class SubstancesController < ApplicationController
 
   def show
     @substance = Substance.where(id: params['id']).first
+    @relevant_statutes = @substance.substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }
   end
 
   def edit
