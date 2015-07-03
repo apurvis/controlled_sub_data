@@ -8,6 +8,8 @@ s = Substance.where(name: 'Dimethyltryptamine').first
 SubstanceAlternateName.create(substance_id: s.id, name: 'DMT')
 
 s = Substance.where(name: 'Diethyltryptamine').first
+s.comment = "additional language first seen in 36 FR 7802; April 24, 1971"
+s.save
 SubstanceAlternateName.create(substance_id: s.id, name: 'DMT')
 
 s = Substance.where(name: 'Nabilone').first
