@@ -1,6 +1,8 @@
 require 'csv'
 require 'Date'
 
+ActiveRecord::Base.logger = nil
+
 def parse_statute_csv(schedule_level)
   puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
   puts "=======================================\n"
