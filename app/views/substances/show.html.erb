@@ -1,9 +1,12 @@
 <h2>Name: <%= @substance.name %></h2>
-
-<h3>Classification: <%= @substance.substance_classification.try(:name) %>
-<h3>Chemical Name: <%= @substance.chemical_formula %>
-<h3>SMILES: <%= @substance.chemical_formula_smiles_format %>
-<h3>DEA Code: <%= @substance.dea_code %>
+<% if @substance.substance_classification.try(:name) %>
+   <h3>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h3>
+<% else %>
+   <h3>Classification:</h3>
+<% end %>
+<h3>Chemical Name: <%= @substance.chemical_formula %></h3>
+<h3>SMILES: <%= @substance.chemical_formula_smiles_format %></h3>
+<h3>DEA Code: <%= @substance.dea_code %></h3>
 <h3><%= link_to 'edit', edit_substance_path(@substance) %></h3>
 
 <br/>
