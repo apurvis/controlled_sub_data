@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702185257) do
+ActiveRecord::Schema.define(version: 20150703023234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,16 +24,20 @@ ActiveRecord::Schema.define(version: 20150702185257) do
     t.string   "blue_book_code"
     t.string   "name"
     t.date     "expiration_date"
+    t.datetime "deleted_at"
   end
 
+  add_index "statutes", ["deleted_at"], name: "index_statutes_on_deleted_at", using: :btree
   add_index "statutes", ["state", "start_date"], name: "index_statutes_on_state_and_start_date", unique: true, using: :btree
 
   create_table "substance_classifications", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree
   add_index "substance_classifications", ["name"], name: "index_substance_classifications_on_name", unique: true, using: :btree
 
   create_table "substance_statutes", force: :cascade do |t|
@@ -43,8 +47,10 @@ ActiveRecord::Schema.define(version: 20150702185257) do
     t.string   "penalty"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree
   add_index "substance_statutes", ["substance_id", "statute_id", "schedule_level"], name: "idx_substance_schedule_level", unique: true, using: :btree
 
   create_table "substances", force: :cascade do |t|
@@ -55,9 +61,11 @@ ActiveRecord::Schema.define(version: 20150702185257) do
     t.datetime "updated_at",                     null: false
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
     t.integer  "substance_classification_id"
+    t.datetime "deleted_at"
   end
 
   add_index "substances", ["chemical_formula_smiles_format"], name: "index_substances_on_chemical_formula_smiles_format", unique: true, using: :btree
+  add_index "substances", ["deleted_at"], name: "index_substances_on_deleted_at", using: :btree
   add_index "substances", ["name"], name: "index_substances_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|

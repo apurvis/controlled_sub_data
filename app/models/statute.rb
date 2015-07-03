@@ -1,4 +1,6 @@
 class Statute < ActiveRecord::Base
+  acts_as_paranoid
+
   has_many :substance_statutes
 
   validates :state, presence: true, length: { minimum: 2 }
