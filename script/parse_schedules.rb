@@ -63,7 +63,7 @@ def parse_statute_csv(schedule_level)
           if (Date.parse(possible_date_string) rescue nil)
             first_scheduled_date = Date.parse(possible_date_string)
             puts "Parsed #{first_scheduled_date} out of #{v}!"
-            substance_name = v.gsub(/\(#{possible_date_string}\)/, '').strip rescue substance_name
+            substance_name = substance_name.gsub(/\(#{possible_date_string}\)/, '').strip rescue substance_name
             puts "   Afterwards reduced to #{substance_name}"
           end
         end
