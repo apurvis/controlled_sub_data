@@ -13,12 +13,8 @@ class Substance < ActiveRecord::Base
   def self.find_or_create_substance(name, options = {})
     s = nil
     name = name.strip
-    if s = Substance.where(name: name).first
-      puts "  Skipping #{name} because it already exists with id #{Substance.where(name: name).first.id}"
-    else
-      puts "  Creating substance record #{name}"
-      s = Substance.new(name: name)
-    end
+    s = Substance.where(name: name).first
+    s = Substance.new(name: name) unless s
 
     if options[:classification]
       s.substance_classification_id = SubstanceClassification.find_or_create_substance_classification(options[:classification]).id

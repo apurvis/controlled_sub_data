@@ -3,6 +3,10 @@ require 'Date'
 
 ActiveRecord::Base.logger = nil
 
+%w(substances statutes substance_statutes substance_classifications substance_alternate_names).each do |t|
+  ActiveRecord::Base.connection.execute("DELETE FROM #{t}")
+end
+
 def parse_statute_csv(schedule_level)
   puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
   puts "=======================================\n"
