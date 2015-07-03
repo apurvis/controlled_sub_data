@@ -1,12 +1,16 @@
 class SubstanceClassificationsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @classifications = SubstanceClassification.all
+  end
+
   def show
     @classification = SubstanceClassification.where(id: params["id"]).first
   end
 
-  def index
-    @classifications = SubstanceClassification.all
+  def edit
+    @classification = SubstanceClassification.where(id: params["id"]).first
   end
 
   def new
@@ -14,7 +18,13 @@ class SubstanceClassificationsController < ApplicationController
   end
 
   def create
-    render plain: params[:substance_classification].inspect
+    @classification = SubstanceClassification.new(substance_classification_params)
+
+    if @classification.save
+      redirect_to @classification
+    else
+      render 'new'
+    end
   end
 
   private
