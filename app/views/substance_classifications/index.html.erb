@@ -5,6 +5,7 @@
       <td>ID</td>
       <td>Name</td>
       <td>Number of Substances In Category</td>
+      <td></td>
    </tr>
 
    <% @classifications.each do |c| %>
@@ -12,6 +13,7 @@
          <td><%= link_to "#{c.id}", substance_classification_path(c) %></td>
          <td><%= link_to c.name, substance_classification_path(c) %></td>
          <td><%= c.substances.size %>
+         <td><%= link_to 'edit', edit_substance_classification_path(c) %></td>
       <tr>
    <% end %>
 </table>

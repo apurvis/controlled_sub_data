@@ -1,0 +1,43 @@
+<%= form_for @substance do |f| %>
+   <% if @substance.errors.any? %>
+      <div id="error_explanation">
+         <h2>
+            <%= pluralize(@substance.errors.count, "error") %> prohibited this statute from being saved:
+         </h2>
+         <ul>
+            <% @substance.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+            <% end %>
+         </ul>
+      </div>
+   <% end %>
+
+   <p>
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+   </p>
+
+   <p>
+     <%= f.label :chemical_formula %><br>
+     <%= f.text_field :chemical_formula %>
+   </p>
+
+   <p>
+      <%= f.label :chemical_formula_smiles_format %><br>
+      <%= f.text_field :chemical_formula_smiles_format %>
+   </p>
+
+   <p>
+      <%= f.label :dea_code %><br>
+      <%= f.text_field :dea_code %>
+   </p>
+
+   <p>
+      <%= f.label :classification %><br>
+      <%= select(:substance, :substance_classification_id, SubstanceClassification.all.map { |c| [c.name[0..50], c.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.submit %>
+   </p>
+<% end %>

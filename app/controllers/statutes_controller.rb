@@ -1,16 +1,16 @@
 class StatutesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @statutes = Statute.all
+  end
+
   def show
     @statute = Statute.where(id: params["id"]).first
   end
 
   def edit
     @statute = Statute.where(id: params["id"]).first
-  end
-
-  def index
-    @statutes = Statute.all
   end
 
   def new

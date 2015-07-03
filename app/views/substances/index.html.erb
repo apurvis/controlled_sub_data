@@ -6,6 +6,7 @@
       <td>Name</td>
       <td>Classification</td>
       <td>DEA Code</td>
+      <td></td>
    </tr>
 
    <% @substances.each do |substance| %>
@@ -17,7 +18,8 @@
          <% else %>
             <td></td>
          <% end %>
-         <td><%= substance.dea_code %>
+         <td><%= substance.dea_code %></td>
+         <td><%= link_to 'edit', edit_substance_path(substance) %></td>
       <tr>
    <% end %>
 </table>

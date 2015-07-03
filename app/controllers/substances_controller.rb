@@ -1,12 +1,16 @@
 class SubstancesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @substances = Substance.all
+  end
+
   def show
     @substance = Substance.where(id: params["id"]).first
   end
 
-  def index
-    @substances = Substance.all
+  def edit
+    @substance = Substance.where(id: params["id"]).first
   end
 
   def new
@@ -14,7 +18,13 @@ class SubstancesController < ApplicationController
   end
 
   def create
-    render plain: params[:substance].inspect
+    @substance = Substance.new(substance_params)
+
+    if @substance.save
+      redirect_to @substance
+    else
+      render 'new'
+    end
   end
 
   private

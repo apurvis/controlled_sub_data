@@ -3,6 +3,7 @@ class Substance < ActiveRecord::Base
   has_many :substance_statutes
 
   validates_uniqueness_of :name
+  validates_uniqueness_of :dea_code, :allow_nil
   validates_uniqueness_of :chemical_formula
   validates_uniqueness_of :chemical_formula_smiles_format
 
