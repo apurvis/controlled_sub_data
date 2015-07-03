@@ -4,8 +4,8 @@ class Substance < ActiveRecord::Base
 
   validates_uniqueness_of :name
 #  validates_uniqueness_of :dea_code, allow_nil: true
-  validates_uniqueness_of :chemical_formula, allow_nil: true
-  validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true
+  validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
+  validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
   def self.find_or_create_substance(name, options = {})
     s = nil

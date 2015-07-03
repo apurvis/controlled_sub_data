@@ -1,5 +1,7 @@
 <h2>Classification: <%= @classification.name %></h2>
-
+<h3><%= link_to 'edit', edit_substance_classification_path(@classification) %></h3>
+<br/>
+<br/>
 <h3>Substances in this Classification</h3>
 <table border="1">
    <tr>
@@ -17,5 +19,5 @@
    <% end %>
 </table>
 
-<h3><%= link_to 'edit', edit_substance_classification_path(@classification) %></h3>
+
 <h3><%= link_to 'back', substance_classifications_path %></h3>

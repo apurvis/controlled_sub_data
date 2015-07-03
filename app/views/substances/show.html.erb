@@ -1,8 +1,13 @@
 <h2>Name: <%= @substance.name %></h2>
+
 <h3>Classification: <%= @substance.substance_classification.try(:name) %>
 <h3>Chemical Name: <%= @substance.chemical_formula %>
 <h3>SMILES: <%= @substance.chemical_formula_smiles_format %>
 <h3>DEA Code: <%= @substance.dea_code %>
+<h3><%= link_to 'edit', edit_substance_path(@substance) %></h3>
+
+<br/>
+<br/>
 
 <h3>Affected by Statutes</h3>
 <table border="1">
@@ -23,5 +28,4 @@
    <% end %>
 </table>
 
-<h3><%= link_to 'edit', edit_substance_path(@substance) %></h3>
 <h3><%= link_to 'back', substances_path %></h3>

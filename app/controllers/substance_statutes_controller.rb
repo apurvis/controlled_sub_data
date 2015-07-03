@@ -2,7 +2,11 @@ class SubstanceStatutesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @substance_statute = SubstanceStatute.where(id: params["id"]).first
+    @substance_statute = SubstanceStatute.where(id: params['id']).first
+  end
+
+  def edit
+    @substance_statute = SubstanceStatute.where(id: params['id']).first
   end
 
   def index
@@ -20,6 +24,16 @@ class SubstanceStatutesController < ApplicationController
       redirect_to @substance_statute
     else
       render 'new'
+    end
+  end
+
+  def update
+    @substance_statute = SubstanceStatute.where(id: params['id']).first
+
+    if @substance_statute.update(substance_statutes_params)
+      redirect_to @substance_statute
+    else
+      render 'edit'
     end
   end
 
