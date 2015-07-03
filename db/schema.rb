@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703030254) do
+ActiveRecord::Schema.define(version: 20150703042234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150703030254) do
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
     t.integer  "substance_classification_id"
     t.datetime "deleted_at"
+    t.date     "first_scheduled_date",                        comment: "Parsed from statements like Chlordiazepoxide (2744) Effective 7/2/1975"
   end
 
   add_index "substances", ["chemical_formula_smiles_format"], name: "index_substances_on_chemical_formula_smiles_format", unique: true, using: :btree

@@ -1,4 +1,5 @@
 require 'csv'
+require 'Date'
 
 def parse_statute_csv(schedule_level)
   puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
@@ -39,13 +40,26 @@ def parse_statute_csv(schedule_level)
           v = v.strip
         end
 
-        if v =~ /Effective/i
-          substance_name = v.strip.split(" Effective ")[0].strip
+        if v =~ /Effective/
+          substance_name = v.strip.split("Effective ")[0].strip
+          first_scheduled_date = v.strip.split("Effective ")[1].strip
+          puts "Effective: #{first_scheduled_date}"
+          if first_scheduled_date =~ /^\d+\/\d+\/\d\d\d\d$/
+            first_scheduled_date = Date.strptime(first_scheduled_date, "%m/%d/%Y")
+          else
+            first_scheduled_date = Date.parse(first_scheduled_date) rescue nil
+          end
         else
           substance_name = v.strip
         end
 
-        substance = Substance.find_or_create_substance(substance_name, classification: current_classification, dea_code: dea_code)
+        substance = Substance.find_or_create_substance(
+          substance_name,
+          classification: current_classification,
+          dea_code: dea_code,
+          first_scheduled_date: first_scheduled_date
+        )
+
         if statute = Statute.where(state: 'FEDERAL', start_date: "#{k.strip}-01-01".to_date).first
           if SubstanceStatute.where(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level).size > 0
             puts "Already have a statute for #{substance_name}, #{statute.start_date}, #{schedule_level}"

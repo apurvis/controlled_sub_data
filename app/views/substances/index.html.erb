@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Classification</th>
       <th>DEA Code</th>
+      <th>First Scheduled Date</th>
       <th></th>
    </tr>
 
@@ -19,6 +20,7 @@
             <td></td>
          <% end %>
          <td><%= substance.dea_code %></td>
+         <td><%= substance.first_scheduled_date.try(:strftime, '%Y-%m-%d') %>
          <td><%= link_to 'edit', edit_substance_path(substance) %></td>
       <tr>
    <% end %>

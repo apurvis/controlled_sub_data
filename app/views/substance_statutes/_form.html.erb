@@ -13,17 +13,17 @@
    <% end %>
 
    <p>
-      <%= f.label :substance %><br>
+      <%= f.label :substance %><br/>
       <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
    </p>
 
    <p>
-      <%= f.label :statute %><br>
+      <%= f.label :statute %><br/>
       <%= select(:substance_statute, :statute_id, Statute.all.map { |s| [s.formatted_name, s.id] } ) %>
    </p>
 
    <p>
-      <%= f.label :schedule_level %><br>
+      <%= f.label :schedule_level %><br/>
       <%= number_field(:substance_statute, :schedule_level, in: 1.0..5, step: 1) %>
    </p>
 

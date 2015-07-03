@@ -25,7 +25,9 @@ class Substance < ActiveRecord::Base
     end
 
     s.dea_code = options[:dea_code] if options[:dea_code]
+    s.first_scheduled_date = options[:first_scheduled_date] if options[:first_scheduled_date]
     s.save
+
     s
   end
 end

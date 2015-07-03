@@ -38,6 +38,11 @@
    </p>
 
    <p>
+      <%= f.label :first_scheduled_date %><br>
+      <%= date_field(:substance, :first_scheduled_date) %>
+   </p>
+
+   <p>
       <%= f.submit %>
    </p>
 <% end %>
