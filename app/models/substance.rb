@@ -3,9 +3,10 @@ class Substance < ActiveRecord::Base
 
   belongs_to :substance_classification
   has_many :substance_statutes
+  has_many :substance_alternate_names
 
   validates_uniqueness_of :name
-#  validates_uniqueness_of :dea_code, allow_nil: true
+#  validates_uniqueness_of :dea_code, allow_nil: true TODO: should be on
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 

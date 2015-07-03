@@ -1,0 +1,28 @@
+<%= form_for @substance_alternate_name do |f| %>
+   <% if @substance_alternate_name.errors.any? %>
+      <div id="error_explanation">
+         <h2>
+            <%= pluralize(@substance_alternate_name.errors.count, "error") %> prohibited this statute from being saved:
+         </h2>
+         <ul>
+            <% @substance_alternate_name.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+            <% end %>
+         </ul>
+      </div>
+   <% end %>
+
+   <p>
+      <%= f.label :substance %><br>
+      <%= select(:substance_alternate_name, :substance_id, Substance.all.map { |c| [c.name[0..50], c.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :alternate_name %><br>
+      <%= f.text_field :name %>
+   </p>
+
+   <p>
+      <%= f.submit %>
+   </p>
+<% end %>

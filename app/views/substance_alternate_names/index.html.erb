@@ -1,0 +1,21 @@
+<h2><%= link_to "Create New Alternate Name", new_substance_alternate_name_path %></h2>
+
+<table id="main_table" border="1">
+   <tr>
+      <th>ID</th>
+      <th>Substance ID</th>
+      <th>Substance Name</th>
+      <th>Alternate Name</th>
+      <th></th>
+   </tr>
+
+   <% @substance_alternate_names.each do |san| %>
+      <tr>
+         <td><%= link_to "#{san.id}", substance_alternate_name_path(san) %></td>
+         <td><%= san.substance.id %>
+         <td><%= link_to san.substance.name, substance_path(san.substance) %></td>
+         <td><%= san.name %></td>
+         <td><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
+      <tr>
+   <% end %>
+</table>

@@ -9,6 +9,17 @@
 <br/>
 <br/>
 
+<h3>Alternate Names</h3>
+<table border="1">
+   <% @substance.substance_alternate_names.each do |n| %>
+      <tr><%= link_to n.name, substance_alternate_name_path(n) %></tr>
+   <% end %>
+   <tr><%= link_to "Add a new alternate name", new_substance_alternate_name_path(substance_id: @substance.id) %></tr>
+</table>
+
+<br/>
+<br/>
+
 <h3>Affected by Statutes</h3>
 <table border="1">
    <tr>

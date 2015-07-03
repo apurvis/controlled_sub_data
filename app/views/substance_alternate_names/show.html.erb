@@ -1,0 +1,4 @@
+<h2>Original Name: <%= link_to @substance_alternate_name.substance.name, substance_path(@substance_alternate_name.substance) %></h2>
+<h2>Alternate Name: <%= @substance_alternate_name.name %></h2>
+
+<h3><%= link_to 'back', substance_alternate_names_path %></h3>
