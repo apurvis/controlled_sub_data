@@ -6,6 +6,7 @@
    <tr>
       <td>Substance ID</td>
       <td>Substance Name</td>
+      <td>DEA Code</td>
       <td>Statute</td>
    </tr>
 
@@ -13,6 +14,7 @@
       <tr>
          <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
+         <td><%= ss.substance.dea_code %></td>
          <td><%= link_to ss.statute.formatted_name, statute_path(ss.statute) %></td>
       </tr>
    <% end %>

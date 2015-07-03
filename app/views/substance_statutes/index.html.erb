@@ -16,7 +16,11 @@
          <td><%= ss.substance.substance_classification.try(:name) %></td>
          <td><%= ss.statute.state %></td>
          <td><%= ss.statute.start_date %></td>
-         <td><%= ss.schedule_level %></td>
+         <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
+            <td><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
+         <% else %>
+            <td></td>
+         <% end %>
          <td><%= ss.substance.dea_code %></td>
       <tr>
    <% end %>

@@ -10,7 +10,7 @@ class ScheduleLevelsController < ApplicationController
   }
 
   def show
-    @level = params["id"].to_i
+    @level = params['id'].to_i
     @roman_level = ScheduleLevelsController::LEVELS.keys[@level - 1]
     @substance_statutes = SubstanceStatute.where(schedule_level: @level).all
   end
