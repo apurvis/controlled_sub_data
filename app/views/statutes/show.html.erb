@@ -16,6 +16,7 @@
    <tr>
       <td>Substance ID</td>
       <td>Substance Name</td>
+      <td>Classification</td>
       <td>Scheduled Level</td>
       <td></td>
    </tr>
@@ -24,6 +25,11 @@
       <tr>
          <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
+         <% if ss.substance.substance_classification.try(:name) %>
+            <td><%= link_to ss.substance.substance_classification.name, substance_classification_path(ss.substance.substance_classification) %></td>
+         <% else %>
+            <td></td>
+         <% end %>
          <td><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
          <td><%= link_to "edit link", edit_substance_statute_path(ss) %></td>
       </tr>
