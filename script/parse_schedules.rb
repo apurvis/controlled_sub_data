@@ -4,7 +4,7 @@ def parse_statute_csv(schedule_level)
   puts "\n\nPARSING SCHEDULE #{schedule_level} FILE"
   puts "=======================================\n"
 
-  csv_text = File.read("script/schedule_data/schedule_#{schedule_level}.csv").encode("UTF-8", invalid: :replace, undef: :replace, replace: "?")
+  csv_text = File.read("script/schedule_data/schedule_#{schedule_level}.csv").encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
   csv_rows = CSV.parse(csv_text, headers: true)
 
   # Create the schedules
@@ -21,11 +21,10 @@ def parse_statute_csv(schedule_level)
   current_classification = nil
   csv_rows.each do |row|
     row.to_hash.each do |k,v|
-      if v.nil? || v == "" || v =~ /^\d+$/
+      if v.nil? || v == '' || v =~ /^\d+$/
         next
       elsif k =~ /Controlled Substances Schedule \w/
         # Special handling for the I and II schedule files which include classifications
-        puts "THE RAWEST Raw: #{k} => #{v}"
         current_classification = v.strip
       else
         v = v.strip
@@ -33,15 +32,15 @@ def parse_statute_csv(schedule_level)
 
         if v =~ /\(\d\d\d\d\)/
           dea_code = /\((\d\d\d\d)\)/.match(v)[1].to_i
-          v.gsub!(/\((\d\d\d\d)\)/, "")
+          v.gsub!(/\((\d\d\d\d)\)/, '')
         elsif v =~ /\d\d\d\d$/
           dea_code = /\d\d\d\d$/.match(v)[0].to_i
-          v.gsub!(/#{dea_code}$/, "")
+          v.gsub!(/#{dea_code}$/, '')
           v = v.strip
         end
 
         if v =~ /Effective/i
-          substance_name = v.strip.split(" Effective ")[0]
+          substance_name = v.strip.split(" Effective ")[0].strip
         else
           substance_name = v.strip
         end

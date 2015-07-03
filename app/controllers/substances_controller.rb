@@ -2,7 +2,7 @@ class SubstancesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @substances = Substance.all
+    @substances = Substance.all.order("name ASC")
   end
 
   def show

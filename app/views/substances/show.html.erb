@@ -1,30 +1,32 @@
-<h2>Name: <%= @substance.name %></h2>
+<h1>Name: <%= @substance.name %></h1>
+
 <% if @substance.substance_classification.try(:name) %>
    <h3>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h3>
 <% else %>
    <h3>Classification:</h3>
 <% end %>
+
 <h3>Chemical Name: <%= @substance.chemical_formula %></h3>
 <h3>SMILES: <%= @substance.chemical_formula_smiles_format %></h3>
 <h3>DEA Code: <%= @substance.dea_code %></h3>
-<h3><%= link_to 'edit', edit_substance_path(@substance) %></h3>
+<h3><%= link_to 'edit substance', edit_substance_path(@substance) %></h3>
 
 <br/>
 <br/>
 
 <h3>Alternate Names</h3>
-<table border="1">
+<table>
    <% @substance.substance_alternate_names.each do |n| %>
       <tr><%= link_to n.name, substance_alternate_name_path(n) %></tr>
    <% end %>
-   <tr><%= link_to "Add a new alternate name", new_substance_alternate_name_path(substance_id: @substance.id) %></tr>
+   <tr><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></tr>
 </table>
 
 <br/>
 <br/>
 
 <h3>Affected by Statutes</h3>
-<table border="1">
+<table>
    <tr>
       <th>Statute ID</th>
       <th>State</th>
@@ -38,7 +40,7 @@
          <td><%= ss.statute.state %></td>
          <td><%= ss.statute.start_date %></td>
          <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
-            <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: "schedule_levels", action: :show, id: ss.schedule_level } %></td>
+            <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: 'schedule_levels', action: :show, id: ss.schedule_level } %></td>
          <% else %>
             <td></td>
          <% end %>
