@@ -1,3 +1,5 @@
+<h2><%= link_to "Create new Statute", new_statute_path %></h2>
+
 <table id="main_table" border="1">
    <tr>
       <td>ID</td>
@@ -6,6 +8,7 @@
       <td>Start Date</td>
       <td>Expiration Date</td>
       <td>Blue Book Code</td>
+      <td></td>
    </tr>
 
    <% @statutes.each do |statute| %>
@@ -16,6 +19,7 @@
          <td><%= statute.start_date %></td>
          <td><%= statute.expiration_date %></td>
          <td><%= statute.blue_book_code %></td>
+         <td><%= link_to 'edit', edit_statute_path(statute) %></td>
       <tr>
    <% end %>
 </table>

@@ -1,43 +1,5 @@
-<%= form_for :statute, url: statutes_path do |f| %>
-   <% if @statute.errors.any? %>
-      <div id="error_explanation">
-         <h2>
-            <%= pluralize(@statute.errors.count, "error") %> prohibited this statute from being saved:
-         </h2>
-         <ul>
-            <% @statute.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-            <% end %>
-         </ul>
-      </div>
-   <% end %>
+<h1>New Statute</h1>
 
-   <p>
-     <%= f.label :state %><br>
-     <%= f.text_field :state %>
-   </p>
+<%= render 'form' %>
 
-   <p>
-      <%= f.label :start_date %><br>
-      <%= f.text_field :start_date %>
-   </p>
-
-   <p>
-      <%= f.label :blue_book_code %><br>
-      <%= f.text_field :blue_book_code %>
-   </p>
-
-   <p>
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
-   </p>
-
-   <p>
-      <%= f.label :expiration_date %><br>
-      <%= f.text_field :expiration_date %>
-   </p>
-
-   <p>
-      <%= f.submit %>
-   </p>
-<% end %>
+<%= link_to 'Back', statutes_path %>
