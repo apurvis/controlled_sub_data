@@ -18,9 +18,13 @@
 <h3>Alternate Names</h3>
 <table>
    <% @substance.substance_alternate_names.each do |n| %>
-      <tr><%= link_to n.name, substance_alternate_name_path(n) %></tr>
+      <tr>
+         <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+      </tr>
    <% end %>
-   <tr><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></tr>
+   <tr>
+      <td><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></td>
+   </tr>
 </table>
 
 <br/>
