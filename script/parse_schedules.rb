@@ -28,7 +28,7 @@ def parse_statute_csv(schedule_level)
         # Special handling for the I and II schedule files which include classifications
         current_classification = v.strip
       else
-        v = v.strip
+        v = v.strip.gsub(/\s+/, ' ')
         puts "Raw: #{k} => #{v}"
 
         if v =~ /\(\d\d\d\d\)/
@@ -40,6 +40,8 @@ def parse_statute_csv(schedule_level)
           v = v.strip
         end
 
+        first_scheduled_date = nil
+        # Sometimes there is date information embedded in the name after "Effective"
         if v =~ /Effective/
           substance_name = v.strip.split("Effective ")[0].strip
           first_scheduled_date = v.strip.split("Effective ")[1].strip
@@ -51,6 +53,19 @@ def parse_statute_csv(schedule_level)
           end
         else
           substance_name = v.strip
+        end
+
+        #... but sometimes it's just there as (December 1, 1980) or (Jul 3, 1972)
+        # We err on the side of the last 25 chars because there can be a lot of parens otherwise
+        last_25_chars = substance_name[substance_name.size - 25..substance_name.size]
+        if last_25_chars =~ /\(.*\)/
+          possible_date_string = /\((.*)\)/.match(last_25_chars)[1]
+          if (Date.parse(possible_date_string) rescue nil)
+            first_scheduled_date = Date.parse(possible_date_string)
+            puts "Parsed #{first_scheduled_date} out of #{v}!"
+            substance_name = v.gsub(/\(#{possible_date_string}\)/, '').strip rescue substance_name
+            puts "   Afterwards reduced to #{substance_name}"
+          end
         end
 
         substance = Substance.find_or_create_substance(
