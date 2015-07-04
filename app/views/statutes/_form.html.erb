@@ -13,8 +13,8 @@
    <% end %>
 
    <p>
-     <%= f.label :state %><br>
-     <%= f.text_field :state %>
+      <%= f.label :state %><br>
+      <%= select(:statute, :state, Statute::STATES) %>
    </p>
 
    <p>
