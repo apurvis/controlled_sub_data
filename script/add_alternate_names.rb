@@ -19,3 +19,6 @@ s.save
 s = Substance.where(name: 'Peyote').first
 s.comment = "Meaning all parts of the plant presently classified botanically as Lophophora Willamsli Lemalre, whether growing or not; the seeds thereof; any extract from any part of such plant; and every compound, manufacture. salt. derivative, mixture or preparation of such plant, its seeds or extracts.  Interpretation re-published January 21, 1976"
 s.save
+
+s = Substance.where(name: '3,4-methylenedioxy amphetamine')
+SubstanceAlternateName.create(substance_id: s.id, name: 'MDA')
