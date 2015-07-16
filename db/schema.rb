@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703081002) do
+ActiveRecord::Schema.define(version: 20150716224314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "statute_amendment_substance_changes", force: :cascade do |t|
+    t.integer  "statute_amendment_id"
+    t.integer  "substance_id"
+    t.string   "addition_or_substraction"
+    t.integer  "schedule_level",                        comment: "1, 2, 3, 4, or 5"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "statute_amendments", force: :cascade do |t|
+    t.integer  "statute_id"
+    t.date     "start_date"
+    t.date     "expiration_date"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "statutes", force: :cascade do |t|
     t.string   "state",                        comment: "2 Character State Code or FEDERAL"

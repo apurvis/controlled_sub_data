@@ -1,7 +1,8 @@
-<h2><%= link_to "Create New Statute", new_statute_path %></h2>
+<h2><%= link_to "Create new Statute", new_statute_path %></h2>
 
 <table>
    <tr>
+      <th>ID</th>
       <th>Name</th>
       <th>State</th>
       <th>Start Date</th>
@@ -12,7 +13,8 @@
 
    <% @statutes.each do |statute| %>
       <tr>
-         <td><%= link_to statute.formatted_name, statute_path(statute) %></td>
+         <td><%= link_to "#{statute.id}", statute_path(statute) %></td>
+         <td><%= statute.name %></td>
          <td><%= statute.state %></td>
          <td><%= statute.start_date %></td>
          <td><%= statute.expiration_date %></td>

@@ -1,0 +1,25 @@
+<h2><%= link_to "Create New Statute Amendment", new_statute_amendment_path %></h2>
+
+<table>
+   <tr>
+      <th>Amendment Identifier</th>
+      <th>Statute</th>
+      <th>State</th>
+      <th>Statute Start Date</th>
+      <th>Amendment Start Date</th>
+      <th>Amendment Expiration Date</th>
+      <th></th>
+   </tr>
+
+   <% @statute_amendments.each do |s| %>
+      <tr>
+         <td><%= link_to "#{s.id}", statute_amendment_path(s) %>
+         <td><%= link_to s.statute.formatted_name, statute_path(s.statute) %></td>
+         <td><%= s.statute.state %></td>
+         <td><%= s.statute.start_date %></td>
+         <td><%= s.start_date %></td>
+         <td><%= s.expiration_date %></td>
+         <td><%= link_to 'edit', edit_statute_amendment_path(s) %></td>
+      <tr>
+   <% end %>
+</table>
