@@ -1,0 +1,38 @@
+<%= form_for @substance_change do |f| %>
+   <% if @substance_change.errors.any? %>
+      <div id="error_explanation">
+         <h2>
+            <%= pluralize(@substance_change.errors.count, "error") %> prohibited this statute from being saved:
+         </h2>
+         <ul>
+            <% @substance_change.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+            <% end %>
+         </ul>
+      </div>
+   <% end %>
+
+   <p>
+      <%= f.label :statute_amendment %>
+      <%= select(:substance_change, :statute_amendment_id, StatuteAmendment.all.map { |s| [s.formatted_name, s.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :substance %><br/>
+      <%= select(:substance_change, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :addition_or_deletion %><br>
+      <%= select(:substance_change, :addition_or_substraction, ['Added', 'Deleted']) %>
+   </p>
+
+   <p>
+      <%= f.label :schedule_level %><br/>
+      <%= number_field(:substance_statute, :schedule_level, in: 1.0..5, step: 1) %>
+   </p>
+
+   <p>
+      <%= f.submit %>
+   </p>
+<% end %>

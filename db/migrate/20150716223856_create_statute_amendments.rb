@@ -4,6 +4,7 @@ class CreateStatuteAmendments < ActiveRecord::Migration
       t.integer :statute_id
       t.date :start_date
       t.date :expiration_date
+      t.string :source_of_amendment
 
       t.timestamps null: false
     end

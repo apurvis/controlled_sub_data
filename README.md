@@ -3,6 +3,12 @@ Controlled Sub Data
 
 A basic CRUD application to help the Immigrant Defense Project collate information on discrepancies between state and federal controlled substance statutes.
 
+Naming Conventions
+------------------
+A statute's string identifier is created by concatenating its state (or federal) and its effective date.
+
+String identifiers for amendments to statutes are identified by the statute identifier plus "Amended <DATE>".
+
 Ruby on Rails
 -------------
 

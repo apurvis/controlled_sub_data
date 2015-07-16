@@ -40,6 +40,6 @@ class StatuteAmendmentSubstanceChangesController < ApplicationController
   private
 
   def substance_change_params
-    params.require(:statute_amendment).permit(:statute_id, :start_date, :expiration_date)
+    params.require(:substance_change).permit(:statute_amendment_id, :start_date, :expiration_date, :addition_or_substraction, :scheduled_level)
   end
 end
