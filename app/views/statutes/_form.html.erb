@@ -12,24 +12,32 @@
       </div>
    <% end %>
 
-   <p>
-      <%= f.label :state %><br>
-      <%= select(:statute, :state, Statute::STATES) %>
-   </p>
+   <% if @statute.is_a?(StatuteAmendment) %>
+      <p>
+         <%= f.label :statute_being_amended %>: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
+         <%= f.hidden_field :parent_id, value: @statute.statute.id %>
+         <%= f.hidden_field :state, value: @statute.statute.state %>
+      </p>
+   <% else %>
+      <p>
+         <%= f.label :state %><br>
+         <%= select(:statute, :state, Statute::STATES) %>
+      </p>
+
+      <p>
+         <%= f.label :blue_book_code %><br>
+         <%= f.text_field :blue_book_code %>
+      </p>
+
+      <p>
+         <%= f.label :name %><br>
+         <%= f.text_field :name %>
+      </p>
+   <% end %>
 
    <p>
       <%= f.label :start_date %><br>
       <%= date_field(:statute, :start_date) %>
-   </p>
-
-   <p>
-      <%= f.label :blue_book_code %><br>
-      <%= f.text_field :blue_book_code %>
-   </p>
-
-   <p>
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
    </p>
 
    <p>

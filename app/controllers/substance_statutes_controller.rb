@@ -14,7 +14,8 @@ class SubstanceStatutesController < ApplicationController
   end
 
   def new
-    @substance_statute = SubstanceStatute.new
+    @statute = Statute.where(id: params['statute_id'].to_i).first
+    @substance_statute = SubstanceStatute.new(statute_id: @statute.id)
   end
 
   def create
@@ -43,6 +44,17 @@ class SubstanceStatutesController < ApplicationController
   private
 
   def substance_statutes_params
-    params.require(:substance_statute).permit(:substance_id, :statute_id, :schedule_level)
+    params.require(:substance_statute).permit(
+      :substance_id,
+      :statute_id,
+      :schedule_level,
+      :is_expiration,
+      :include_salts,
+      :include_derivatives,
+      :include_mixtures,
+      :include_isomers,
+      :include_optical_isomers,
+      :include_geometric_isomers
+    )
   end
 end

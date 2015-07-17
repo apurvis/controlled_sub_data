@@ -1,6 +1,14 @@
 <h2>Substance Statute Link</h2>
-<h3>Substance: <%= @substance_statute.substance.name %></h3>
-<h3>Statute: <%= @substance_statute.statute.formatted_name %></h3>
+<h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
+<h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
+<h3>Is an expiration?: <%= @substance_statute.is_expiration? %></h3>
+
+<p>Include salts?: <%= @substance_statute.include_salts? %></p>
+<p>include_derivatives?: <%= @substance_statute.include_derivatives? %></p>
+<p>include_mixtures?: <%= @substance_statute.include_mixtures? %></p>
+<p>include_isomers?: <%= @substance_statute.include_isomers? %></p>
+<p>include_optical_isomers?: <%= @substance_statute.include_optical_isomers? %></p>
+<p>include_geometric_isomers?: <%= @substance_statute.include_geometric_isomers? %></p>
 
 <h3><%= link_to 'edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
-<h3><%= link_to 'back', substance_classifications_path %></h3>
+<h3><%= link_to 'back', statute_path(@substance_statute.statute) %></h3>

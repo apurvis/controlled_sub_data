@@ -85,7 +85,7 @@ def parse_statute_csv(schedule_level)
           if SubstanceStatute.where(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level).size > 0
             puts "Already have a statute for #{substance_name}, #{statute.start_date}, #{schedule_level}"
           else
-            ss = SubstanceStatute.new(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level)
+            ss = SubstanceStatute.new(substance_id: substance.id, statute_id: statute.id, schedule_level: schedule_level, is_expiration: false)
             ss.save
           end
         else
@@ -97,3 +97,17 @@ def parse_statute_csv(schedule_level)
 end
 
 [1,2,3,4,5].each { |i| parse_statute_csv(i) }
+
+#Create the revamped federal statute
+base_federal = Statute.where(state: 'FEDERAL').order('start_date ASC').first
+revamped_federal = Statute.create(state: 'REVAMPED_FEDERAL', start_date: base_federal.start_date)
+
+base_federal.substance_statutes.each do |ss|
+  SubstanceStatute.create(
+    substance_id: ss.substance.id,
+    statute_id: revamped_federal.id,
+    schedule_level: ss.schedule_level,
+    is_expiration: ss.is_expiration,
+    penalty: ss.penalty
+  )
+end

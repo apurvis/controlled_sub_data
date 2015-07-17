@@ -8,10 +8,13 @@ Rails.application.routes.draw do
 
   root to: 'visitors#index'
 
-  resources :substances
   resources :statutes
+  resources :statute_amendments
+
+  resources :substances
   resources :substance_alternate_names
   resources :substance_statutes
   resources :substance_classifications
+
   resources :schedule_levels
 end
