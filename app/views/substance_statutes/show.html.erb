@@ -11,4 +11,4 @@
 <p>include_geometric_isomers?: <%= @substance_statute.include_geometric_isomers? %></p>
 
 <h3><%= link_to 'edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
-<h3><%= link_to 'back', substance_statutes_path %></h3>
+<h3><%= link_to 'back', statute_path(@substance_statute.statute) %></h3>

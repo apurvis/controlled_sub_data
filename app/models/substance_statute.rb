@@ -8,10 +8,10 @@ class SubstanceStatute < ActiveRecord::Base
   scope :expirations, -> { where(is_expiration: true) }
 
   def expiring_amendment
-    puts "floozby amendments: #{statute.statute.statute_amendments.size}"
-    puts "statute id: #{statute.statute.id}, selfid: #{self.id}"
+    base_statute = (statute.statute rescue nil) || statute
+
     SubstanceStatute.expirations.where(
-      statute_id: statute.statute.statute_amendments.map { |a| a.id },
+      statute_id: base_statute.statute_amendments.map { |a| a.id },
       substance_id: substance.id
     ).first.try(:statute)
   end
