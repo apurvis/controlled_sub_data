@@ -14,14 +14,15 @@ class StatuteAmendmentSubstanceChangesController < ApplicationController
   end
 
   def new
-    @substance_change = StatuteAmendmentSubstanceChange.new
+    @statute_amendment = StatuteAmendment.where(id: params['statute_amendment_id'].to_i).first
+    @substance_change = StatuteAmendmentSubstanceChange.new(statute_amendment_id: @statute_amendment.id)
   end
 
   def create
     @substance_change = StatuteAmendmentSubstanceChange.new(substance_change_params)
 
     if @substance_change.save
-      redirect_to @substance_change
+      redirect_to @substance_change.statute_amendment
     else
       render 'new'
     end

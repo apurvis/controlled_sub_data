@@ -14,7 +14,8 @@ class SubstanceStatutesController < ApplicationController
   end
 
   def new
-    @substance_statute = SubstanceStatute.new
+    @statute = Statute.where(id: params['statute_id'].to_i).first
+    @substance_statute = SubstanceStatute.new(statute_id: @statute.id)
   end
 
   def create

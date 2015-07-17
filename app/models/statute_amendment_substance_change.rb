@@ -1,4 +1,4 @@
 class StatuteAmendmentSubstanceChange < ActiveRecord::Base
   belongs_to :statute_amendment
-  has_one :substance
+  belongs_to :substance
 end

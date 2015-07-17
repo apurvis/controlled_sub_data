@@ -13,13 +13,13 @@
    <% end %>
 
    <p>
-      <%= f.label :substance %><br/>
-      <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+      <%= f.label :statute_being_added_to %><br/>
+      <%= @substance_statute.statute.formatted_name %>
    </p>
 
    <p>
-      <%= f.label :statute %><br/>
-      <%= select(:substance_statute, :statute_id, Statute.all.map { |s| [s.formatted_name, s.id] } ) %>
+      <%= f.label :substance %><br/>
+      <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
    </p>
 
    <p>
