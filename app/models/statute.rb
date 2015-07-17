@@ -2,7 +2,7 @@ class Statute < ActiveRecord::Base
   acts_as_paranoid
 
   has_many :substance_statutes
-  has_many :statute_amendments
+  has_many :statute_amendments, foreign_key: :parent_id
 
   validates :state, presence: true, length: { minimum: 2 }
   validates :start_date, presence: true

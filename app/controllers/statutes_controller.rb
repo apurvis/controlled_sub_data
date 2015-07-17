@@ -2,7 +2,7 @@ class StatutesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @statutes = Statute.all
+    @statutes = Statute.where(type: nil).all
   end
 
   def show
@@ -20,7 +20,7 @@ class StatutesController < ApplicationController
 
     # Then collect the amendment additions
     @statute.statute_amendments.each do |amendment|
-      amendment.statute_amendment_substance_changes.each do |substance_change|
+      amendment.substance_statutes.each do |substance_change|
         @substance_statute_data << {
           substance: substance_change.substance,
           start_date: amendment.start_date,

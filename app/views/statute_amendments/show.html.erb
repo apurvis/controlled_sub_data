@@ -18,9 +18,9 @@
       <th></th>
    </tr>
 
-   <% @statute_amendment.statute_amendment_substance_changes.each do |ss| %>
+   <% @statute_amendment.substance_statutes.each do |ss| %>
       <tr>
-         <td><%= ss.is_subtraction ? 'Expired' : 'Added' %></td>
+         <td><%= ss.is_expiration ? 'Expired' : 'Added' %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
 
          <% if ss.substance.substance_classification.try(:name) %>

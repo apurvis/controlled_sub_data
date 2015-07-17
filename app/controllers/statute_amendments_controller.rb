@@ -14,12 +14,13 @@ class StatuteAmendmentsController < ApplicationController
   end
 
   def new
-    @statute = Statute.where(id: params['statute_id']).first
-    @statute_amendment = StatuteAmendment.new(statute_id: @statute.id)
+    @statute = Statute.where(id: params['statute_amendment']['parent_id']).first
+    @statute_amendment = StatuteAmendment.new(parent_id: @statute.id, state: @statute.state)
   end
 
   def create
-    @statute_amendment = StatuteAmendment.new(statute_amendment_params)
+    @statute = Statute.where(id: params['statute_amendment']['parent_id']).first
+    @statute_amendment = StatuteAmendment.new(statute_amendment_params.merge(state: @statute.state))
 
     if @statute_amendment.save
       redirect_to @statute_amendment
@@ -41,6 +42,6 @@ class StatuteAmendmentsController < ApplicationController
   private
 
   def statute_amendment_params
-    params.require(:statute_amendment).permit(:statute_id, :start_date, :expiration_date)
+    params.require(:statute_amendment).permit(:statute_id, :parent_id, :state, :start_date, :expiration_date)
   end
 end

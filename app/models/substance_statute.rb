@@ -5,11 +5,11 @@ class SubstanceStatute < ActiveRecord::Base
   belongs_to :statute
 
   def expiring_amendment
-    StatuteAmendmentSubstanceChange.where(
-      statute_amendment_id: statute.statute_amendments.map { |a| a.id },
+    SubstanceStatute.where(
+      statute_id: statute.statute_amendments.map { |a| a.id },
       substance_id: substance.id,
-      is_subtraction: true
-    ).first.try(:statute_amendment)
+      is_expiration: true
+    ).first.try(:statute)
   end
 
   def expiration_date

@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   resources :statutes
   resources :statute_amendments
-  resources :statute_amendment_substance_changes
 
   resources :substances
   resources :substance_alternate_names

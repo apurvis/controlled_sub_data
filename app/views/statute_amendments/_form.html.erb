@@ -13,8 +13,8 @@
    <% end %>
 
    <p>
-      <%= f.label :linked_statute %><br>
-      <%= select(:statute_amendment, :statute_id, Statute.all.map { |s| [s.formatted_name, s.id] }) %>
+      <%= f.label :parent_statute %><br>
+      <%= select(:statute_amendment, :parent_id, Statute.all.map { |s| [s.formatted_name, s.id] }) %>
    </p>
 
    <p>
