@@ -11,8 +11,23 @@
 <h3><%= link_to 'edit statute', edit_statute_path(@statute) %></h3>
 <br/>
 
+<h3>Amendments to this statute</h3>
+<%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, statute_id: @statute.id } %>
+<table>
+   <tr>
+      <th>Amendment Identifier</th>
+   </tr>
+
+   <% @statute.statute_amendments.each do |amendment| %>
+      <tr>
+         <td><%= link_to amendment.formatted_name, statute_amendment_path(amendment) %></td>
+      </tr>
+   <% end %>
+</table>
+
+
 <h3>Substances Scheduled By This Statute</h3>
-<%= link_to 'add a substance to this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
+<%= link_to 'Add a substance to this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
 <table>
    <tr>
       <th>Substance Name</th>
@@ -39,6 +54,12 @@
 
          <td><%= link_to "edit link", edit_substance_statute_path(ss) %></td>
       </tr>
+   <% end %>
+
+   <% @statute.statute_amendments.each do |amendment| %>
+      <% amendment.statute_amendment_substance_changes.each do |substance_change| %>
+      <tr></tr>
+      <% end %>
    <% end %>
 </table>
 

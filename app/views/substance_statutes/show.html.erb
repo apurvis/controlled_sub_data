@@ -1,6 +1,6 @@
 <h2>Substance Statute Link</h2>
-<h3>Substance: <%= @substance_statute.substance.name %></h3>
-<h3>Statute: <%= @substance_statute.statute.formatted_name %></h3>
+<h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
+<h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
 
 <h3><%= link_to 'edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
 <h3><%= link_to 'back', substance_classifications_path %></h3>

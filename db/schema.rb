@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20150716224314) do
   create_table "statute_amendment_substance_changes", force: :cascade do |t|
     t.integer  "statute_amendment_id"
     t.integer  "substance_id"
-    t.string   "addition_or_substraction"
-    t.integer  "schedule_level",                        comment: "1, 2, 3, 4, or 5"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.boolean  "is_subtraction"
+    t.integer  "schedule_level",                    comment: "1, 2, 3, 4, or 5"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "statute_amendments", force: :cascade do |t|

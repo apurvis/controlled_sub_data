@@ -14,7 +14,7 @@
 
    <p>
       <%= f.label :statute_being_added_to %><br/>
-      <%= @substance_statute.statute.formatted_name %>
+      <%= select(:substance_statute, :statute_id, [[@substance_statute.statute.formatted_name, @substance_statute.statute.id]]) %>
    </p>
 
    <p>

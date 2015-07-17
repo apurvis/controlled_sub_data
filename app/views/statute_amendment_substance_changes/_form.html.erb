@@ -24,7 +24,7 @@
 
    <p>
       <%= f.label :addition_or_deletion %><br>
-      <%= select(:substance_change, :addition_or_substraction, ['Added', 'Deleted']) %>
+      <%= select(:substance_change, :is_subtraction, [['Added', false], ['Deleted', true]]) %>
    </p>
 
    <p>

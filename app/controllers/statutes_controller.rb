@@ -7,6 +7,28 @@ class StatutesController < ApplicationController
 
   def show
     @statute = Statute.where(id: params['id']).first
+
+    # First collect the original statute data
+    @substance_statute_data = @statute.substance_statutes.map do |ss|
+      {
+        substance: ss.substance,
+        start_date: @statute.start_date,
+        added_by_amendment: nil,
+        expired_by_amendment: ss.expiring_amendment
+      }
+    end
+
+    # Then collect the amendment additions
+    @statute.statute_amendments.each do |amendment|
+      amendment.statute_amendment_substance_changes.each do |substance_change|
+        @substance_statute_data << {
+          substance: substance_change.substance,
+          start_date: amendment.start_date,
+          added_by_amendment: amendment,
+          expired_by_amendment: 'broken_for_now'
+        }
+      end
+    end
   end
 
   def edit

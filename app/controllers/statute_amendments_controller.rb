@@ -14,7 +14,8 @@ class StatuteAmendmentsController < ApplicationController
   end
 
   def new
-    @statute_amendment = StatuteAmendment.new
+    @statute = Statute.where(id: params['statute_id']).first
+    @statute_amendment = StatuteAmendment.new(statute_id: @statute.id)
   end
 
   def create

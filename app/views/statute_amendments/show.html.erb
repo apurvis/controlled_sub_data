@@ -20,7 +20,7 @@
 
    <% @statute_amendment.statute_amendment_substance_changes.each do |ss| %>
       <tr>
-         <td><%= ss.addition_or_substraction %></td>
+         <td><%= ss.is_subtraction ? 'Expired' : 'Added' %></td>
          <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
 
          <% if ss.substance.substance_classification.try(:name) %>
