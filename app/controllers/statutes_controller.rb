@@ -40,12 +40,7 @@ class StatutesController < ApplicationController
   end
 
   def new
-    if params['parent_id']
-      @parent_statute = Statute.where(id: params['parent_id']).first
-      @statute = StatuteAmendment.new(parent_id: @parent_statute.id, state: @parent_statute.state)
-    else
-      @statute = Statute.new
-    end
+    @statute = Statute.new
   end
 
   def create

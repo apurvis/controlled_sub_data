@@ -15,6 +15,8 @@
    <% if @statute.is_a?(StatuteAmendment) %>
       <p>
          <%= f.label :statute_being_amended %>: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
+         <%= f.hidden_field :parent_id, value: @statute.statute.id %>
+         <%= f.hidden_field :state, value: @statute.statute.state %>
       </p>
    <% else %>
       <p>

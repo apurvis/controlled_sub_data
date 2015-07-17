@@ -9,8 +9,9 @@
    <h3>Title: <%= @statute.name%> </h3>
    <h3>Expiration Date: <%= @statute.expiration_date %>
    <br/>
+
    <h3>Amendments to this statute</h3>
-   <%= link_to 'Add an amendment to this statute', { controller: 'statutes', action: :new, parent_id: @statute.id } %>
+   <%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>
    <table>
       <tr>
          <th>Amendment Identifier</th>
