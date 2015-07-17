@@ -15,6 +15,7 @@ class StatutesController < ApplicationController
         substance: ss.substance,
         start_date: @statute.start_date,
         added_by_amendment: nil,
+        is_expiration: ss.is_expiration,
         expired_by_amendment: ss.expiring_amendment,
         schedule_level: ss.schedule_level
       }
@@ -28,11 +29,16 @@ class StatutesController < ApplicationController
           substance: substance_change.substance,
           start_date: amendment.start_date,
           added_by_amendment: amendment,
-          expired_by_amendment: nil, # TODO: fix
+          is_expiration: substance_change.is_expiration?,
+          expired_by_amendment: substance_change.expiring_amendment,
           schedule_level: substance_change.schedule_level
         }
       end
     end
+
+    puts "---"
+    puts @substance_statute_data
+    puts "---"
   end
 
   def edit
