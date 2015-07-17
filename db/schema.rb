@@ -11,28 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716224314) do
+ActiveRecord::Schema.define(version: 20150717035249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "statute_amendment_substance_changes", force: :cascade do |t|
-    t.integer  "statute_amendment_id"
-    t.integer  "substance_id"
-    t.string   "addition_or_substraction"
-    t.integer  "schedule_level",                        comment: "1, 2, 3, 4, or 5"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  create_table "statute_amendments", force: :cascade do |t|
-    t.integer  "statute_id"
-    t.date     "start_date"
-    t.date     "expiration_date"
-    t.string   "source_of_amendment"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
 
   create_table "statutes", force: :cascade do |t|
     t.string   "state",                        comment: "2 Character State Code or FEDERAL"
@@ -43,6 +25,8 @@ ActiveRecord::Schema.define(version: 20150716224314) do
     t.string   "name"
     t.date     "expiration_date"
     t.datetime "deleted_at"
+    t.string   "type"
+    t.integer  "parent_id",                    comment: "ID of the parent statute if this is an amendment"
   end
 
   add_index "statutes", ["deleted_at"], name: "index_statutes_on_deleted_at", using: :btree
@@ -73,6 +57,7 @@ ActiveRecord::Schema.define(version: 20150716224314) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.datetime "deleted_at"
+    t.boolean  "is_expiration"
   end
 
   add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree

@@ -9,6 +9,11 @@ A statute's string identifier is created by concatenating its state (or federal)
 
 String identifiers for amendments to statutes are identified by the statute identifier plus "Amended <DATE>".
 
+On spelling discrepancies
+-------------------------
+If there are spelling discrepancies for a substance name between different statutes, you should create two different statutes.
+
+
 Ruby on Rails
 -------------
 
