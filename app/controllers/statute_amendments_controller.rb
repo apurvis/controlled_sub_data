@@ -6,18 +6,17 @@ class StatuteAmendmentsController < StatutesController
       @parent_statute = Statute.where(id: params['parent_id']).first
       @statute = StatuteAmendment.new(parent_id: @parent_statute.id, state: @parent_statute.state)
     else
-      raise "NO parent id provided!"
+      raise "No parent statute id provided!"
     end
   end
 
   def create
-#    puts "PARMS: #{params}"
-#    puts "statute amend: #{statute_amendment_params}"
-#    puts "statute: #{statute_params}"
-#    puts "merge: #{statute_params.merge(statute_amendment_params)}"
+    # TODO: there is confusion about how the parent_id is being passed in the STI setting.
+    # this works for now but is not ideal.
     @parent_statute = Statute.where(id: statute_amendment_params['parent_id']).first
     @statute = StatuteAmendment.new(statute_params.merge(statute_amendment_params))
-    @statute.state = @parent_statute.state # TODO: this shouldn't be necessary
+    @statute.state = @parent_statute.state # TODO: this shouldn't be necessary but there is validates_presence_of :state
+
     if @statute.save
       redirect_to @statute
     else

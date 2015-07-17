@@ -22,7 +22,7 @@ class StatutesController < ApplicationController
 
     # Then collect the amendment additions
     @statute.statute_amendments.each do |amendment|
-      amendment.substance_statutes.each do |substance_change|
+      amendment.substance_statutes.additions.each do |substance_change|
         @substance_statute_data << {
           substance_statute: substance_change,
           substance: substance_change.substance,

@@ -4,6 +4,8 @@ class SubstanceStatute < ActiveRecord::Base
   belongs_to :substance
   belongs_to :statute
 
+  scope :additions, -> { where(is_expiration: false) }
+
   def expiring_amendment
     SubstanceStatute.where(
       statute_id: statute.statute_amendments.map { |a| a.id },
