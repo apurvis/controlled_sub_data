@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
 
   resources :statutes
-  resources :statute_amendments, only: [:index]
+  resources :statute_amendments
 
   resources :substances
   resources :substance_alternate_names

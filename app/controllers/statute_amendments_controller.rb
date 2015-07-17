@@ -1,4 +1,4 @@
-class StatuteAmendmentsController < ApplicationController
+class StatuteAmendmentsController < StatutesController
   before_action :authenticate_user!
 
   def index

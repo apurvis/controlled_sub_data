@@ -2,6 +2,7 @@
 <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
 <h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
 <h3>Is an expiration?: <% @substance_statute.is_expiration %>
+
 <p>Include salts?: <%= @substance_statute.include_salts? %></p>
 <p>include_derivatives?: <%= @substance_statute.include_derivatives? %></p>
 <p>include_mixtures?: <%= @substance_statute.include_mixtures? %></p>
