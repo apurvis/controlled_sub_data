@@ -13,13 +13,18 @@
    <% end %>
 
    <p>
-      <%= f.label :statute_being_added_to %><br/>
+      <%= f.label :statute_being_modified %><br/>
       <%= select(:substance_statute, :statute_id, [[@substance_statute.statute.formatted_name, @substance_statute.statute.id]]) %>
    </p>
 
    <p>
       <%= f.label :substance %><br/>
       <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+   </p>
+
+   <p>
+      <%= f.label :is_this_an_expiration %><br/>
+      <%= select(:substance_statute, :is_expiration, [false, true])%>
    </p>
 
    <p>

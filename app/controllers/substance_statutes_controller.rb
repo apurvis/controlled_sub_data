@@ -44,6 +44,6 @@ class SubstanceStatutesController < ApplicationController
   private
 
   def substance_statutes_params
-    params.require(:substance_statute).permit(:substance_id, :statute_id, :schedule_level)
+    params.require(:substance_statute).permit(:substance_id, :statute_id, :schedule_level, :is_expiration)
   end
 end
