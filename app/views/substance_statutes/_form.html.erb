@@ -28,6 +28,20 @@
    </p>
 
    <p>
+      <%= f.label :is_this_an_expiration %><br/>
+      <%= select(:substance_statute, :is_expiration, [false, true])%>
+   </p>
+
+   <p>
+      <%= f.label :include_salts %>            <%= check_box(:substance_statute, :include_salts) %><br/>
+      <%= f.label :include_derivatives %>      <%= check_box(:substance_statute, :include_derivatives) %><br/>
+      <%= f.label :include_mixtures %>         <%= check_box(:substance_statute, :include_mixtures) %><br/>
+      <%= f.label :include_isomers %>          <%= check_box(:substance_statute, :include_isomers) %><br/>
+      <%= f.label :include_optical_isomers %>  <%= check_box(:substance_statute, :include_optical_isomers) %><br/>
+      <%= f.label :include_geometric_isomers %><%= check_box(:substance_statute, :include_geometric_isomers) %>
+   </p>
+
+   <p>
       <%= f.label :schedule_level %><br/>
       <%= number_field(:substance_statute, :schedule_level, in: 1.0..5, step: 1) %>
    </p>

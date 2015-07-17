@@ -11,6 +11,7 @@ class StatutesController < ApplicationController
     # First collect the original statute data
     @substance_statute_data = @statute.substance_statutes.map do |ss|
       {
+        substance_statute: ss,
         substance: ss.substance,
         start_date: @statute.start_date,
         added_by_amendment: nil,
@@ -23,6 +24,7 @@ class StatutesController < ApplicationController
     @statute.statute_amendments.each do |amendment|
       amendment.substance_statutes.each do |substance_change|
         @substance_statute_data << {
+          substance_statute: substance_change,
           substance: substance_change.substance,
           start_date: amendment.start_date,
           added_by_amendment: amendment,
