@@ -1,11 +1,11 @@
 <h2>STATE: <%= @statute.state %></h2>
 <h2>TYPE: <%= @statute.is_a?(StatuteAmendment) ? 'Statute Amendment' : 'Base Statute'  %>
 <h2>EFFECTIVE DATE: <%= @statute.start_date.strftime('%Y-%m-%d') %></h2>
+<h3>BLUE BOOK CODE: <%= @statute.blue_book_code %></h3>
 
 <% if @statute.is_a?(StatuteAmendment) %>
    <h2>AMENDED STATUTE: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
 <% else %>
-   <h3>Blue Book Code: <%= @statute.blue_book_code %></h3>
    <h3>Title: <%= @statute.name%> </h3>
    <h3>Expiration Date: <%= @statute.expiration_date %>
    <br/>
@@ -18,16 +18,18 @@
    <table>
       <tr>
          <th>Amendment Identifier</th>
+         <th>Blue Book Code</th>
       </tr>
 
       <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
          <tr>
             <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+            <td><%= amendment.blue_book_code %></td>
          </tr>
       <% end %>
    </table>
 <% end %>
-<h3><%= link_to 'Edit statute', edit_statute_path(@statute) %></h3>
+<h3><%= link_to "Edit #{@statute.class}", edit_statute_path(@statute) %></h3>
 
 
 <h3>Substances Scheduled By This <%= @statute.class %></h3>
