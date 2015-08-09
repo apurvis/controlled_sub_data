@@ -17,7 +17,7 @@
          <th>Amendment Identifier</th>
       </tr>
 
-      <% @statute.statute_amendments.each do |amendment| %>
+      <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
          <tr>
             <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
          </tr>

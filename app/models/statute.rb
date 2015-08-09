@@ -11,7 +11,9 @@ class Statute < ActiveRecord::Base
 
   def duplicated_federal_substance_statutes
     if @duplicate_federal_as_of_date
-
+      Statute.where(state: 'REVAMPED_FEDERAL').where(['start_date <= ?', @duplicate_federal_as_of_date]).map do |s|
+        s.substance_statutes
+      end.flatten
     else
       []
     end
