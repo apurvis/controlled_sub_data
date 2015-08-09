@@ -55,7 +55,6 @@ class SubstanceStatutesController < ApplicationController
       :include_isomers,
       :include_optical_isomers,
       :include_geometric_isomers,
-
       :include_positional_isomers,
       :include_salts_of_isomers,
       :include_salts_of_optical_isomers,

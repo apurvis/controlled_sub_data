@@ -8,6 +8,17 @@ class StatutesController < ApplicationController
   def show
     @statute = Statute.where(id: params['id']).first
 
+    # First collect the federal duplicates
+    @statute.duplicated_federal_substance_statutes.each do |federal_dupe|
+      substance_statute: federal_dupe,
+      substance: federal_dupe.substance,
+      start_date: @duplicate_federal_as_of_date,
+      added_by_amendment: nil,
+      is_expiration: false,
+      expired_by_amendment: substance_change.expiring_amendment,
+      schedule_level: federal_dupe.schedule_level
+    end
+
     # First collect the original statute data
     @substance_statute_data = @statute.substance_statutes.map do |ss|
       {
@@ -72,6 +83,14 @@ class StatutesController < ApplicationController
   private
 
   def statute_params
-    params.require(:statute).permit(:name, :state, :parent_id, :start_date, :blue_book_code, :expiration_date)
+    params.require(:statute).permit(
+      :name,
+      :state,
+      :parent_id,
+      :start_date,
+      :blue_book_code,
+      :expiration_date,
+      :duplicate_federal_as_of_date
+    )
   end
 end

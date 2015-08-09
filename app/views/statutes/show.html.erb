@@ -24,11 +24,11 @@
       <% end %>
    </table>
 <% end %>
-<h3><%= link_to 'edit statute', edit_statute_path(@statute) %></h3>
+<h3><%= link_to 'Edit statute', edit_statute_path(@statute) %></h3>
 
 
 <h3>Substances Scheduled By This <%= @statute.class %></h3>
-<%= link_to 'Add a substance to this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
+<%= link_to 'Add a substance to/Expire a substance from this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
 
 <table>
    <tr>
@@ -45,7 +45,11 @@
          <td><%= link_to ss[:substance].name, substance_path(ss[:substance]) %></td>
 
          <% if ss[:added_by_amendment] %>
-            <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
+            <% if ss[:added_by_amendment].is_a?(Statute) %>
+               <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
+            <% else %>
+               <td>Duplicated Federal</td>
+            <% end %>
             <td><%= ss[:added_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
          <% else %>
             <td>Original Statute</td>
@@ -66,7 +70,7 @@
             <td></td>
          <% end %>
 
-         <td><%= link_to "edit link", edit_substance_statute_path(ss[:substance_statute]) %></td>
+         <td><%= link_to 'Edit link', edit_substance_statute_path(ss[:substance_statute]) %></td>
       </tr>
    <% end %>
 </table>
