@@ -9,6 +9,9 @@
    <h3>Title: <%= @statute.name%> </h3>
    <h3>Expiration Date: <%= @statute.expiration_date %>
    <br/>
+   <% if @statute.duplicate_federal_as_of_date %>
+      <h3>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %>
+   <% end %>
 
    <h3>Amendments to this statute</h3>
    <%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>
