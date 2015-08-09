@@ -2,6 +2,9 @@
 
 <% if @substance %>
   <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
+  <% if @as_of_date %>
+    <h3>As of <%= @as_of_date.strftime('%Y-%m-%d') %></h3>
+   <% end %>
 <% end %>
 
 <table>

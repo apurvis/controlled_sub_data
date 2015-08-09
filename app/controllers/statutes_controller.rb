@@ -4,7 +4,8 @@ class StatutesController < ApplicationController
   def index
     if params[:search]
       @substance = Substance.where(id: params[:search][:substance_id]).first
-      @statutes = @substance.regulated_by_statutes
+      @as_of_date = params[:search][:as_of_date].try(:to_date)
+      @statutes = @substance.regulated_by_statutes(@as_of_date)
     else
       @statutes = Statute.where(type: nil).all
     end
@@ -15,13 +16,15 @@ class StatutesController < ApplicationController
 
     # First collect the federal duplicates
     @statute.duplicated_federal_substance_statutes.each do |federal_dupe|
-      substance_statute: federal_dupe,
-      substance: federal_dupe.substance,
-      start_date: @duplicate_federal_as_of_date,
-      added_by_amendment: nil,
-      is_expiration: false,
-      expired_by_amendment: substance_change.expiring_amendment,
-      schedule_level: federal_dupe.schedule_level
+      {
+        substance_statute: federal_dupe,
+        substance: federal_dupe.substance,
+        start_date: @duplicate_federal_as_of_date,
+        added_by_amendment: nil,
+        is_expiration: false,
+        expired_by_amendment: substance_change.expiring_amendment,
+        schedule_level: federal_dupe.schedule_level
+      }
     end
 
     # First collect the original statute data

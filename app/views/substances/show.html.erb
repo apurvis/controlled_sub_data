@@ -34,7 +34,7 @@
 <h3>Affected by Statutes</h3>
 <table>
    <tr>
-      <th>Statute ID</th>
+      <th>Statute</th>
       <th>State</th>
       <th>Start Date</th>
       <th>Schedule Level</th>
@@ -42,7 +42,7 @@
 
    <% @substance.substance_statutes.each do |ss| %>
       <tr>
-         <td><%= link_to "#{ss.statute.id}", statute_path(ss.statute) %></td>
+         <td><%= link_to "#{ss.statute.formatted_name}", statute_path(ss.statute) %></td>
          <td><%= ss.statute.state %></td>
          <td><%= ss.statute.start_date %></td>
          <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
