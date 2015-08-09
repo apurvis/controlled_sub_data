@@ -45,10 +45,12 @@
       <%= date_field(:statute, :expiration_date) %>
    </p>
 
-   <p>
-      <%= f.label :duplicate_federal_as_of_date, 'Duplicate federal statute as of this date?  (Only choose a value if you are duplicating the federal statute!)' %><br>
-      <%= date_field(:statute, :duplicate_federal_as_of_date) %>
-   </p>
+   <% if !@statute.is_a?(StatuteAmendment) %>
+      <p>
+         <%= f.label :duplicate_federal_as_of_date, 'Duplicate federal statute as of this date?  (Only choose a value if you are duplicating the federal statute!)' %><br>
+         <%= date_field(:statute, :duplicate_federal_as_of_date) %>
+      </p>
+   <% end %>
 
    <p>
       <%= f.submit %>

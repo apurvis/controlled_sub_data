@@ -15,21 +15,21 @@ class StatutesController < ApplicationController
     @statute = Statute.where(id: params['id']).first
 
     # First collect the federal duplicates
-    @statute.duplicated_federal_substance_statutes.each do |federal_dupe|
+    @substance_statute_data =  @statute.duplicated_federal_substance_statutes.map do |federal_dupe|
       {
         substance_statute: federal_dupe,
         substance: federal_dupe.substance,
-        start_date: @duplicate_federal_as_of_date,
-        added_by_amendment: nil,
+        start_date: @statute.duplicate_federal_as_of_date,
+        added_by_amendment: '',
         is_expiration: false,
-        expired_by_amendment: substance_change.expiring_amendment,
+        expired_by_amendment: federal_dupe.expiring_amendment,
         schedule_level: federal_dupe.schedule_level
       }
     end
 
     # First collect the original statute data
-    @substance_statute_data = @statute.substance_statutes.map do |ss|
-      {
+    @statute.substance_statutes.map do |ss|
+      @substance_statute_data << {
         substance_statute: ss,
         substance: ss.substance,
         start_date: @statute.start_date,

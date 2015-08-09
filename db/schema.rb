@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20150809203430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "statutes", force: :cascade do |t|
     t.string   "state",                                     comment: "2 Character State Code or FEDERAL"
