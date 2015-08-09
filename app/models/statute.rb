@@ -11,11 +11,9 @@ class Statute < ActiveRecord::Base
 
   def duplicated_federal_substance_statutes
     if duplicate_federal_as_of_date
-      puts "DUPED BABY!"
       Statute.where(state: 'REVAMPED_FEDERAL').where(['start_date <= ?', duplicate_federal_as_of_date]).map do |s|
-        puts "found Statute #{s}"
         s.substance_statutes
-      end.flatten
+      end.flatten.compact
     else
       []
     end
