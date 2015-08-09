@@ -98,7 +98,8 @@ class StatutesController < ApplicationController
       :start_date,
       :blue_book_code,
       :expiration_date,
-      :duplicate_federal_as_of_date
+      :duplicate_federal_as_of_date,
+      :comment
     )
   end
 end

@@ -2,6 +2,8 @@
 <h2>TYPE: <%= @statute.is_a?(StatuteAmendment) ? 'Statute Amendment' : 'Base Statute'  %>
 <h2>EFFECTIVE DATE: <%= @statute.start_date.strftime('%Y-%m-%d') %></h2>
 <h3>BLUE BOOK CODE: <%= @statute.blue_book_code %></h3>
+<h3>COMMENTS:</h3>
+<p><%= @statute.comment %></p>
 
 <% if @statute.is_a?(StatuteAmendment) %>
    <h2>AMENDED STATUTE: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
