@@ -44,7 +44,12 @@ Under the hood, statute amendments are just statutes with a parent statute that 
 
 You then add/remove substances to the statute by clicking on "Add a substance to/Expire a substance from this statute".  To amend statutes in ways that expire scheduling of substance, check is "Is this an expiration?" checkbox
 
+### Search for Statutes
+
+You can search for statutes by substance, and you can specify an optional "As of date".  All statutes applying to the substance and starting before the "as of date" will be displayed.
+
 ## Technical Info
+
 This application requires:
 
 - Ruby 2.2.2
