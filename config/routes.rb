@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   root to: 'visitors#index'
 
+  resources :statute_searches
+
   resources :statutes
   resources :statute_amendments
 

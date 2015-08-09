@@ -10,6 +10,10 @@ class Substance < ActiveRecord::Base
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
+  def regulated_by_statutes
+    substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
+  end
+
   def self.find_or_create_substance(name, options = {})
     s = nil
     name = name.strip

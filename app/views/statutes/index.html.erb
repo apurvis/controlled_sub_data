@@ -1,5 +1,9 @@
 <h2><%= link_to "Create New Statute", new_statute_path %></h2>
 
+<% if @substance %>
+  <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
+<% end %>
+
 <table>
    <tr>
       <th>Name</th>
@@ -12,7 +16,7 @@
 
    <% @statutes.each do |statute| %>
       <tr>
-         <td><%= link_to statute.formatted_name, statute_path(statute) %></td>
+         <td><%= link_to(statute.formatted_name, statute_path(statute)) %></td>
          <td><%= statute.state %></td>
          <td><%= statute.start_date %></td>
          <td><%= statute.expiration_date %></td>
