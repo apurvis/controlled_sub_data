@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150809203430) do
+ActiveRecord::Schema.define(version: 20150809224951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "statutes", force: :cascade do |t|
     t.string   "state",                                     comment: "2 Character State Code or FEDERAL"
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150809203430) do
     t.string   "type"
     t.integer  "parent_id",                                 comment: "ID of the parent statute if this is an amendment"
     t.date     "duplicate_federal_as_of_date"
+    t.text     "comment"
   end
 
   add_index "statutes", ["deleted_at"], name: "index_statutes_on_deleted_at", using: :btree
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 20150809203430) do
     t.boolean  "include_compounds"
     t.boolean  "include_materials"
     t.boolean  "include_preparations"
+    t.text     "comment"
   end
 
   add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree

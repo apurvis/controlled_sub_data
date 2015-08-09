@@ -49,6 +49,7 @@ class SubstanceStatutesController < ApplicationController
       :statute_id,
       :schedule_level,
       :is_expiration,
+      :comment,
       :include_salts,
       :include_derivatives,
       :include_mixtures,

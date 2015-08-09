@@ -25,15 +25,15 @@
       </p>
 
       <p>
-         <%= f.label :blue_book_code %><br>
-         <%= f.text_field :blue_book_code %>
-      </p>
-
-      <p>
          <%= f.label :name %><br>
          <%= f.text_field :name %>
       </p>
    <% end %>
+
+   <p>
+      <%= f.label :blue_book_code %><br>
+      <%= f.text_field :blue_book_code %>
+   </p>
 
    <p>
       <%= f.label :start_date %><br>
@@ -51,6 +51,12 @@
          <%= date_field(:statute, :duplicate_federal_as_of_date) %>
       </p>
    <% end %>
+
+   <p>
+      <%= f.label :comment %><br/>
+      <%= f.text_area(:comment, cols: '50', rows: '10') %>
+   </p>
+
 
    <p>
       <%= f.submit %>

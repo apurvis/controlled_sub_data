@@ -27,7 +27,7 @@ class StatuteAmendmentsController < StatutesController
   def update
     @statute = StatuteAmendment.where(id: params['id']).first
 
-    if @statute.update(statute_params)
+    if @statute.update(statute_params.merge(statute_amendment_params))
       redirect_to @statute
     else
       render 'edit'
@@ -39,6 +39,6 @@ class StatuteAmendmentsController < StatutesController
   end
 
   def statute_amendment_params
-    params.require(:statute_amendment).permit(:parent_id)
+    params.require(:statute_amendment).permit(:parent_id, :blue_book_code, :comment)
   end
 end
