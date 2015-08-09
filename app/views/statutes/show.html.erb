@@ -45,7 +45,7 @@
    </tr>
    <% @substance_statute_data.each do |ss| %>
       <tr>
-         <td><%= link_to ss[:substance].name, substance_path(ss[:substance]) %></td>
+         <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
 
          <% if ss[:added_by_amendment] %>
             <% if ss[:added_by_amendment].is_a?(Statute) %>
