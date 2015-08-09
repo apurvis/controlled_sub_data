@@ -15,7 +15,6 @@ class StatuteAmendmentsController < StatutesController
     # this works for now but is not ideal.
     @parent_statute = Statute.where(id: statute_amendment_params['parent_id']).first
     @statute = StatuteAmendment.new(statute_params.merge(statute_amendment_params))
-    puts "AMEND PARAMS! #{statute_amendment_params}"
     @statute.state = @parent_statute.state # TODO: this shouldn't be necessary but there is validates_presence_of :state
 
     if @statute.save

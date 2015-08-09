@@ -8,6 +8,5 @@ class StatuteSearchesController < ApplicationController
   end
 
   def show
-    puts "buf"
   end
 end

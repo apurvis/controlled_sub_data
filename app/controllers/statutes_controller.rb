@@ -54,10 +54,6 @@ class StatutesController < ApplicationController
         }
       end
     end
-
-    puts "---"
-    puts @substance_statute_data
-    puts "---"
   end
 
   def edit
