@@ -9,6 +9,9 @@
    <h3>Title: <%= @statute.name%> </h3>
    <h3>Expiration Date: <%= @statute.expiration_date %>
    <br/>
+   <% if @statute.duplicate_federal_as_of_date %>
+      <h3>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %>
+   <% end %>
 
    <h3>Amendments to this statute</h3>
    <%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>
@@ -17,18 +20,18 @@
          <th>Amendment Identifier</th>
       </tr>
 
-      <% @statute.statute_amendments.each do |amendment| %>
+      <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
          <tr>
             <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
          </tr>
       <% end %>
    </table>
 <% end %>
-<h3><%= link_to 'edit statute', edit_statute_path(@statute) %></h3>
+<h3><%= link_to 'Edit statute', edit_statute_path(@statute) %></h3>
 
 
 <h3>Substances Scheduled By This <%= @statute.class %></h3>
-<%= link_to 'Add a substance to this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
+<%= link_to 'Add a substance to/Expire a substance from this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
 
 <table>
    <tr>
@@ -42,13 +45,17 @@
    </tr>
    <% @substance_statute_data.each do |ss| %>
       <tr>
-         <td><%= link_to ss[:substance].name, substance_path(ss[:substance]) %></td>
+         <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
 
          <% if ss[:added_by_amendment] %>
-            <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
-            <td><%= ss[:added_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
+            <% if ss[:added_by_amendment].is_a?(Statute) %>
+               <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
+            <% else %>
+               <td>Duplicated Federal</td>
+            <% end %>
+            <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
          <% else %>
-            <td>Original Statute</td>
+            <td>This Statute or Amendment</td>
             <td></td>
          <% end %>
 
@@ -66,7 +73,7 @@
             <td></td>
          <% end %>
 
-         <td><%= link_to "edit link", edit_substance_statute_path(ss[:substance_statute]) %></td>
+         <td><%= link_to 'Edit link', edit_substance_statute_path(ss[:substance_statute]) %></td>
       </tr>
    <% end %>
 </table>

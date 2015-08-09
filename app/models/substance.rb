@@ -6,12 +6,16 @@ class Substance < ActiveRecord::Base
   has_many :substance_alternate_names
 
   validates_uniqueness_of :name
-#  validates_uniqueness_of :dea_code, allow_nil: true TODO: should be on
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
-  def regulated_by_statutes
-    substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
+  def regulated_by_statutes(as_of_date = nil)
+    statutes = substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
+    if as_of_date
+      statutes.select { |s| s.start_date <= as_of_date }
+    else
+      statutes
+    end
   end
 
   def self.find_or_create_substance(name, options = {})

@@ -9,6 +9,15 @@
 <p>include_isomers?: <%= @substance_statute.include_isomers? %></p>
 <p>include_optical_isomers?: <%= @substance_statute.include_optical_isomers? %></p>
 <p>include_geometric_isomers?: <%= @substance_statute.include_geometric_isomers? %></p>
+<p>include_positional_isomers?: <%= @substance_statute.include_positional_isomers? %></p>
+<p>include_salts_of_isomers?: <%= @substance_statute.include_salts_of_isomers? %></p>
+<p>include_salts_of_optical_isomers?: <%= @substance_statute.include_salts_of_optical_isomers? %></p>
+<p>include_esters?: <%= @substance_statute.include_esters? %></p>
+<p>include_ethers?: <%= @substance_statute.include_ethers? %></p>
+<p>include_compounds?: <%= @substance_statute.include_compounds? %></p>
+<p>include_materials?: <%= @substance_statute.include_materials? %></p>
+<p>include_preparations?: <%= @substance_statute.include_preparations? %></p>
 
-<h3><%= link_to 'edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
-<h3><%= link_to 'back', statute_path(@substance_statute.statute) %></h3>
+
+<h3><%= link_to 'Edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
+<h3><%= link_to 'Back', statute_path(@substance_statute.statute) %></h3>

@@ -2,6 +2,9 @@
 
 <% if @substance %>
   <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
+  <% if @as_of_date %>
+    <h3>As of <%= @as_of_date.strftime('%Y-%m-%d') %></h3>
+   <% end %>
 <% end %>
 
 <table>
@@ -21,7 +24,7 @@
          <td><%= statute.start_date %></td>
          <td><%= statute.expiration_date %></td>
          <td><%= statute.blue_book_code %></td>
-         <td><%= link_to 'edit', edit_statute_path(statute) %></td>
+         <td><%= link_to 'Edit', edit_statute_path(statute) %></td>
       <tr>
    <% end %>
 </table>
