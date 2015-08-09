@@ -40,7 +40,7 @@
       <th>Schedule Level</th>
    </tr>
 
-   <% @relevant_statutes.each do |ss| %>
+   <% @substance.substance_statutes.each do |ss| %>
       <tr>
          <td><%= link_to "#{ss.statute.id}", statute_path(ss.statute) %></td>
          <td><%= ss.statute.state %></td>

@@ -2,7 +2,12 @@ class StatutesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @statutes = Statute.where(type: nil).all
+    if params[:search]
+      @substance = Substance.where(id: params[:search][:substance_id]).first
+      @statutes = @substance.regulated_by_statutes
+    else
+      @statutes = Statute.where(type: nil).all
+    end
   end
 
   def show
@@ -72,6 +77,13 @@ class StatutesController < ApplicationController
   private
 
   def statute_params
-    params.require(:statute).permit(:name, :state, :parent_id, :start_date, :blue_book_code, :expiration_date)
+    params.require(:statute).permit(
+      :name,
+      :state,
+      :parent_id,
+      :start_date,
+      :blue_book_code,
+      :expiration_date
+    )
   end
 end

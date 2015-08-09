@@ -1,5 +1,6 @@
-<%= form_tag(controller: 'statute_searches', method: 'get') do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
+<%= form_tag(statutes_path, method: :get, class:'navbar-form', id: 'search-form') do %>
+  <%= label_tag(:search, 'Search by Substance:') %>
+  <%= select(:search, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+  <%= date_field(:search, :as_of_date) %>
+  <%= submit_tag('Search') %>
 <% end %>
