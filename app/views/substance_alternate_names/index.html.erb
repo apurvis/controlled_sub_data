@@ -2,15 +2,15 @@
 
 <table>
    <tr>
-      <th>Original Name</th>
       <th>Alternate Name</th>
+      <th>Original Name</th>
       <th></th>
    </tr>
 
    <% @substance_alternate_names.each do |san| %>
       <tr>
-         <td><%= link_to san.substance.name, substance_path(san.substance) %></td>
          <td><%= link_to san.name, substance_alternate_name_path(san) %></td>
+         <td><%= link_to san.substance.name, substance_path(san.substance) %></td>
          <td><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
       <tr>
    <% end %>

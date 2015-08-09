@@ -2,7 +2,7 @@ class SubstanceAlternateNamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @substance_alternate_names = SubstanceAlternateName.all
+    @substance_alternate_names = SubstanceAlternateName.all.sort { |a,b| a.name <=> b.name }
   end
 
   def show
