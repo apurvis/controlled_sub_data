@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717052642) do
+ActiveRecord::Schema.define(version: 20150809183801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,10 +52,10 @@ ActiveRecord::Schema.define(version: 20150717052642) do
   create_table "substance_statutes", force: :cascade do |t|
     t.integer  "substance_id"
     t.integer  "statute_id"
-    t.integer  "schedule_level",                         comment: "1, 2, 3, 4, or 5"
+    t.integer  "schedule_level",                                comment: "1, 2, 3, 4, or 5"
     t.string   "penalty"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.datetime "deleted_at"
     t.boolean  "is_expiration"
     t.boolean  "include_salts"
@@ -64,6 +64,14 @@ ActiveRecord::Schema.define(version: 20150717052642) do
     t.boolean  "include_isomers"
     t.boolean  "include_optical_isomers"
     t.boolean  "include_geometric_isomers"
+    t.boolean  "include_positional_isomers"
+    t.boolean  "include_salts_of_isomers"
+    t.boolean  "include_salts_of_optical_isomers"
+    t.boolean  "include_esters"
+    t.boolean  "include_ethers"
+    t.boolean  "include_compounds"
+    t.boolean  "include_materials"
+    t.boolean  "include_preparations"
   end
 
   add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree
