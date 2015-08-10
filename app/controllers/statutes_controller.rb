@@ -1,5 +1,6 @@
 class StatutesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def index
     if params[:search]

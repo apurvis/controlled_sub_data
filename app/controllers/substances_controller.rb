@@ -1,5 +1,6 @@
 class SubstancesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def index
     @substances = Substance.all.order('name ASC')

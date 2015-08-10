@@ -1,5 +1,6 @@
 class SubstanceAlternateNamesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def index
     @substance_alternate_names = SubstanceAlternateName.all.sort { |a,b| a.name <=> b.name }

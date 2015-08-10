@@ -1,5 +1,6 @@
 class SubstanceStatutesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def show
     @substance_statute = SubstanceStatute.where(id: params['id']).first
