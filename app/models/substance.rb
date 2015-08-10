@@ -15,8 +15,8 @@ class Substance < ActiveRecord::Base
     statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
 
     if statutes.any? { |s| s.state == 'REVAMPED_FEDERAL' }
-      puts "FOUND A FEDERAL"
-      if as_of_date
+      federally_scheduled_date = statutes.select { |s| s.state == 'REVAMPED_FEDERAL' }.first.start_date
+      if as_of_date && as_of_date >= federally_scheduled_date
         federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
       else
         federal_inheritors = Statute.where(['duplicate_federal_as_of_date IS NOT NULL']).all
