@@ -1,8 +1,10 @@
-<div class="container">
-  <div class="row">
+<div class='container'>
+  <div class='row'>
     <h3>Users</h3>
-    <div class="column">
-      <table class="table">
+
+    <h4><%= link_to 'Invite a new user', new_user_invitation_path %></h4>
+    <div class='column'>
+      <table class='table'>
         <tbody>
           <% @users.each do |user| %>
             <tr>
