@@ -13,6 +13,11 @@ class StatutesController < ApplicationController
 
   def show
     @statute = Statute.where(id: params['id']).first
+    if @statute.is_a?(StatuteAmendment)
+      @scheduled_substance_message = 'Add a substance to/Expire a substance from this statute'
+    else
+      @scheduled_substance_message = 'Add a substance to this statute'
+    end
 
     # First collect the federal duplicates
     @substance_statute_data =  @statute.duplicated_federal_substance_statutes.map do |federal_dupe|

@@ -22,7 +22,7 @@ class SubstanceStatutesController < ApplicationController
     @substance_statute = SubstanceStatute.new(substance_statutes_params)
 
     if @substance_statute.save
-      redirect_to @substance_statute
+      redirect_to @substance_statute.statute
     else
       render 'new'
     end

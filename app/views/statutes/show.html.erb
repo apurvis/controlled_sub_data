@@ -48,50 +48,52 @@
 
 <div class='scheduled_substances'>
    <h3>Substances Scheduled By This <%= @statute.class %></h3>
-   <%= link_to 'Add a substance to/Expire a substance from this statute', { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
+   <%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
 
-   <table>
-      <tr>
-         <th>Substance Name</th>
-         <th>Added By Amendment</th>
-         <th>Added On Date</th>
-         <th>Expired By Amendment</th>
-         <th>Expired Date</th>
-         <th>Scheduled Level</th>
-         <th></th>
-      </tr>
-      <% @substance_statute_data.each do |ss| %>
+   <% if @substance_statute_data.size > 0 %>
+      <table>
          <tr>
-            <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
-
-            <% if ss[:added_by_amendment] %>
-               <% if ss[:added_by_amendment].is_a?(Statute) %>
-                  <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
-               <% else %>
-                  <td>Duplicated Federal</td>
-               <% end %>
-               <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
-            <% else %>
-               <td>This Statute or Amendment</td>
-               <td></td>
-            <% end %>
-
-            <% if ss[:expired_by_amendment] %>
-               <td><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
-               <td><%= ss[:expired_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
-            <% else %>
-               <td></td>
-               <td></td>
-            <% end %>
-
-            <% if ss[:schedule_level] && ss[:schedule_level].is_a?(Integer) %>
-               <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss[:schedule_level] - 1], { controller: "schedule_levels", action: :show, id: ss[:schedule_level] } %></td>
-            <% else %>
-               <td></td>
-            <% end %>
-
-            <td><%= link_to 'Edit link', edit_substance_statute_path(ss[:substance_statute]) %></td>
+            <th>Substance Name</th>
+            <th>Added By Amendment</th>
+            <th>Added On Date</th>
+            <th>Expired By Amendment</th>
+            <th>Expired Date</th>
+            <th>Scheduled Level</th>
+            <th></th>
          </tr>
-      <% end %>
-   </table>
+         <% @substance_statute_data.each do |ss| %>
+            <tr>
+               <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
+
+               <% if ss[:added_by_amendment] %>
+                  <% if ss[:added_by_amendment].is_a?(Statute) %>
+                     <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
+                  <% else %>
+                     <td>Duplicated Federal</td>
+                  <% end %>
+                  <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
+               <% else %>
+                  <td>This Statute or Amendment</td>
+                  <td>N/A</td>
+               <% end %>
+
+               <% if ss[:expired_by_amendment] %>
+                  <td><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
+                  <td><%= ss[:expired_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
+               <% else %>
+                  <td></td>
+                  <td></td>
+               <% end %>
+
+               <% if ss[:schedule_level] && ss[:schedule_level].is_a?(Integer) %>
+                  <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss[:schedule_level] - 1], { controller: "schedule_levels", action: :show, id: ss[:schedule_level] } %></td>
+               <% else %>
+                  <td></td>
+               <% end %>
+
+               <td><%= link_to 'Edit link', edit_substance_statute_path(ss[:substance_statute]) %></td>
+            </tr>
+         <% end %>
+      </table>
+   <% end %>
 </div>

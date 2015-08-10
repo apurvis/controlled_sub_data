@@ -22,10 +22,12 @@
       <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
    </p>
 
-   <p>
-      <%= f.label :is_this_an_expiration %><br/>
-      <%= select(:substance_statute, :is_expiration, [false, true]) %>
-   </p>
+   <% if @substance_statute.statute.is_a?(StatuteAmendment)%>
+      <p>
+         <%= f.label :is_statute_expiring_the_scheduling_of_this_substance %><br/>
+         <%= select(:substance_statute, :is_expiration, [false, true]) %>
+      </p>
+   <% end %>
 
    <p>
       <%= f.label :include_salts %>                    <%= check_box(:substance_statute, :include_salts) %><br/>
