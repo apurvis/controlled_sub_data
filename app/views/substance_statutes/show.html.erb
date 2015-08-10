@@ -1,27 +1,32 @@
-<h2>Substance Statute Link</h2>
-<h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
-<h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
-<h3>Is an expiration?: <%= @substance_statute.is_expiration? %></h3>
+<div class='basic_info'>
+   <h2>Substance Statute Link</h2>
+   <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
+   <h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
+   <h3>Is this change an expiration?: <%= @substance_statute.is_expiration? %></h3>
+   <h3><%= link_to 'Edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
+</div>
 
-<table>
-   <tr><td>Include salts?</td><td> <%= @substance_statute.include_salts? %></td></tr>
-   <tr><td>include_derivatives?</td><td> <%= @substance_statute.include_derivatives? %></td></tr>
-   <tr><td>include_mixtures?</td><td> <%= @substance_statute.include_mixtures? %></td></tr>
-   <tr><td>include_isomers?</td><td> <%= @substance_statute.include_isomers? %></td></tr>
-   <tr><td>include_optical_isomers?</td><td> <%= @substance_statute.include_optical_isomers? %></td></tr>
-   <tr><td>include_geometric_isomers?</td><td> <%= @substance_statute.include_geometric_isomers? %></td></tr>
-   <tr><td>include_positional_isomers?</td><td> <%= @substance_statute.include_positional_isomers? %></td></tr>
-   <tr><td>include_salts_of_isomers?</td><td> <%= @substance_statute.include_salts_of_isomers? %></td></tr>
-   <tr><td>include_salts_of_optical_isomers?</td><td> <%= @substance_statute.include_salts_of_optical_isomers? %></td></tr>
-   <tr><td>include_esters?</td><td> <%= @substance_statute.include_esters? %></td></tr>
-   <tr><td>include_ethers?</td><td> <%= @substance_statute.include_ethers? %></td></tr>
-   <tr><td>include_compounds?</td><td> <%= @substance_statute.include_compounds? %></td></tr>
-   <tr><td>include_materials?</td><td> <%= @substance_statute.include_materials? %></td></tr>
-   <tr><td>include_preparations?</td><td> <%= @substance_statute.include_preparations? %></td></tr>
-</table>
-
-<h3>Comments</h3>
-<p><%= @substance_statute.comment %></p>
-
-<h3><%= link_to 'Edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
-<h3><%= link_to 'Back', statute_path(@substance_statute.statute) %></h3>
+<div class='comment'>
+   <h3>Comments</h3>
+   <p><%= @substance_statute.comment %></p>
+</div>
+<hr>
+<div>
+   <h3>Additional information about how this substance is scheduled by this statute</h2>
+   <table>
+      <tr><td>Include salts?</td><td> <%= @substance_statute.include_salts? %></td></tr>
+      <tr><td>include_derivatives?</td><td> <%= @substance_statute.include_derivatives? %></td></tr>
+      <tr><td>include_mixtures?</td><td> <%= @substance_statute.include_mixtures? %></td></tr>
+      <tr><td>include_isomers?</td><td> <%= @substance_statute.include_isomers? %></td></tr>
+      <tr><td>include_optical_isomers?</td><td> <%= @substance_statute.include_optical_isomers? %></td></tr>
+      <tr><td>include_geometric_isomers?</td><td> <%= @substance_statute.include_geometric_isomers? %></td></tr>
+      <tr><td>include_positional_isomers?</td><td> <%= @substance_statute.include_positional_isomers? %></td></tr>
+      <tr><td>include_salts_of_isomers?</td><td> <%= @substance_statute.include_salts_of_isomers? %></td></tr>
+      <tr><td>include_salts_of_optical_isomers?</td><td> <%= @substance_statute.include_salts_of_optical_isomers? %></td></tr>
+      <tr><td>include_esters?</td><td> <%= @substance_statute.include_esters? %></td></tr>
+      <tr><td>include_ethers?</td><td> <%= @substance_statute.include_ethers? %></td></tr>
+      <tr><td>include_compounds?</td><td> <%= @substance_statute.include_compounds? %></td></tr>
+      <tr><td>include_materials?</td><td> <%= @substance_statute.include_materials? %></td></tr>
+      <tr><td>include_preparations?</td><td> <%= @substance_statute.include_preparations? %></td></tr>
+   </table>
+</div>

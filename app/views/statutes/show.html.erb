@@ -1,19 +1,19 @@
 <div class='basic_info'>
    <% if @statute.is_a?(StatuteAmendment) %>
-      <h2>AMENDED STATUTE: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
+      <h2>Amends Statute: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
    <% else %>
-      <h2>Title: <%= @statute.name%></h2>
+      <h2>Title: <%= @statute.name %></h2>
    <% end %>
 
-   <h3>State: <%= @statute.state %></h2>
-   <h3>Type: <%= @statute.class  %>
-   <h3>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h2>
-   <h3>Expiration Date: <%= @statute.expiration_date %>
-   <h3>Blue Book Code: <%= @statute.blue_book_code %></h3>
+   <h3>State: <%= @statute.state %></h3>
+   <h4>Type: <%= @statute.class %></h4>
+   <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
+   <h4>Expiration Date: <%= @statute.expiration_date %></h4>
+   <h4>Blue Book Code: <%= @statute.blue_book_code %></h4>
    <% if @statute.duplicate_federal_as_of_date %>
-      <h3>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %>
+      <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
-   <h3><%= link_to "Edit #{@statute.class}", edit_statute_path(@statute) %></h3>
+   <h4><%= link_to "Edit #{@statute.class}", edit_statute_path(@statute) %></h4>
 </div>
 
 <div class='comment'>
