@@ -1,3 +1,5 @@
+<h4>Alternate names are also included in the drop down</h4>
+
 <%= form_tag(statutes_path, method: :get, class:'navbar-form', id: 'search-form') do %>
   <%= label_tag(:search, 'Search for Substance:') %>
   <%= select(:search, :substance_id, @name_id_map) %><br/>
@@ -5,3 +7,4 @@
   <%= date_field(:search, :as_of_date) %><br/>
   <%= submit_tag('Search') %>
 <% end %>
+
