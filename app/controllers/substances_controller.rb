@@ -41,8 +41,9 @@ class SubstancesController < ApplicationController
     @substance = Substance.where(id: params['id']).first
 
     if @substance.substance_statutes.size > 0
-      raise "You can't delete a substance that still has links to statutes!  This one still links to #{@substance.substance_statutes.size} statutes."
+      flash.alert = "You can't delete a substance that still has links to statutes!  This one still links to #{@substance.substance_statutes.size} statutes."
     else
+      flash.notice = "Successfully deleted substance #{@substance.name}"
       @substance.destroy
     end
     redirect_to substances_path

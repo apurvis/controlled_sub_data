@@ -1,5 +1,13 @@
 <h2><%= link_to 'Create New Substance', new_substance_path %></h2>
 
+<% if flash[:notice] %>
+   <div id="error_explanation">
+      <h2>
+         <%= flash[:notice] %>
+      </h2>
+   </div>
+<% end %>
+
 <table>
    <tr>
       <th>Name</th>
@@ -21,7 +29,7 @@
          <td><%= substance.dea_code %></td>
          <td><%= substance.first_scheduled_date.try(:strftime, '%Y-%m-%d') %>
          <td><%= link_to 'edit', edit_substance_path(substance) %></td>
-         <td><%= link_to 'Delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?"} %></td>
+         <td><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
       <tr>
    <% end %>
 </table>
