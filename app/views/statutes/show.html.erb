@@ -22,24 +22,26 @@
 </div>
 
 <div class='amendments'>
-   <h3>Amendments</h3>
-   <%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>
-   <% if !@statute.is_a?(StatuteAmendment) && !@statute.statute_amendments.empty? %>
+   <% if !@statute.is_a?(StatuteAmendment) %>
+      <h3>Amendments</h3>
+      <%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>
 
 
-      <table>
-         <tr>
-            <th>Amendment Identifier</th>
-            <th>Blue Book Code</th>
-         </tr>
-
-         <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
+      <% if !@statute.statute_amendments.empty? %>
+         <table>
             <tr>
-               <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-               <td><%= amendment.blue_book_code %></td>
+               <th>Amendment Identifier</th>
+               <th>Blue Book Code</th>
             </tr>
-         <% end %>
-      </table>
+
+            <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
+               <tr>
+                  <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+                  <td><%= amendment.blue_book_code %></td>
+               </tr>
+            <% end %>
+         </table>
+      <% end %>
    <% end %>
 </div>
 
