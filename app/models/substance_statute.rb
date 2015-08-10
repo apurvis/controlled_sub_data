@@ -1,5 +1,6 @@
 class SubstanceStatute < ActiveRecord::Base
   acts_as_paranoid
+  audited
 
   belongs_to :substance
   belongs_to :statute

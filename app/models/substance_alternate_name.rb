@@ -1,4 +1,6 @@
 class SubstanceAlternateName < ActiveRecord::Base
+  audited
+
   belongs_to :substance
 
   validates :name, presence: true

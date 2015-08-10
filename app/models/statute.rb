@@ -1,5 +1,6 @@
 class Statute < ActiveRecord::Base
   acts_as_paranoid
+  audited
 
   has_many :substance_statutes
   has_many :statute_amendments, foreign_key: :parent_id
