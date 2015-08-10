@@ -67,6 +67,8 @@ You then add/remove substances to the statute by clicking on "Add a substance to
 
 You can search for statutes by substance, and you can specify an optional "As of date".  All statutes applying to the substance and starting before the "as of date" will be displayed.
 
+Alternate names will appear in the list of substances (but link to search results for the canonical substance name)
+
 ## Technical Info
 
 This application requires:
