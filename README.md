@@ -12,8 +12,10 @@ String identifiers for amendments to statutes are identified by the statute iden
 
 If there are spelling discrepancies for a substance name between different statutes, you should create two different statutes, because it's unclear right now that this is not a substantive difference.
 
-## Data Model
 ---
+
+## Data Model
+
 There are at heart ```Substances``` and ```Statutes```.  ```Statutes``` regulate many ```Substances``` and they are linked by ```SubstanceStatute``` records.
 
 ### Substances
@@ -29,8 +31,9 @@ It also contains links to a rolling change log in the form of ```StatuteAmendmen
 ### SubstanceStatutes
 A ```SubstanceStatutes``` contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
 
-## Usage
 ---
+
+## Usage
 
 ### Creating Statutes
 
