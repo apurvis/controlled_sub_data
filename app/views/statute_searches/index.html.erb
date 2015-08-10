@@ -1,6 +1,7 @@
 <%= form_tag(statutes_path, method: :get, class:'navbar-form', id: 'search-form') do %>
-  <%= label_tag(:search, 'Search by Substance:') %>
-  <%= select(:search, :substance_id, @name_id_map) %>
-  <%= date_field(:search, :as_of_date) %>
+  <%= label_tag(:search, 'Search for Substance:') %>
+  <%= select(:search, :substance_id, @name_id_map) %><br/>
+  <%= label_tag(:as_of_date, "As of Date (Optional)") %>
+  <%= date_field(:search, :as_of_date) %><br/>
   <%= submit_tag('Search') %>
 <% end %>
