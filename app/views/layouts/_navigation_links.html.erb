@@ -1,8 +1,12 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
-  <li><%= link_to 'Edit account', edit_user_registration_path %></li>
-  <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+   <li><%= link_to 'Substances', substances_path %></li>
+   <li><%= link_to 'Statutes', statutes_path %></li>
+   <li><%= link_to 'Search', statute_searches_path %></li>
+   <li><%= link_to 'Documentation', 'https://github.com/apurvis/controlled_sub_data' %></li>
+
+   <li><%= link_to 'Edit Account', edit_user_registration_path %></li>
+   <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
 <% else %>
-  <li><%= link_to 'Sign in', new_user_session_path %></li>
-  <li><%= link_to 'Sign up', new_user_registration_path %></li>
+  <li><%= link_to 'Sign In', new_user_session_path %></li>
 <% end %>
