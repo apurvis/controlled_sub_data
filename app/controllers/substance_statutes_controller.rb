@@ -39,6 +39,9 @@ class SubstanceStatutesController < ApplicationController
   end
 
   def destroy
+    @substance_statute = SubstanceStatute.where(id: params['id']).first
+    @substance_statute.destroy
+    redirect_to @substance_statute.statute
   end
 
   private

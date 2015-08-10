@@ -60,7 +60,8 @@
             <th>Expired By Amendment</th>
             <th>Expired Date</th>
             <th>Scheduled Level</th>
-            <th></th>
+            <th>Edit</th>
+            <th>Delete</th>
          </tr>
          <% @substance_statute_data.each do |ss| %>
             <tr>
@@ -93,7 +94,13 @@
                   <td></td>
                <% end %>
 
-               <td><%= link_to 'Edit link', edit_substance_statute_path(ss[:substance_statute]) %></td>
+               <% unless ss[:added_by_amendment] %>
+                  <td><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
+                  <td><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?"} %></td>
+               <% else %>
+                  <td></td>
+                  <td></td>
+               <% end %>
             </tr>
          <% end %>
       </table>
