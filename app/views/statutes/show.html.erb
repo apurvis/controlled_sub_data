@@ -47,12 +47,13 @@
 
 
 <div class='scheduled_substances'>
-   <h3>Substances Scheduled By This <%= @statute.class %></h3>
+   <h3>Changes in Scheduling Effected by This <%= @statute.class %></h3>
    <%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
 
    <% if @substance_statute_data.size > 0 %>
       <table>
          <tr>
+            <th>Change Type</th>
             <th>Substance Name</th>
             <th>Added By Amendment</th>
             <th>Added On Date</th>
@@ -63,6 +64,7 @@
          </tr>
          <% @substance_statute_data.each do |ss| %>
             <tr>
+               <td><%= ss[:is_expiration] != true ? 'addition' : 'expiration' %></td>
                <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
 
                <% if ss[:added_by_amendment] %>
