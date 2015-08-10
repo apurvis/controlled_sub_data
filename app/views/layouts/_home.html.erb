@@ -1,13 +1,17 @@
-<h3>Quick Links</h3>
-<div>
-   <ul>
-      <li><%= link_to 'Users', users_path %></li>
-      <li><%= link_to 'Substances', substances_path %></li>
-      <li><%= link_to 'Statutes', statutes_path %></li>
-      <li><%= link_to 'Search', statute_searches_path %></li>
-      <li><%= link_to 'Statute Amendments', statute_amendments_path %></li>
-      <li><%= link_to 'Substance Classifications', substance_classifications_path %></li>
-      <li><%= link_to 'Schedule Levels', schedule_levels_path %></li>
-      <li><%= link_to 'Substance Alternate Names', substance_alternate_names_path %></li>
-   </ul>
-</div>
+
+<% if user_signed_in? %>
+   <hr>
+   <div class='quick_links'>
+      <h3>Quick Links</h3>
+      <ul>
+         <li><%= link_to 'Users', users_path %></li>
+         <li><%= link_to 'Substances', substances_path %></li>
+         <li><%= link_to 'Statutes', statutes_path %></li>
+         <li><%= link_to 'Search', statute_searches_path %></li>
+         <li><%= link_to 'Statute Amendments', statute_amendments_path %></li>
+         <li><%= link_to 'Substance Classifications', substance_classifications_path %></li>
+         <li><%= link_to 'Schedule Levels', schedule_levels_path %></li>
+         <li><%= link_to 'Substance Alternate Names', substance_alternate_names_path %></li>
+      </ul>
+   </div>
+<% end %>

@@ -1,57 +1,62 @@
-<h1>Name: <%= @substance.name %></h1>
+<div class='basic_info'>
+   <h1>Name: <%= @substance.name %></h1>
 
-<% if @substance.substance_classification.try(:name) %>
-   <h3>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h3>
-<% else %>
-   <h3>Classification:</h3>
+   <% if @substance.substance_classification.try(:name) %>
+      <h4>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h4>
+   <% else %>
+      <h4>Classification:</h4>
+   <% end %>
+
+   <h4>Chemical Name: <%= @substance.chemical_formula %></h4>
+   <h4>DEA Code: <%= @substance.dea_code %></h4>
+   <h4>SMILES CODE: <%= @substance.chemical_formula_smiles_format %></h4>
+   <h4>First Scheduled Date: <%= @substance.first_scheduled_date %></h4>
+   <h4><%= link_to 'Edit', edit_substance_path(@substance) %></h4>
+</div>
+
+<div class='alternate_names'>
+   <h3>Alternate Names</h3>
+   <table>
+      <% @substance.substance_alternate_names.each do |n| %>
+         <tr>
+            <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+         </tr>
+      <% end %>
+      <tr>
+         <td><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></td>
+      </tr>
+   </table>
+</div>
+
+<% if @substance.comment && !@substance.comment.blank? %>
+   <div class='comment'>
+      <h3>Comment: <%= @substance.comment %></h3>
+   </div>
 <% end %>
 
-<h3>Chemical Name: <%= @substance.chemical_formula %></h3>
-<h3>SMILES: <%= @substance.chemical_formula_smiles_format %></h3>
-<h3>DEA Code: <%= @substance.dea_code %></h3>
-<h3>First Scheduled Date: <%= @substance.first_scheduled_date %>
-<h3><%= link_to 'Edit Substance', edit_substance_path(@substance) %></h3>
-
-<br/>
-<h3>Comment: <%= @substance.comment %>
-<br/>
-
-<h3>Alternate Names</h3>
-<table>
-   <% @substance.substance_alternate_names.each do |n| %>
+<div class='statute_list'>
+   <h3>Affected by Statutes</h3>
+   <table>
       <tr>
-         <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+         <th>Statute</th>
+         <th>State</th>
+         <th>Start Date</th>
+         <th>Schedule Level</th>
       </tr>
-   <% end %>
-   <tr>
-      <td><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></td>
-   </tr>
-</table>
 
-<br/>
-<br/>
+      <% @substance.substance_statutes.each do |ss| %>
+         <tr>
+            <td><%= link_to "#{ss.statute.formatted_name}", statute_path(ss.statute) %></td>
+            <td><%= ss.statute.state %></td>
+            <td><%= ss.statute.start_date %></td>
+            <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
+               <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: 'schedule_levels', action: :show, id: ss.schedule_level } %></td>
+            <% else %>
+               <td></td>
+            <% end %>
+         </tr>
+      <% end %>
+   </table>
+<div>
 
-<h3>Affected by Statutes</h3>
-<table>
-   <tr>
-      <th>Statute</th>
-      <th>State</th>
-      <th>Start Date</th>
-      <th>Schedule Level</th>
-   </tr>
-
-   <% @substance.substance_statutes.each do |ss| %>
-      <tr>
-         <td><%= link_to "#{ss.statute.formatted_name}", statute_path(ss.statute) %></td>
-         <td><%= ss.statute.state %></td>
-         <td><%= ss.statute.start_date %></td>
-         <% if ss.schedule_level && ss.schedule_level.is_a?(Integer) %>
-            <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss.schedule_level - 1], { controller: 'schedule_levels', action: :show, id: ss.schedule_level } %></td>
-         <% else %>
-            <td></td>
-         <% end %>
-      </tr>
-   <% end %>
-</table>
-
-<h3><%= link_to 'back', substances_path %></h3>
+<h3><%= link_to 'Back', substances_path %></h3>

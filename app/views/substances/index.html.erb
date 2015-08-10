@@ -2,7 +2,6 @@
 
 <table>
    <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Classification</th>
       <th>DEA Code</th>
@@ -12,7 +11,6 @@
 
    <% @substances.each do |substance| %>
       <tr>
-         <td><%= link_to "#{substance.id}", substance_path(substance) %></td>
          <td><%= link_to substance.name, substance_path(substance) %></td>
          <% if substance.substance_classification.try(:name) %>
             <td><%= link_to substance.substance_classification.name, substance_classification_path(substance.substance_classification) %></td>
