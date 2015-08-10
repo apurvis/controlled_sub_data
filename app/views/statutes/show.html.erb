@@ -45,10 +45,9 @@
    <% end %>
 </div>
 
-
 <div class='scheduled_substances'>
    <h3>Changes in Scheduling Effected by This <%= @statute.class %></h3>
-   <%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>
+   <h4><%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %></h4>
 
    <% if @substance_statute_data.size > 0 %>
       <table>
