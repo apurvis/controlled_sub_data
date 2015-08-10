@@ -11,22 +11,21 @@
    <h4>DEA Code: <%= @substance.dea_code %></h4>
    <h4>SMILES CODE: <%= @substance.chemical_formula_smiles_format %></h4>
    <h4>First Scheduled Date: <%= @substance.first_scheduled_date %></h4>
+
    <h4><%= link_to 'Edit', edit_substance_path(@substance) %></h4>
+   <div class='alternate_names'>
+      <h3>Alternate Names (<%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %>)</h3>
+      <table>
+         <% @substance.substance_alternate_names.each do |n| %>
+            <tr>
+               <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+            </tr>
+         <% end %>
+      </table>
+   </div>
 </div>
 
-<div class='alternate_names'>
-   <h3>Alternate Names</h3>
-   <table>
-      <% @substance.substance_alternate_names.each do |n| %>
-         <tr>
-            <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
-         </tr>
-      <% end %>
-      <tr>
-         <td><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_id: @substance.id) %></td>
-      </tr>
-   </table>
-</div>
+
 
 <% if @substance.comment && !@substance.comment.blank? %>
    <div class='comment'>

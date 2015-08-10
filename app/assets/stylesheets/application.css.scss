@@ -20,6 +20,7 @@ td.schedule_level  {
 
 table, td {
    border: 1px solid black;
+   background-color: white;
 }
 
 td, th {
@@ -39,4 +40,14 @@ div {
 
 div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.quick_links {
    width: 100%;
+}
+
+.basic_info {
+   background-color: #E6F0FF;
+   border: 1px solid black;
+   padding-left: 10px;
+   padding-bottom: 10px;
+   padding-right: 10px;
+   float: left;
+   width: 70%;
 }
