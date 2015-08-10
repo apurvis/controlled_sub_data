@@ -65,7 +65,7 @@
          <% @substance_statute_data.each do |ss| %>
             <tr>
                <td><%= ss[:is_expiration] != true ? 'addition' : 'expiration' %></td>
-               <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance]) %></td>
+               <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
 
                <% if ss[:added_by_amendment] %>
                   <% if ss[:added_by_amendment].is_a?(Statute) %>
