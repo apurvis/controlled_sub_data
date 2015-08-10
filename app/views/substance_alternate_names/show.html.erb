@@ -1,5 +1,6 @@
-<h2>Original Name: <%= link_to @substance_alternate_name.substance.name, substance_path(@substance_alternate_name.substance) %></h2>
+<div class='basic_info'>
+<h3>Original Name: <%= link_to @substance_alternate_name.substance.name, substance_path(@substance_alternate_name.substance) %></h2>
 <h2>Alternate Name: <%= @substance_alternate_name.name %></h2>
 
-<td><%= link_to 'Edit', edit_substance_alternate_name_path(@substance_alternate_name) %></td>
-<h3><%= link_to 'Back', substance_alternate_names_path %></h3>
+<h3><%= link_to 'Edit', edit_substance_alternate_name_path(@substance_alternate_name) %></h4>
+</div>

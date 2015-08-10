@@ -26,7 +26,7 @@ A ```Statute``` contains info about the law (name, effective date, blue book cod
 
 It also contains links to a rolling change log in the form of ```StatuteAmendments``` which are records of how a Statute has evolved over time.
 
-```StatuteAmendments``` have an effective date and can contain substance additions (e.g. a new substance was scheduled), substance expirations, or a change in schedule level.
+```StatuteAmendments``` have an effective date and can contain substance additions (e.g. a new substance was scheduled), substance expirations, changes in schedule level for a given substance.
 
 ### SubstanceStatutes
 A ```SubstanceStatute``` record contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
