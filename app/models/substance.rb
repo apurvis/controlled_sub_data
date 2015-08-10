@@ -12,11 +12,18 @@ class Substance < ActiveRecord::Base
 
   def regulated_by_statutes(as_of_date = nil)
     statutes = substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
-    if as_of_date
-      statutes.select { |s| s.start_date <= as_of_date }
-    else
-      statutes
+    statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
+
+    if statutes.any? { |s| s.state == 'REVAMPED_FEDERAL' }
+      puts "FOUND A FEDERAL"
+      if as_of_date
+        federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
+      else
+        federal_inheritors = Statute.where(['duplicate_federal_as_of_date IS NOT NULL']).all
+      end
+      statutes += federal_inheritors
     end
+    statutes
   end
 
   def self.find_or_create_substance(name, options = {})
