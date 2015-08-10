@@ -29,7 +29,7 @@ It also contains links to a rolling change log in the form of ```StatuteAmendmen
 ```StatuteAmendments``` have an effective date and can contain substance additions (e.g. a new substance was scheduled), substance expirations, or a change in schedule level.
 
 ### SubstanceStatutes
-A ```SubstanceStatutes``` contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
+A ```SubstanceStatute``` record contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
 
 ---
 
