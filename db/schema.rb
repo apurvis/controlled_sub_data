@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810001234) do
+ActiveRecord::Schema.define(version: 20150810035031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,7 +117,6 @@ ActiveRecord::Schema.define(version: 20150810001234) do
     t.string   "comment"
   end
 
-  add_index "substances", ["chemical_formula_smiles_format"], name: "index_substances_on_chemical_formula_smiles_format", unique: true, using: :btree
   add_index "substances", ["deleted_at"], name: "index_substances_on_deleted_at", using: :btree
   add_index "substances", ["name"], name: "index_substances_on_name", unique: true, using: :btree
 

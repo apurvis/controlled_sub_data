@@ -7,6 +7,7 @@
       <th>DEA Code</th>
       <th>First Scheduled Date</th>
       <th></th>
+      <th></th>
    </tr>
 
    <% @substances.each do |substance| %>
@@ -20,6 +21,7 @@
          <td><%= substance.dea_code %></td>
          <td><%= substance.first_scheduled_date.try(:strftime, '%Y-%m-%d') %>
          <td><%= link_to 'edit', edit_substance_path(substance) %></td>
+         <td><%= link_to 'Delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?"} %></td>
       <tr>
    <% end %>
 </table>

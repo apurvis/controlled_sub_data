@@ -37,6 +37,17 @@ class SubstancesController < ApplicationController
     end
   end
 
+  def destroy
+    @substance = Substance.where(id: params['id']).first
+
+    if @substance.substance_statutes.size > 0
+      raise "You can't delete a substance that still has links to statutes!  This one still links to #{@substance.substance_statutes.size} statutes."
+    else
+      @substance.destroy
+    end
+    redirect_to substances_path
+  end
+
   private
 
   def substance_params
