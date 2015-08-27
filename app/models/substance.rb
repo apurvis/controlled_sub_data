@@ -5,13 +5,14 @@ class Substance < ActiveRecord::Base
   belongs_to :substance_classification
   has_many :substance_statutes
   has_many :substance_alternate_names
+  has_many :statutes, { through: :substance_statutes }, -> { order 'statutes.started_at ASC' }
 
   validates_uniqueness_of :name
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
   def first_regulating_statute
-    substance_statutes.map { |ss| ss.statute }.sort { |a,b| a.start_date <=> b.start_date }.first
+    statutes.first
   end
 
   def first_scheduled_date
@@ -19,19 +20,18 @@ class Substance < ActiveRecord::Base
   end
 
   def regulated_by_statutes(as_of_date = nil)
-    statutes = substance_statutes.map { |ss| ss.statute }.sort { |a,b| a.start_date <=> b.start_date }
-    statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
+    raw_statutes = as_of_date ? statutes.select { |s| s.start_date <= as_of_date } : statutes
 
-    if statutes.any? { |s| s.state == Statute::FEDERAL }
-      federally_scheduled_date = statutes.select { |s| s.state == Statute::FEDERAL }.first.start_date
+    if raw_statutes.any? { |s| s.state == Statute::FEDERAL }
+      federally_scheduled_date = raw_statutes.select { |s| s.state == Statute::FEDERAL }.first.start_date
       if as_of_date && as_of_date >= federally_scheduled_date
         federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
       else
         federal_inheritors = Statute.where(['duplicate_federal_as_of_date IS NOT NULL']).all
       end
-      statutes += federal_inheritors
+      raw_statutes += federal_inheritors
     end
-    statutes
+    raw_statutes
   end
 
   def self.find_or_create_substance(name, options = {})
