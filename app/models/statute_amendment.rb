@@ -3,7 +3,7 @@ class StatuteAmendment < Statute
 
   def formatted_name
     if start_date
-      "#{statute.formatted_name} Amended #{start_date.strftime('%Y-%m-%d')}"
+      "#{start_date.strftime('%Y-%m-%d')} Amendment of #{statute.formatted_name}"
     else
       "#{statute.formatted_name} Amended XXXX-XX-XX"
     end

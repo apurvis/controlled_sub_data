@@ -31,12 +31,16 @@
             <tr>
                <th>Amendment Identifier</th>
                <th>Blue Book Code</th>
+               <th>Edit</th>
+               <th>Delete</th>
             </tr>
 
             <% @statute.statute_amendments.each do |amendment| %>
                <tr>
                   <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
                   <td><%= amendment.blue_book_code %></td>
+                  <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
+                  <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
                </tr>
             <% end %>
          </table>
@@ -94,7 +98,7 @@
 
                <% unless ss[:added_by_amendment] %>
                   <td class='button'><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
-                  <td class='button'><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?"} %></td>
+                  <td class='button'><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?" } %></td>
                <% else %>
                   <td></td>
                   <td></td>

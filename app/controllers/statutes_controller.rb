@@ -100,6 +100,26 @@ class StatutesController < ApplicationController
     end
   end
 
+  def destroy
+    @statute = Statute.where(id: params['id']).first
+
+    if @statute.statute_amendments.size > 0
+      flash.alert = "You can't delete a statute that still has amendments!  This has #{@statute.statute_amendments.size} amendments; please remove them first and try again."
+    elsif @statute.substance_statutes.size > 0
+      flash.alert = "You can't delete a statute that still has links to substances!  This one still links to #{@statute.substance_statutes.size} substances.  Please delete the links between this substance and its statutes through the statutes page and then try again."
+    else
+      notice = "Successfully deleted statute #{@statute.formatted_name}"
+      @statute.destroy
+      flash.notice = notice
+    end
+
+    if @statute && @statute.is_a?(StatuteAmendment)
+      redirect_to @statute.statute
+    else
+      redirect_to statutes_path
+    end
+  end
+
   private
 
   def statute_params

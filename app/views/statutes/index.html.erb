@@ -14,7 +14,8 @@
       <th>Start Date</th>
       <th>Expiration Date</th>
       <th>Blue Book Code</th>
-      <th></th>
+      <th>Edit</th>
+      <th>Delete</th>
    </tr>
 
    <% @statutes.each do |statute| %>
@@ -25,6 +26,7 @@
          <td><%= statute.expiration_date %></td>
          <td><%= statute.blue_book_code %></td>
          <td class='button'><%= link_to 'Edit', edit_statute_path(statute) %></td>
+         <td class='button'><%= link_to 'Delete', statute_path(statute), method: :delete, data: { confirm: "Are you sure?" } %></td>
       <tr>
    <% end %>
 </table>
