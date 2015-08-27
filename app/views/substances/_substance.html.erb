@@ -1,0 +1,16 @@
+<tr>
+   <td><%= link_to substance.name, substance_path(substance) %></td>
+   <% if substance.substance_classification.try(:name) %>
+      <td><%= link_to substance.substance_classification.name, substance_classification_path(substance.substance_classification) %></td>
+   <% else %>
+      <td></td>
+   <% end %>
+   <td><%= substance.dea_code %></td>
+   <% if substance.first_regulating_statute %>
+      <td><%= link_to substance.first_regulating_statute.formatted_name, statute_path(substance.first_regulating_statute) %></td>
+   <% else %>
+      <td class='expiration'>Not Regulated</td>
+   <% end %>
+   <td class='button'><%= link_to 'edit', edit_substance_path(substance) %></td>
+   <td class='button'><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
+<tr>
