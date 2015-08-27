@@ -10,7 +10,6 @@ class SubstanceAlternateNamesController < ApplicationController
     @substance_alternate_name = SubstanceAlternateName.where(id: params['id']).first
     @substance = @substance_alternate_name.substance || @substance_alternate_name.substance_statute.substance
     @statute = @substance_alternate_name.substance_statute.try(:statute)
-    puts "statute: #{@statute.pretty_inspect}"
   end
 
   def edit

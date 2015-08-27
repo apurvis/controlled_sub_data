@@ -35,7 +35,6 @@ class StatutesController < ApplicationController
 
     # Next collect any actual statute data
     @statute.substance_statutes.each do |ss|
-      puts "SS: #{ss.id} alternate nameS: #{ss.substance_alternate_names.size}"
       @substance_statute_data << {
         substance_statute: ss,
         substance: ss.substance,
