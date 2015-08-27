@@ -41,8 +41,9 @@ class SubstanceStatutesController < ApplicationController
 
   def destroy
     @substance_statute = SubstanceStatute.where(id: params['id']).first
-    flash.notice = "Successfully Deleted link from #{@substance_statute.statute.formatted_name} to #{@substance_statute.substance.name}"
+    notice = "Successfully Deleted link from #{@substance_statute.statute.formatted_name} to #{@substance_statute.substance.name}"
     @substance_statute.destroy
+    flash.notice = notice
     redirect_to @substance_statute.statute
   end
 

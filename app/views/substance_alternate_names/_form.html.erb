@@ -12,10 +12,13 @@
       </div>
    <% end %>
 
-   <p>
-      <%= f.label :substance %><br>
-      <%= select(:substance_alternate_name, :substance_id, Substance.all.map { |c| [c.name[0..50], c.id] } ) %>
-   </p>
+   <% if @substance_alternate_name.substance %>
+      <p>This alternate name maps directly to <%= link_to @substance_alternate_name.substance.name, substance_path(@substance_alternate_name.substance) %> and is not associated with any statutes.  This behavior is deprecated.</p>
+   <% elsif @substance_alternate_name.substance_statute %>
+      <h3>Substance: <%= link_to @substance_alternate_name.substance_statute.substance.name, substance_statute_path(@substance_alternate_name.substance_statute) %></h3>
+      <h3>Statute: <%= link_to @substance_alternate_name.substance_statute.statute.formatted_name, statute_path(@substance_alternate_name.substance_statute.statute) %></h3>
+      <%= f.hidden_field :substance_statute_id, value:  @substance_alternate_name.substance_statute.id %>
+   <% end %>
 
    <p>
       <%= f.label :alternate_name %><br>

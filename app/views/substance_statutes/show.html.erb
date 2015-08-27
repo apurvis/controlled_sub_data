@@ -2,9 +2,27 @@
    <h2>Substance Statute Link</h2>
    <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
    <h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
-   <h3>Schedule Level: <%= @substance_statute.schedule_level ? @substance_statute.schedule_level : 'N/A' %>
-   <h3>Is this change an expiration?: <%= @substance_statute.is_expiration? %></h3>
+   <h3>
+      <% if @substance_statute.is_expiration? %>
+         <span class='expiration'>EXPIRATION</span>
+      <% else %>
+         <span class='addition'>ADDITION</span>
+      <% end %>
+   </h3>
+   <h3>Schedule Level: <%= @substance_statute.schedule_level ? @substance_statute.schedule_level : 'N/A' %></h3>
+
    <h3><%= link_to 'Edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
+   <div class='alternate_names'>
+      <h3>Alternate Names Defined by Statute</h3>
+      <table>
+         <% @substance_statute.substance_alternate_names.each do |n| %>
+            <tr>
+               <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+            </tr>
+         <% end %>
+      </table>
+      <h4><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_statute_id: @substance_statute.id) %></h4>
+   </div>
 </div>
 
 <div class='comment'>
