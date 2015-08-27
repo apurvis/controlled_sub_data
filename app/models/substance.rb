@@ -10,12 +10,20 @@ class Substance < ActiveRecord::Base
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
+  def first_regulating_statute
+    substance_statutes.map { |ss| ss.statute }.sort { |a,b| a.start_date <=> b.start_date }.first
+  end
+
+  def first_scheduled_date
+    first_regulating_statute.try(:start_date)
+  end
+
   def regulated_by_statutes(as_of_date = nil)
-    statutes = substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
+    statutes = substance_statutes.map { |ss| ss.statute }.sort { |a,b| a.start_date <=> b.start_date }
     statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
 
-    if statutes.any? { |s| s.state == 'REVAMPED_FEDERAL' }
-      federally_scheduled_date = statutes.select { |s| s.state == 'REVAMPED_FEDERAL' }.first.start_date
+    if statutes.any? { |s| s.state == Statute::FEDERAL }
+      federally_scheduled_date = statutes.select { |s| s.state == Statute::FEDERAL }.first.start_date
       if as_of_date && as_of_date >= federally_scheduled_date
         federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
       else
@@ -37,7 +45,6 @@ class Substance < ActiveRecord::Base
     end
 
     s.dea_code = options[:dea_code] if options[:dea_code]
-    s.first_scheduled_date = options[:first_scheduled_date] if options[:first_scheduled_date]
     s.save
 
     s

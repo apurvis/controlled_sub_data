@@ -1,5 +1,5 @@
 <div class='basic_info'>
-   <h1>Name: <%= @substance.name %></h1>
+   <h1><%= @substance.name %></h1>
 
    <% if @substance.substance_classification.try(:name) %>
       <h4>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h4>
@@ -10,7 +10,11 @@
    <h4>Chemical Name: <%= @substance.chemical_formula %></h4>
    <h4>DEA Code: <%= @substance.dea_code %></h4>
    <h4>SMILES CODE: <%= @substance.chemical_formula_smiles_format %></h4>
-   <h4>First Scheduled Date: <%= @substance.first_scheduled_date %></h4>
+   <% if @substance.first_regulating_statute %>
+      <h4>First Regulating Statute: <%= link_to @substance.first_regulating_statute.formatted_name, statute_path(@substance.first_regulating_statute) %></h4>
+   <% else %>
+      <h4>Not currently regulated</h4>
+   <% end %>
 
    <h4><%= link_to 'Edit', edit_substance_path(@substance) %></h4>
    <div class='alternate_names'>
@@ -34,7 +38,7 @@
 <% end %>
 
 <div class='statute_list'>
-   <h3>Affected by Statutes</h3>
+   <h3>Regulated by Statutes</h3>
    <table>
       <tr>
          <th>Statute</th>

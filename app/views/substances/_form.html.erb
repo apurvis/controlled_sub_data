@@ -1,8 +1,8 @@
 <%= form_for @substance do |f| %>
    <% if @substance.errors.any? %>
-      <div id="error_explanation">
+      <div id='error_explanation'>
          <h2>
-            <%= pluralize(@substance.errors.count, "error") %> prohibited this statute from being saved:
+            <%= pluralize(@substance.errors.count, 'error') %> prohibited this statute from being saved:
          </h2>
          <ul>
             <% @substance.errors.full_messages.each do |msg| %>
@@ -35,11 +35,6 @@
    <p>
       <%= f.label :classification %><br>
       <%= select(:substance, :substance_classification_id, SubstanceClassification.all.map { |c| [c.name[0..50], c.id] } ) %>
-   </p>
-
-   <p>
-      <%= f.label :first_scheduled_date %><br>
-      <%= date_field(:substance, :first_scheduled_date) %>
    </p>
 
    <p>
