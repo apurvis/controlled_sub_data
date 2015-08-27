@@ -30,7 +30,7 @@
          <% if substance.first_regulating_statute %>
             <td><%= link_to substance.first_regulating_statute.formatted_name, statute_path(substance.first_regulating_statute) %></td>
          <% else %>
-            <td>Not Regulated</td>
+            <td class='expiration'>Not Regulated</td>
          <% end %>
          <td class='button'><%= link_to 'edit', edit_substance_path(substance) %></td>
          <td class='button'><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>

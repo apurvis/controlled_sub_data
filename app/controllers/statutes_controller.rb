@@ -34,7 +34,8 @@ class StatutesController < ApplicationController
     end
 
     # Next collect any actual statute data
-    @statute.substance_statutes.map do |ss|
+    @statute.substance_statutes.each do |ss|
+      puts "SS: #{ss.id} alternate nameS: #{ss.substance_alternate_names.size}"
       @substance_statute_data << {
         substance_statute: ss,
         substance: ss.substance,
@@ -48,15 +49,15 @@ class StatutesController < ApplicationController
 
     # Then collect the amendment additions
     @statute.statute_amendments.each do |amendment|
-      amendment.substance_statutes.additions.each do |substance_change|
+      amendment.substance_statutes.additions.each do |ss|
         @substance_statute_data << {
-          substance_statute: substance_change,
-          substance: substance_change.substance,
+          substance_statute: ss,
+          substance: ss.substance,
           start_date: amendment.start_date,
           added_by_amendment: amendment,
-          is_expiration: substance_change.is_expiration?,
-          expired_by_amendment: substance_change.expiring_amendment,
-          schedule_level: substance_change.schedule_level
+          is_expiration: ss.is_expiration?,
+          expired_by_amendment: ss.expiring_amendment,
+          schedule_level: ss.schedule_level
         }
       end
     end

@@ -4,6 +4,7 @@ class SubstanceStatute < ActiveRecord::Base
 
   belongs_to :substance
   belongs_to :statute
+  has_many :substance_alternate_names
 
   scope :additions, -> { where(is_expiration: false) }
   scope :expirations, -> { where(is_expiration: true) }
