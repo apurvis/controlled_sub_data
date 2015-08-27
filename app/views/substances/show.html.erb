@@ -1,5 +1,5 @@
 <div class='basic_info'>
-   <h1><%= @substance.name %></h1>
+   <h1><%= @substance.name %> (<%= link_to 'Edit', edit_substance_path(@substance) %>)</h1>
 
    <% if @substance.substance_classification.try(:name) %>
       <h4>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h4>
@@ -16,17 +16,19 @@
       <h4>Not currently regulated</h4>
    <% end %>
 
-   <h4><%= link_to 'Edit Statute Information', edit_substance_path(@substance) %></h4>
-   <div class='alternate_names'>
-      <h3>Alternate Names</h3>
-      <p><span class='expiration'>Defining alternate names at the substance level is deprecated behavior.  Alternate names must be added to the substance statute link.</span></p>
-      <table>
-         <% @substance.substance_alternate_names.each do |n| %>
-            <tr>
-               <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
-            </tr>
-         <% end %>
-      </table>
+   <% if @substance.substance_alternate_names.size > 0 %>
+      <div class='alternate_names'>
+         <h3>Alternate Names</h3>
+         <p><span class='expiration'>Defining alternate names at the substance level is deprecated behavior.  Alternate names must be added to the substance statute link.</span></p>
+         <table>
+            <% @substance.substance_alternate_names.each do |n| %>
+               <tr>
+                  <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+               </tr>
+            <% end %>
+         </table>
+      </div>
+   <% end %>
    </div>
 </div>
 

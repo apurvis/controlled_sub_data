@@ -6,14 +6,13 @@
    <% end %>
 
    <h3>State: <%= @statute.state %></h3>
-   <h4>Type: <%= @statute.class %></h4>
    <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
    <h4>Expiration Date: <%= @statute.expiration_date %></h4>
    <h4>Blue Book Code: <%= @statute.blue_book_code %></h4>
    <% if @statute.duplicate_federal_as_of_date %>
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
-   <h4><%= link_to "Edit #{@statute.class}", edit_statute_path(@statute) %></h4>
+   <h4><%= link_to "(Edit)", edit_statute_path(@statute) %></h4>
 </div>
 
 <div class='comment'>
@@ -57,10 +56,10 @@
          <tr>
             <th>Change Type</th>
             <th>Substance Name</th>
+            <th>AKA</th>
             <th>Added By</th>
             <th>Added On</th>
             <th>Expired By</th>
-            <th>Expired Date</th>
             <th>Scheduled Level</th>
             <th>Edit Link to Statute</th>
             <th>Delete Link to Statute</th>
@@ -69,6 +68,9 @@
             <tr>
                <td><%= ss[:is_expiration] != true ? 'addition' : 'expiration' %></td>
                <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
+               <td>
+                  <%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %>
+               </td>
 
                <% if ss[:added_by_amendment] %>
                   <% if ss[:added_by_amendment].is_a?(Statute) %>
@@ -84,9 +86,7 @@
 
                <% if ss[:expired_by_amendment] %>
                   <td><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
-                  <td><%= ss[:expired_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
                <% else %>
-                  <td></td>
                   <td></td>
                <% end %>
 

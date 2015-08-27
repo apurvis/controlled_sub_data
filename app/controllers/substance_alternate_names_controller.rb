@@ -19,6 +19,7 @@ class SubstanceAlternateNamesController < ApplicationController
 
   def new
     fail "No substance statute id supplied" unless params.has_key?(:substance_statute_id)
+
     @substance_alternate_name = SubstanceAlternateName.new
     @substance_alternate_name.substance_statute_id = params[:substance_statute_id]
     @substance_statute = SubstanceStatute.find_by_id(params[:substance_statute_id])
@@ -43,6 +44,20 @@ class SubstanceAlternateNamesController < ApplicationController
       redirect_to @substance_alternate_name
     else
       render 'edit'
+    end
+  end
+
+  def destroy
+    @substance_alternate_name = SubstanceAlternateName.where(id: params['id']).first
+    @substance_statute = @substance_alternate_name.substance_statute
+    notice = "Successfully deleted alternate name of #{@substance_alternate_name.name}"
+    @substance_alternate_name.destroy
+    flash.notice = notice
+
+    if @substance_statute
+      redirect_to substance_statute_path(@substance_statute)
+    else
+      redirect_to substance_alternate_names_path
     end
   end
 

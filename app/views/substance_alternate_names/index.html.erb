@@ -10,8 +10,8 @@
       <tr>
          <td><%= link_to san.name, substance_alternate_name_path(san) %></td>
          <% if san.substance %>
-            <td><%= link_to san.substance.name, substance_path(san.substance) %> (No linked statutes)</td>
-            <td></td>
+            <td><%= link_to san.substance.name, substance_path(san.substance) %> </td>
+            <td class='expiration'>No linked statutes</td>
          <% elsif san.substance_statute %>
             <td><%= link_to san.substance_statute.substance.name, substance_path(san.substance_statute.substance) %></td>
             <td><%= link_to san.substance_statute.statute.formatted_name, substance_statute_path(san.substance_statute) %></td>

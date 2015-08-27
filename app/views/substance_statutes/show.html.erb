@@ -1,5 +1,5 @@
 <div class='basic_info'>
-   <h2>Substance Statute Link</h2>
+   <h2>Substance Statute Link (<%= link_to 'Edit', edit_substance_statute_path(@substance_statute) %>)</h2>
    <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
    <h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
    <h3>
@@ -11,13 +11,14 @@
    </h3>
    <h3>Schedule Level: <%= @substance_statute.schedule_level ? @substance_statute.schedule_level : 'N/A' %></h3>
 
-   <h3><%= link_to 'Edit substance statute link', edit_substance_statute_path(@substance_statute) %></h3>
    <div class='alternate_names'>
       <h3>Alternate Names Defined by Statute</h3>
       <table>
          <% @substance_statute.substance_alternate_names.each do |n| %>
             <tr>
                <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+               <td class='button'><%= link_to 'edit', edit_substance_alternate_name_path(n) %></td>
+               <td class='button'><%= link_to 'delete', substance_alternate_name_path(n), method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
          <% end %>
       </table>
