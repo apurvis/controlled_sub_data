@@ -20,35 +20,8 @@
    <p><%= @statute.comment %></p>
 </div>
 
-<div class='amendments'>
-   <% if !@statute.is_a?(StatuteAmendment) %>
-      <h3>Amendments</h3>
-      <h4><%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %></h4>
-
-      <% if !@statute.statute_amendments.empty? %>
-         <table>
-            <tr>
-               <th>Amendment Identifier</th>
-               <th>Blue Book Code</th>
-               <th>Edit</th>
-               <th>Delete</th>
-            </tr>
-
-            <% @statute.statute_amendments.each do |amendment| %>
-               <tr>
-                  <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-                  <td><%= amendment.blue_book_code %></td>
-                  <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
-                  <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
-               </tr>
-            <% end %>
-         </table>
-      <% end %>
-   <% end %>
-</div>
-
 <div class='scheduled_substances'>
-   <h3>Changes in Scheduling Effected by This <%= @statute.class %></h3>
+   <h1>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h3>
    <h4><%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %></h4>
 
    <% if @substance_statute_data.size > 0 %>
@@ -59,6 +32,7 @@
             <th>AKA</th>
             <th>Added By</th>
             <th>Added On</th>
+            <th>Flags</th>
             <th>Expired By</th>
             <th>Scheduled Level</th>
             <th>Edit Link to Statute</th>
@@ -73,15 +47,23 @@
                </td>
 
                <% if ss[:added_by_amendment] %>
-                  <% if ss[:added_by_amendment].is_a?(Statute) %>
-                     <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
-                  <% else %>
-                     <td>Duplicated Federal</td>
-                  <% end %>
+                  <td>
+                     <% if ss[:added_by_amendment].is_a?(Statute) %>
+                        <%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %>
+                     <% else %>
+                        Duplicated Federal
+                     <% end %>
+                  </td>
                   <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
                <% else %>
                   <td>This Statute or Amendment</td>
                   <td>N/A</td>
+               <% end %>
+
+               <% if ss[:substance_statute].has_include_flags? %>
+                  <td class='addition'><%= ss[:substance_statute].include_flags_string %></td>
+               <% else %>
+                  <td>None</td>
                <% end %>
 
                <% if ss[:expired_by_amendment] %>
@@ -106,5 +88,32 @@
             </tr>
          <% end %>
       </table>
+   <% end %>
+</div>
+
+<div class='amendments'>
+   <% if !@statute.is_a?(StatuteAmendment) %>
+      <h1>Amendments</h1>
+      <h4><%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %></h4>
+
+      <% if !@statute.statute_amendments.empty? %>
+         <table>
+            <tr>
+               <th>Amendment Identifier</th>
+               <th>Blue Book Code</th>
+               <th>Edit</th>
+               <th>Delete</th>
+            </tr>
+
+            <% @statute.statute_amendments.each do |amendment| %>
+               <tr>
+                  <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+                  <td><%= amendment.blue_book_code %></td>
+                  <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
+                  <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
+               </tr>
+            <% end %>
+         </table>
+      <% end %>
    <% end %>
 </div>
