@@ -21,7 +21,7 @@ class StatutesController < ApplicationController
     end
 
     # First collect the federal duplicates
-    @substance_statute_data =  @statute.duplicated_federal_substance_statutes.map do |federal_dupe|
+    @substance_statute_data = @statute.duplicated_federal_substance_statutes.map do |federal_dupe|
       {
         substance_statute: federal_dupe,
         substance: federal_dupe.substance,
@@ -33,7 +33,7 @@ class StatutesController < ApplicationController
       }
     end
 
-    # First collect the original statute data
+    # Next collect any actual statute data
     @statute.substance_statutes.map do |ss|
       @substance_statute_data << {
         substance_statute: ss,
@@ -58,6 +58,16 @@ class StatutesController < ApplicationController
           expired_by_amendment: substance_change.expiring_amendment,
           schedule_level: substance_change.schedule_level
         }
+      end
+    end
+
+    @substance_statute_data.sort! do |a,b|
+      if a[:start_date] < b[:start_date]
+        -1
+      elsif a[:start_date] > b[:start_date]
+        1
+      else
+        a[:substance].name <=> b[:substance].name
       end
     end
   end

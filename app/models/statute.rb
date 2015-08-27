@@ -3,7 +3,7 @@ class Statute < ActiveRecord::Base
   audited
 
   has_many :substance_statutes
-  has_many :statute_amendments, foreign_key: :parent_id
+  has_many :statute_amendments, { foreign_key: :parent_id }, -> { order 'statutes.started_at ASC' }
 
   validates :state, presence: true, length: { minimum: 2 }
   validates :start_date, presence: true
