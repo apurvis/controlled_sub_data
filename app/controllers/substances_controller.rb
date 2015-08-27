@@ -3,7 +3,7 @@ class SubstancesController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @substances = Substance.order('name ASC').paginate(page: params[:page])
+    @substances = Substance.order('LOWER(name) ASC').paginate(page: params[:page])
   end
 
   def show
