@@ -11,7 +11,7 @@
       <tr>
          <td><%= link_to san.name, substance_alternate_name_path(san) %></td>
          <td><%= link_to san.substance.name, substance_path(san.substance) %></td>
-         <td><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
+         <td class='button'><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
       <tr>
    <% end %>
 </table>

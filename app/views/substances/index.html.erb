@@ -32,8 +32,8 @@
          <% else %>
             <td>Not Regulated</td>
          <% end %>
-         <td><%= link_to 'edit', edit_substance_path(substance) %></td>
-         <td><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
+         <td class='button'><%= link_to 'edit', edit_substance_path(substance) %></td>
+         <td class='button'><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
       <tr>
    <% end %>
 </table>

@@ -19,15 +19,19 @@ class Substance < ActiveRecord::Base
     first_regulating_statute.try(:start_date)
   end
 
+  def federally_scheduled_date
+    statutes.select { |s| s.state == Statute::FEDERAL }.first.try(:start_date)
+  end
+
   def regulated_by_statutes(as_of_date = nil)
     raw_statutes = as_of_date ? statutes.select { |s| s.start_date <= as_of_date } : statutes
 
-    if raw_statutes.any? { |s| s.state == Statute::FEDERAL }
-      federally_scheduled_date = raw_statutes.select { |s| s.state == Statute::FEDERAL }.first.start_date
+    if federally_scheduled_date
+      federal_inheritors = Statute.where(['duplicate_federal_as_of_date >= ?', federally_scheduled_date])
       if as_of_date && as_of_date >= federally_scheduled_date
-        federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
+        federal_inheritors = federal_inheritors.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
       else
-        federal_inheritors = Statute.where(['duplicate_federal_as_of_date IS NOT NULL AND duplicate_federal_as_of_date >= ?', federally_scheduled_date]).all
+        federal_inheritors = federal_inheritors.where('duplicate_federal_as_of_date IS NOT NULL').all
       end
       raw_statutes += federal_inheritors
     end
