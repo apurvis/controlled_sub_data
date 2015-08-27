@@ -1,23 +1,17 @@
 <h2><%= link_to 'Create New Substance', new_substance_path %></h2>
 
-<% if flash[:notice] %>
-   <div id="error_explanation">
-      <h2>
-         <%= flash[:notice] %>
-      </h2>
-   </div>
-<% end %>
-
 <table>
    <tr>
       <th>Name</th>
+      <th>AKA</th>
       <th>Classification</th>
       <th>DEA Code</th>
-      <th>First Scheduling Statute</th>
-      <th></th>
-      <th></th>
+      <th>First Scheduled By</th>
+      <th>Edit</th>
+      <th>Delete</th>
    </tr>
+
    <%= render @substances %>
 </table>
 
-   <%= will_paginate @substances %>
+<%= will_paginate @substances %>
