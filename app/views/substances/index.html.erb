@@ -13,7 +13,7 @@
       <th>Name</th>
       <th>Classification</th>
       <th>DEA Code</th>
-      <th>First Scheduled Date</th>
+      <th>First Scheduling Statute</th>
       <th></th>
       <th></th>
    </tr>
@@ -27,7 +27,11 @@
             <td></td>
          <% end %>
          <td><%= substance.dea_code %></td>
-         <td><%= substance.first_scheduled_date.try(:strftime, '%Y-%m-%d') %>
+         <% if substance.first_regulating_statute %>
+            <td><%= link_to substance.first_regulating_statute.formatted_name, statute_path(substance.first_regulating_statute) %></td>
+         <% else %>
+            <td>Not Regulated</td>
+         <% end %>
          <td><%= link_to 'edit', edit_substance_path(substance) %></td>
          <td><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
       <tr>
