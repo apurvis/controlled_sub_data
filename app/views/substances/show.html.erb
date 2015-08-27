@@ -13,7 +13,7 @@
    <% if @substance.first_regulating_statute %>
       <h4>First Regulating Statute: <%= link_to @substance.first_regulating_statute.formatted_name, statute_path(@substance.first_regulating_statute) %></h4>
    <% else %>
-      <h4>Not currently regulated</h4>
+      <h4><span class='expiration'>Not currently regulated</span></h4>
    <% end %>
 
    <% if @substance.substance_alternate_names.size > 0 %>
