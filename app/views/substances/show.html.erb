@@ -1,24 +1,41 @@
 <div class='basic_info'>
    <h1><%= @substance.name %> (<%= link_to 'Edit', edit_substance_path(@substance) %>)</h1>
 
-   <% if @substance.substance_classification.try(:name) %>
-      <h4>Classification: <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %></h4>
-   <% else %>
-      <h4>Classification:</h4>
-   <% end %>
-
-   <h4>Chemical Name: <%= @substance.chemical_formula %></h4>
-   <h4>DEA Code: <%= @substance.dea_code %></h4>
-   <h4>SMILES CODE: <%= @substance.chemical_formula_smiles_format %></h4>
-   <% if @substance.first_regulating_statute %>
-      <h4>First Regulating Statute: <%= link_to @substance.first_regulating_statute.formatted_name, statute_path(@substance.first_regulating_statute) %></h4>
-   <% else %>
-      <h4><span class='expiration'>Not currently regulated</span></h4>
-   <% end %>
+   <table class='properties'>
+      <tr>
+         <td class='properties'>Classification:</td>
+         <td class='property'>
+            <% if @substance.substance_classification.try(:name) %>
+               <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %>
+            <% end %>
+         </td>
+      </tr>
+      <tr>
+         <td class='properties'>Chemical Name:</td>
+         <td class='property'><%= @substance.chemical_formula %></td>
+      </tr>
+      <tr>
+         <td class='properties'>SMILES Code:</td>
+         <td class='property'><%= @substance.chemical_formula_smiles_format %></td>
+      </tr>
+      <tr>
+         <td class='properties'>DEA Code:</td>
+         <td class='property'><%= @substance.dea_code %></td>
+      </tr>
+      <tr>
+         <td class='properties'>First Regulating Statute:</td>
+         <% if @substance.first_regulating_statute %>
+            <td class='property'><%= link_to @substance.first_regulating_statute.formatted_name, statute_path(@substance.first_regulating_statute) %></td>
+         <% else %>
+            <td class='expiration'>Not currently regulated</td>
+         <% end %>
+      </tr>
+   </table>
+   <p></p>
 
    <% if @substance.substance_alternate_names.size > 0 %>
       <div class='alternate_names'>
-         <h3>Alternate Names</h3>
+         <h3>Deprecated Alternate Names</h3>
          <p><span class='expiration'>Defining alternate names at the substance level is deprecated behavior.  Alternate names must be added to the substance statute link.</span></p>
          <table>
             <% @substance.substance_alternate_names.each do |n| %>
@@ -29,7 +46,24 @@
          </table>
       </div>
    <% end %>
-   </div>
+
+   <% if @substance.alternate_names.size > 0 %>
+      <div class='alternate_names'>
+         <h3>Scheduled Alternate Names</h3>
+         <table>
+            <tr>
+               <th>AKA</th>
+               <th>Scheduled By</th>
+            </tr>
+            <% @substance.alternate_names.each do |n| %>
+               <tr>
+                  <td><%= link_to n.name, substance_alternate_name_path(n) %></td>
+                  <td><%= link_to n.substance_statute.statute.formatted_name, substance_statute_path(n.substance_statute) %></td>
+               </tr>
+            <% end %>
+         </table>
+      </div>
+   <% end %>
 </div>
 
 <% if @substance.comment && !@substance.comment.blank? %>

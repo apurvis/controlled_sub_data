@@ -26,6 +26,22 @@ td.button {
    text-align: center;
 }
 
+table.properties {
+   border: none;
+}
+
+td.properties {
+   background-color: #FBFCFF;
+   font-size: 140%;
+   font-weight: bold;
+}
+
+td.property {
+   background-color: #FBFCFF;
+   font-size: 140%;
+   text-align: right;
+}
+
 table, td {
    border: 1px solid black;
    background-color: white;
