@@ -1,5 +1,3 @@
-<h2><%= link_to "Create New Statute", new_statute_path %></h2>
-
 <% if @substance %>
   <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
   <% if @as_of_date %>
@@ -30,3 +28,5 @@
       <tr>
    <% end %>
 </table>
+
+<h2><%= link_to "Create New Statute", new_statute_path %></h2>

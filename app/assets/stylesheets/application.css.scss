@@ -69,9 +69,31 @@ div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.qui
 .basic_info {
    background-color: #E6F0FF;
    border: 1px solid black;
+   clear: both;
    padding-left: 10px;
    padding-bottom: 10px;
    padding-right: 10px;
    float: left;
+   width: 70%;
+}
+
+div.filter_notification {
+   background-color: #FFFFFF;
+   border: 1px solid black;
+   clear: both;
+   padding-left: 10px;
+   padding-bottom: 10px;
+   padding-right: 10px;
+   float: center;
+   width: 70%;
+   text-align: center;
+}
+
+div.comments {
+   border: 1px solid black;
+   clear: both;
+   padding-left: 10px;
+   padding-bottom: 10px;
+   padding-right: 10px;
    width: 70%;
 }

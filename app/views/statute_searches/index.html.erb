@@ -1,9 +1,16 @@
-<h4>Alternate names are also included in the drop down</h4>
-
-<%= form_tag(statutes_path, method: :get, class:'navbar-form', id: 'search-form') do %>
+<div class='basic_info'>
+<%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
   <%= label_tag(:search, 'Search for Substance:') %>
-  <%= select(:search, :substance_id, @name_id_map) %><br/>
+  <%= select(:search, :substance_id, @substance_name_id_map, { include_blank: true }) %><br/>
+
+  <h4> OR </h4>
+
+  <%= label_tag(:search_state, 'Search by State:') %>
+  <%= select(:search, :state, Statute::STATES, { include_blank: true }) %><br/>
+
   <%= label_tag(:as_of_date, 'As of Date (Optional)') %>
   <%= date_field(:search, :as_of_date) %><br/>
+
   <%= submit_tag('SEARCH') %>
 <% end %>
+</div>

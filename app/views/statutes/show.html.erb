@@ -15,14 +15,46 @@
    <h4><%= link_to "(Edit)", edit_statute_path(@statute) %></h4>
 </div>
 
-<div class='comment'>
+<div class='comments'>
    <h3>COMMENTS:</h3>
    <p><%= @statute.comment %></p>
 </div>
 
+<% if @as_of_date %>
+   <div class='filter_notification'>
+      <h4>Currently showing only substances regulated before <%= @as_of_date.strftime('%Y-%m-%d') %></h4>
+   </div>
+<% else %>
+   <div class='amendments'>
+      <% if !@statute.is_a?(StatuteAmendment) %>
+         <h2>Amendments (<%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>)</h2>
+
+         <% if !@statute.statute_amendments.empty? %>
+            <table>
+               <tr>
+                  <th>Amendment Identifier</th>
+                  <th>Blue Book Code</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+               </tr>
+
+               <% @statute.statute_amendments.each do |amendment| %>
+                  <tr>
+                     <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+                     <td><%= amendment.blue_book_code %></td>
+                     <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
+                     <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
+                  </tr>
+               <% end %>
+            </table>
+         <% end %>
+      <% end %>
+   </div>
+<% end %>
+
 <div class='scheduled_substances'>
-   <h1>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h3>
-   <h4><%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %></h4>
+   <h2>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h2>
+   <h3>(<%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>)</h3>
 
    <% if @substance_statute_data.size > 0 %>
       <table>
@@ -88,32 +120,5 @@
             </tr>
          <% end %>
       </table>
-   <% end %>
-</div>
-
-<div class='amendments'>
-   <% if !@statute.is_a?(StatuteAmendment) %>
-      <h1>Amendments</h1>
-      <h4><%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %></h4>
-
-      <% if !@statute.statute_amendments.empty? %>
-         <table>
-            <tr>
-               <th>Amendment Identifier</th>
-               <th>Blue Book Code</th>
-               <th>Edit</th>
-               <th>Delete</th>
-            </tr>
-
-            <% @statute.statute_amendments.each do |amendment| %>
-               <tr>
-                  <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-                  <td><%= amendment.blue_book_code %></td>
-                  <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
-                  <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
-               </tr>
-            <% end %>
-         </table>
-      <% end %>
    <% end %>
 </div>
