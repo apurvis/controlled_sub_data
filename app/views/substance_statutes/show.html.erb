@@ -24,12 +24,12 @@
       </table>
       <h4><%= link_to 'Add a new alternate name', new_substance_alternate_name_path(substance_statute_id: @substance_statute.id) %></h4>
    </div>
+   <div class='comments'>
+      <h3>COMMENTS:</h3>
+      <p><%= @substance_statute.comment %></p>
+   </div>
 </div>
 
-<div class='comments'>
-   <h3>COMMENTS:</h3>
-   <p><%= @substance_statute.comment %></p>
-</div>
 <hr>
 <div>
    <h3>Additional information about how this substance is scheduled by this statute</h2>

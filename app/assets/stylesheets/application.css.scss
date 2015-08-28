@@ -78,6 +78,8 @@ div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.qui
 }
 
 div.filter_notification {
+   color: red;
+   margin-top: 5px;
    background-color: #FFFFFF;
    border: 1px solid black;
    clear: both;
@@ -90,12 +92,13 @@ div.filter_notification {
 }
 
 div.comments {
+   margin-top: 5px;
    border: 1px solid black;
    clear: both;
    padding-left: 10px;
    padding-bottom: 10px;
    padding-right: 10px;
-
+   width: 100%;
 }
 
 div.main_container {

@@ -13,11 +13,10 @@
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
    <h4><%= link_to "(Edit)", edit_statute_path(@statute) %></h4>
-</div>
-
-<div class='comments'>
-   <h3>COMMENTS:</h3>
-   <p><%= @statute.comment %></p>
+   <div class='comments'>
+      <h3>COMMENTS:</h3>
+      <p><%= @statute.comment %></p>
+   </div>
 </div>
 
 <% if @as_of_date %>
