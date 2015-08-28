@@ -33,6 +33,7 @@
             <table>
                <tr>
                   <th>Amendment Identifier</th>
+                  <th>Title</th>
                   <th>Blue Book Code</th>
                   <th>Edit</th>
                   <th>Delete</th>
@@ -41,6 +42,7 @@
                <% @statute.statute_amendments.each do |amendment| %>
                   <tr>
                      <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+                     <td><%= amendment.name %></td>
                      <td><%= amendment.blue_book_code %></td>
                      <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
                      <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>

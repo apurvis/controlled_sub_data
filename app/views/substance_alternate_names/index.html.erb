@@ -14,7 +14,7 @@
             <td class='expiration'>No linked statutes</td>
          <% elsif san.substance_statute %>
             <td><%= link_to san.substance_statute.substance.name, substance_path(san.substance_statute.substance) %></td>
-            <td><%= link_to san.substance_statute.statute.formatted_name, substance_statute_path(san.substance_statute) %></td>
+            <td><%= link_to san.statute.formatted_name, substance_statute_path(san.substance_statute) %></td>
          <% else %>
             <td>no link to a substance - broken</td>
             <td></td>

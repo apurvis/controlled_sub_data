@@ -13,5 +13,6 @@
       = render 'layouts/navigation'
     %main{:role => "main"}
       = render 'layouts/messages'
-      = yield
+      %div{:class => 'main_container'}
+        = yield
       = render 'layouts/home'

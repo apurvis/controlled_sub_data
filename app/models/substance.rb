@@ -5,7 +5,7 @@ class Substance < ActiveRecord::Base
   belongs_to :substance_classification
   has_many :substance_statutes
   has_many :substance_alternate_names
-  has_many :statutes, { through: :substance_statutes }, -> { order 'statutes.started_at ASC' }
+  has_many :statutes, -> { order 'statutes.start_date ASC' }, { through: :substance_statutes }
 
   validates_uniqueness_of :name
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
