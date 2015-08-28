@@ -19,7 +19,7 @@ If there are spelling discrepancies for a substance name between different statu
 There are at heart ```Substances``` and ```Statutes```.  ```Statutes``` regulate many ```Substances``` and they are linked by ```SubstanceStatute``` records.
 
 ### Substances
-A ```Substance``` record just contains data about the substance being regulated and nothing about the regulations.
+A ```Substance``` record just contains data about the substance being regulated and nothing about the regulations it is subject to.
 
 ### Statutes
 A ```Statute``` contains info about the law (name, effective date, blue book code) and links to substances regulated by that law through ```SubstanceStatute``` records.
