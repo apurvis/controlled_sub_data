@@ -10,6 +10,7 @@
       <th>Name</th>
       <th>State</th>
       <th>Start Date</th>
+      <th>Title</th>
       <th>Expiration Date</th>
       <th>Blue Book Code</th>
       <th>Edit</th>
@@ -21,6 +22,7 @@
          <td><%= link_to(statute.formatted_name, statute_path(statute)) %></td>
          <td><%= statute.state %></td>
          <td><%= statute.start_date %></td>
+         <td><%= statute.name %></td>
          <td><%= statute.expiration_date %></td>
          <td><%= statute.blue_book_code %></td>
          <td class='button'><%= link_to 'Edit', edit_statute_path(statute) %></td>
