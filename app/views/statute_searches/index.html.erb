@@ -1,6 +1,6 @@
 <div class='basic_info'>
 <%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
-  <%= label_tag(:search, 'Search for Substance:') %>
+  <%= label_tag(:search, 'Search by Substance:') %>
   <%= select(:search, :substance_id, @substance_name_id_map, { include_blank: true }) %><br/>
 
   <h4> OR </h4>
