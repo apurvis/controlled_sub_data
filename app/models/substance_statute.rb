@@ -23,7 +23,7 @@ class SubstanceStatute < ActiveRecord::Base
   end
 
   def include_flags_string
-    include_flags.join(', ')
+    include_flags.map { |f| f.sub(/^include_/, '').humanize }.join(', ')
   end
 
   def has_include_flags?
