@@ -1,6 +1,6 @@
 class StatuteComparisonsController < ApplicationController
   def index
-    @states = Statute.all.map { |s| s.state }.uniq
+    @states = Statute.pluck(:state).uniq
   end
 
   def new

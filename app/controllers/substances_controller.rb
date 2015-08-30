@@ -3,7 +3,12 @@ class SubstancesController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @substances = Substance.order('LOWER(name) ASC').paginate(page: params[:page])
+    if params[:search]
+      @substances = Substance.where("LOWER(name) LIKE '%#{params[:search][:substring].downcase}%'")
+    else
+      @substances = Substance
+    end
+    @substances = @substances.order('LOWER(name) ASC').paginate(page: params[:page])
   end
 
   def show
