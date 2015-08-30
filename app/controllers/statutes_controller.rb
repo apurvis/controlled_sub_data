@@ -3,7 +3,6 @@ class StatutesController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    puts "params: #{params}"
     if params[:search]
       @as_of_date = params[:search][:as_of_date].try(:to_date)
 

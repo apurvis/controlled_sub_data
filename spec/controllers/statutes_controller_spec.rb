@@ -7,7 +7,7 @@ describe StatutesController do
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     user = FactoryGirl.create(:user)
-    user.confirm!
+    user.confirm
     sign_in user
 
     SubstanceStatute.create(substance: substance, statute: federal_statute)
