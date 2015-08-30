@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   root to: 'visitors#index'
 
+  resources :statute_comparisons
   resources :statute_searches
 
   resources :statutes

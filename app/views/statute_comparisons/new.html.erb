@@ -1,0 +1,39 @@
+<div class='basic_info'>
+   <h2>Comparing <%= @state_one %> to <%= @state_two %> <%= @as_of_date ? "as of #{@as_of_date}" : '' %></h2>
+</div>
+
+<div class='set_of_statutes'>
+   <h2><%= @state_one %> ONLY</h2>
+   <table>
+      <tr>
+         <th>Name</th>
+         <th>Molecule</th>
+         <th>AKA</th>
+         <th>Classification</th>
+         <th>DEA Code</th>
+         <th>First Scheduled By</th>
+         <th>Edit</th>
+         <th>Delete</th>
+      </tr>
+
+      <%= render @state_one_only %>
+   </table>
+</div>
+
+<div class='set_of_statutes'>
+   <h2><%= @state_two %> ONLY</h2>
+   <table>
+      <tr>
+         <th>Name</th>
+         <th>Molecule</th>
+         <th>AKA</th>
+         <th>Classification</th>
+         <th>DEA Code</th>
+         <th>First Scheduled By</th>
+         <th>Edit</th>
+         <th>Delete</th>
+      </tr>
+
+      <%= render @state_two_only %>
+   </table>
+</div>
