@@ -4,11 +4,13 @@ class SubstancesController < ApplicationController
 
   def index
     if params[:search]
-      @substances = Substance.where("LOWER(name) LIKE '%#{params[:search][:substring].downcase}%'")
+      @substances = Substance.joins('LEFT JOIN substance_statutes ON substance_statutes.substance_id=substances.id
+                                     LEFT JOIN substance_alternate_names ON substance_alternate_names.substance_statute_id=substance_statutes.id')
+                             .where("LOWER(substances.name) LIKE '%#{params[:search][:substring].downcase}%' OR LOWER(substance_alternate_names.name) LIKE '%#{params[:search][:substring].downcase}%'")
     else
       @substances = Substance
     end
-    @substances = @substances.order('LOWER(name) ASC').paginate(page: params[:page])
+    @substances = @substances.order('LOWER(substances.name) ASC').paginate(page: params[:page])
   end
 
   def show
