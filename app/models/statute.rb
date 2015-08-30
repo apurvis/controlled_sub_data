@@ -13,11 +13,13 @@ class Statute < ActiveRecord::Base
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   def duplicated_federal_substance_statutes(as_of_date = nil)
-    if duplicate_federal_as_of_date
-      statutes = Statute.where(state: FEDERAL).where(['start_date <= ?', duplicate_federal_as_of_date])
-      statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
+    duplicated_federal_statutes(as_of_date).map { |s| s.substance_statutes }.flatten.compact
+  end
 
-      statutes.map { |s| s.substance_statutes }.flatten.compact
+  def duplicated_federal_statutes(as_of_date = nil)
+    if duplicate_federal_as_of_date
+      statutes = Statute.where(state: FEDERAL).where(['start_date <= ?', duplicate_federal_as_of_date]).all
+      as_of_date ? statutes.select { |s| s.start_date <= as_of_date } : statutes
     else
       []
     end
