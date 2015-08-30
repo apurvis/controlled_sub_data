@@ -26,10 +26,6 @@ td.button {
    text-align: center;
 }
 
-table.properties {
-   border: none;
-}
-
 td.properties {
    background-color: #FBFCFF;
    font-size: 140%;
@@ -45,6 +41,10 @@ td.property {
 table, td {
    border: 1px solid black;
    background-color: white;
+}
+
+table.properties {
+   border: 0px none !important;
 }
 
 td, th {

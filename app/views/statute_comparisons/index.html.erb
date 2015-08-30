@@ -1,9 +1,19 @@
 <%= form_tag(new_statute_comparison_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
-  <%= label_tag(:compare, 'COMPARE') %>
-  <%= select(:compare, :state_one, @states) %><br/>
-  <%= label_tag(:compare_to, 'TO') %>
-  <%= select(:compare, :state_two, @states) %><br/>
-  <%= label_tag(:as_of_date, 'AS OF') %>
-  <%= date_field(:compare, :as_of_date) %><br/>
-  <%= submit_tag('Compare') %>
+   <table class='properties'>
+      <tr>
+         <td><%= label_tag(:compare, 'COMPARE') %></td>
+         <td><%= select(:compare, :state_one, @states) %></td>
+      </tr>
+      <tr>
+         <td><%= label_tag(:compare_to, 'TO') %></td>
+         <td><%= select(:compare, :state_two, @states) %></td>
+      </tr>
+      <tr>
+         <td><%= label_tag(:as_of_date, 'AS OF') %></td>
+         <td><%= date_field(:compare, :as_of_date) %></td>
+      <tr>
+      <tr>
+         <td><%= submit_tag('Compare') %></td>
+      </tr>
+   </table>
 <% end %>
