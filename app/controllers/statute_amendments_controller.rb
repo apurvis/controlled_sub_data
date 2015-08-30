@@ -1,5 +1,6 @@
 class StatuteAmendmentsController < StatutesController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def new
     if params['parent_id']

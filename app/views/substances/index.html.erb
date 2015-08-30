@@ -1,35 +1,18 @@
 <h2><%= link_to 'Create New Substance', new_substance_path %></h2>
 
-<% if flash[:notice] %>
-   <div id="error_explanation">
-      <h2>
-         <%= flash[:notice] %>
-      </h2>
-   </div>
-<% end %>
-
 <table>
    <tr>
       <th>Name</th>
+      <th>Molecule</th>
+      <th>AKA</th>
       <th>Classification</th>
       <th>DEA Code</th>
-      <th>First Scheduled Date</th>
-      <th></th>
-      <th></th>
+      <th>First Scheduled By</th>
+      <th>Edit</th>
+      <th>Delete</th>
    </tr>
 
-   <% @substances.each do |substance| %>
-      <tr>
-         <td><%= link_to substance.name, substance_path(substance) %></td>
-         <% if substance.substance_classification.try(:name) %>
-            <td><%= link_to substance.substance_classification.name, substance_classification_path(substance.substance_classification) %></td>
-         <% else %>
-            <td></td>
-         <% end %>
-         <td><%= substance.dea_code %></td>
-         <td><%= substance.first_scheduled_date.try(:strftime, '%Y-%m-%d') %>
-         <td><%= link_to 'edit', edit_substance_path(substance) %></td>
-         <td><%= link_to 'delete', substance_path(substance), method: :delete, data: { confirm: "Are you sure?" } %></td>
-      <tr>
-   <% end %>
+   <%= render @substances %>
 </table>
+
+<%= will_paginate @substances %>

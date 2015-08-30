@@ -5,25 +5,42 @@ class Substance < ActiveRecord::Base
   belongs_to :substance_classification
   has_many :substance_statutes
   has_many :substance_alternate_names
+  has_many :statutes, -> { order 'statutes.start_date ASC' }, { through: :substance_statutes }
 
   validates_uniqueness_of :name
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
-  def regulated_by_statutes(as_of_date = nil)
-    statutes = substance_statutes.sort { |a,b| a.statute.start_date <=> b.statute.start_date }.map { |ss| ss.statute }
-    statutes.select! { |s| s.start_date <= as_of_date } if as_of_date
 
-    if statutes.any? { |s| s.state == 'REVAMPED_FEDERAL' }
-      federally_scheduled_date = statutes.select { |s| s.state == 'REVAMPED_FEDERAL' }.first.start_date
+  def alternate_names
+    substance_statutes.map { |ss| ss.substance_alternate_names }.flatten
+  end
+
+  def first_regulating_statute
+    statutes.first
+  end
+
+  def first_scheduled_date
+    first_regulating_statute.try(:start_date)
+  end
+
+  def federally_scheduled_date
+    statutes.select { |s| s.state == Statute::FEDERAL }.first.try(:start_date)
+  end
+
+  def regulated_by_statutes(as_of_date = nil)
+    raw_statutes = as_of_date ? statutes.select { |s| s.start_date <= as_of_date } : statutes
+
+    if federally_scheduled_date
+      federal_inheritors = Statute.where(['duplicate_federal_as_of_date >= ?', federally_scheduled_date])
       if as_of_date && as_of_date >= federally_scheduled_date
-        federal_inheritors = Statute.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
+        federal_inheritors = federal_inheritors.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
       else
-        federal_inheritors = Statute.where(['duplicate_federal_as_of_date IS NOT NULL']).all
+        federal_inheritors = federal_inheritors.where('duplicate_federal_as_of_date IS NOT NULL').all
       end
-      statutes += federal_inheritors
+      raw_statutes += federal_inheritors
     end
-    statutes
+    raw_statutes
   end
 
   def self.find_or_create_substance(name, options = {})
@@ -37,7 +54,6 @@ class Substance < ActiveRecord::Base
     end
 
     s.dea_code = options[:dea_code] if options[:dea_code]
-    s.first_scheduled_date = options[:first_scheduled_date] if options[:first_scheduled_date]
     s.save
 
     s

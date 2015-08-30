@@ -1,5 +1,6 @@
 class SubstanceClassificationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def index
     @classifications = SubstanceClassification.all

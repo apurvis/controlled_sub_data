@@ -19,7 +19,7 @@ If there are spelling discrepancies for a substance name between different statu
 There are at heart ```Substances``` and ```Statutes```.  ```Statutes``` regulate many ```Substances``` and they are linked by ```SubstanceStatute``` records.
 
 ### Substances
-A ```Substance``` record just contains data about the substance being regulated and nothing about the regulations.
+A ```Substance``` record just contains data about the substance being regulated and nothing about the regulations it is subject to.
 
 ### Statutes
 A ```Statute``` contains info about the law (name, effective date, blue book code) and links to substances regulated by that law through ```SubstanceStatute``` records.
@@ -30,6 +30,9 @@ It also contains links to a rolling change log in the form of ```StatuteAmendmen
 
 ### SubstanceStatutes
 A ```SubstanceStatute``` record contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
+
+### SubstanceAlternateName
+A ```SubstanceAlternateName``` is another string that is attached to a ```SubstanceStatute```.  It is an "AKA" or equivalent string for that substance as it is regulated by that statute.
 
 ---
 
@@ -60,8 +63,12 @@ You then add/remove substances to the statute by clicking on "Add a substance to
 1. If the substance doesn't exist in the database yet, you must create a record for it through the Substances page.
 2. From the Statute page, click "Add/expire a substance".
 3. Choose a substance from the drop down.
-3. * If this amendment is expiring this substance's scheduling, check the "is an expiration" box
-3. * If this amendment is changing this substance's schedule level, input a new value in the schedule level box.
+  * If this amendment is expiring this substance's scheduling, check the "is an expiration" box
+  * If this amendment is changing this substance's schedule level, input a new value in the schedule level box.
+
+### Adding Alternate Names
+
+Navigate to a SubstanceStatute; click "Add alternate name".
 
 ### Search for Statutes
 

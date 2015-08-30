@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810035031) do
+ActiveRecord::Schema.define(version: 20150827074902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,9 +61,15 @@ ActiveRecord::Schema.define(version: 20150810035031) do
   create_table "substance_alternate_names", force: :cascade do |t|
     t.integer  "substance_id"
     t.string   "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "substance_statute_id"
+    t.datetime "deleted_at"
   end
+
+  add_index "substance_alternate_names", ["deleted_at"], name: "index_substance_alternate_names_on_deleted_at", using: :btree
+  add_index "substance_alternate_names", ["substance_id"], name: "index_substance_alternate_names_on_substance_id", using: :btree
+  add_index "substance_alternate_names", ["substance_statute_id"], name: "index_substance_alternate_names_on_substance_statute_id", using: :btree
 
   create_table "substance_classifications", force: :cascade do |t|
     t.string   "name"
@@ -102,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150810035031) do
   end
 
   add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree
+  add_index "substance_statutes", ["statute_id"], name: "index_substance_statutes_on_statute_id", using: :btree
   add_index "substance_statutes", ["substance_id", "statute_id", "schedule_level"], name: "idx_substance_schedule_level", unique: true, using: :btree
 
   create_table "substances", force: :cascade do |t|
@@ -113,7 +120,6 @@ ActiveRecord::Schema.define(version: 20150810035031) do
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
     t.integer  "substance_classification_id"
     t.datetime "deleted_at"
-    t.date     "first_scheduled_date",                        comment: "Parsed from statements like Chlordiazepoxide (2744) Effective 7/2/1975"
     t.string   "comment"
   end
 

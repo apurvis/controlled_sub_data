@@ -1,6 +1,12 @@
 <div class='basic_info'>
-<h3>Original Name: <%= link_to @substance_alternate_name.substance.name, substance_path(@substance_alternate_name.substance) %></h2>
-<h2>Alternate Name: <%= @substance_alternate_name.name %></h2>
-
-<h3><%= link_to 'Edit', edit_substance_alternate_name_path(@substance_alternate_name) %></h4>
+   <h3>Original Name: <%= link_to @substance.name, substance_path(@substance) %></h3>
+   <h2>Alternate Name: <%= @substance_alternate_name.name %></h2>
+   <h3>
+      <% if @statute %>
+         Defined in Statute: <%= link_to(@substance_alternate_name.substance_statute.statute.formatted_name, substance_statute_path(@substance_alternate_name.substance_statute)) %>
+      <% else %>
+         <span class='expiration'>Not linked to any statute.  DEPRECATED BEHAVIOR</span>
+      <% end %>
+   </h3>
+   <h3><%= link_to 'Edit', edit_substance_alternate_name_path(@substance_alternate_name) %></h4>
 </div>

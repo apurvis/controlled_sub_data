@@ -1,8 +1,9 @@
 class SubstancesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def index
-    @substances = Substance.all.order('name ASC')
+    @substances = Substance.order('LOWER(name) ASC').paginate(page: params[:page])
   end
 
   def show
@@ -41,10 +42,11 @@ class SubstancesController < ApplicationController
     @substance = Substance.where(id: params['id']).first
 
     if @substance.substance_statutes.size > 0
-      flash.alert = "You can't delete a substance that still has links to statutes!  This one still links to #{@substance.substance_statutes.size} statutes."
+      flash.alert = "You can't delete a substance that still has links to statutes!.  This one still links to #{@substance.substance_statutes.size} statutes.  Please delete the links between this substance and its statutes through the statutes page and then try again."
     else
-      flash.notice = "Successfully deleted substance #{@substance.name}"
+      notice = "Successfully deleted substance #{@substance.name}"
       @substance.destroy
+      flash.notice = notice
     end
     redirect_to substances_path
   end

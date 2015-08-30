@@ -1,5 +1,3 @@
-<h2><%= link_to "Create New Statute", new_statute_path %></h2>
-
 <% if @substance %>
   <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
   <% if @as_of_date %>
@@ -13,8 +11,10 @@
       <th>State</th>
       <th>Start Date</th>
       <th>Expiration Date</th>
+      <th>Title</th>
       <th>Blue Book Code</th>
-      <th></th>
+      <th>Edit</th>
+      <th>Delete</th>
    </tr>
 
    <% @statutes.each do |statute| %>
@@ -23,8 +23,12 @@
          <td><%= statute.state %></td>
          <td><%= statute.start_date %></td>
          <td><%= statute.expiration_date %></td>
+         <td><%= statute.name %></td>
          <td><%= statute.blue_book_code %></td>
-         <td><%= link_to 'Edit', edit_statute_path(statute) %></td>
+         <td class='button'><%= link_to 'Edit', edit_statute_path(statute) %></td>
+         <td class='button'><%= link_to 'Delete', statute_path(statute), method: :delete, data: { confirm: "Are you sure?" } %></td>
       <tr>
    <% end %>
 </table>
+
+<h2><%= link_to "Create New Statute", new_statute_path %></h2>

@@ -1,5 +1,6 @@
 class SubstanceStatutesController < ApplicationController
   before_action :authenticate_user!
+  before_action :vip_only, except: [:index, :show]
 
   def show
     @substance_statute = SubstanceStatute.where(id: params['id']).first
@@ -40,8 +41,15 @@ class SubstanceStatutesController < ApplicationController
 
   def destroy
     @substance_statute = SubstanceStatute.where(id: params['id']).first
-    flash.notice = "Successfully Deleted link from #{@substance_statute.statute.formatted_name} to #{@substance_statute.substance.name}"
-    @substance_statute.destroy
+
+    if @substance_statute.substance_alternate_names.size > 0
+      flash.alert = "You cannot delete this substance statute link until you remove the #{@substance_statute.substance_alternate_names.size} associated alternate names"
+    else
+      notice = "Successfully Deleted link from #{@substance_statute.statute.formatted_name} to #{@substance_statute.substance.name}"
+      @substance_statute.destroy
+      flash.notice = notice
+    end
+
     redirect_to @substance_statute.statute
   end
 

@@ -1,17 +1,25 @@
-<h2><%= link_to "Create New Alternate Name", new_substance_alternate_name_path %></h2>
-
 <table>
    <tr>
       <th>Alternate Name</th>
       <th>Original Name</th>
+      <th>Defined In Statute</th>
       <th></th>
    </tr>
 
    <% @substance_alternate_names.each do |san| %>
       <tr>
          <td><%= link_to san.name, substance_alternate_name_path(san) %></td>
-         <td><%= link_to san.substance.name, substance_path(san.substance) %></td>
-         <td><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
+         <% if san.substance %>
+            <td><%= link_to san.substance.name, substance_path(san.substance) %> </td>
+            <td class='expiration'>No linked statutes</td>
+         <% elsif san.substance_statute %>
+            <td><%= link_to san.substance_statute.substance.name, substance_path(san.substance_statute.substance) %></td>
+            <td><%= link_to san.statute.formatted_name, substance_statute_path(san.substance_statute) %></td>
+         <% else %>
+            <td>no link to a substance - broken</td>
+            <td></td>
+         <% end %>
+         <td class='button'><%= link_to 'edit', edit_substance_alternate_name_path(san) %></td>
       <tr>
    <% end %>
 </table>

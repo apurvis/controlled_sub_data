@@ -6,84 +6,102 @@
    <% end %>
 
    <h3>State: <%= @statute.state %></h3>
-   <h4>Type: <%= @statute.class %></h4>
    <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
    <h4>Expiration Date: <%= @statute.expiration_date %></h4>
    <h4>Blue Book Code: <%= @statute.blue_book_code %></h4>
    <% if @statute.duplicate_federal_as_of_date %>
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
-   <h4><%= link_to "Edit #{@statute.class}", edit_statute_path(@statute) %></h4>
+   <h4><%= link_to "(Edit)", edit_statute_path(@statute) %></h4>
+   <div class='comments'>
+      <h3>COMMENTS:</h3>
+      <p><%= @statute.comment %></p>
+   </div>
 </div>
 
-<div class='comment'>
-   <h3>COMMENTS:</h3>
-   <p><%= @statute.comment %></p>
-</div>
+<% if @as_of_date %>
+   <div class='filter_notification'>
+      <h4>Currently showing only substances regulated before <%= @as_of_date.strftime('%Y-%m-%d') %></h4>
+   </div>
+<% else %>
+   <div class='amendments'>
+      <% if !@statute.is_a?(StatuteAmendment) %>
+         <h2>Amendments (<%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>)</h2>
 
-<div class='amendments'>
-   <% if !@statute.is_a?(StatuteAmendment) %>
-      <h3>Amendments</h3>
-      <h4><%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %></h4>
-
-
-      <% if !@statute.statute_amendments.empty? %>
-         <table>
-            <tr>
-               <th>Amendment Identifier</th>
-               <th>Blue Book Code</th>
-            </tr>
-
-            <% @statute.statute_amendments.sort { |a,b| a.start_date <=> b.start_date }.each do |amendment| %>
+         <% if !@statute.statute_amendments.empty? %>
+            <table>
                <tr>
-                  <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-                  <td><%= amendment.blue_book_code %></td>
+                  <th>Amendment Identifier</th>
+                  <th>Title</th>
+                  <th>Blue Book Code</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                </tr>
-            <% end %>
-         </table>
+
+               <% @statute.statute_amendments.each do |amendment| %>
+                  <tr>
+                     <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
+                     <td><%= amendment.name %></td>
+                     <td><%= amendment.blue_book_code %></td>
+                     <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
+                     <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
+                  </tr>
+               <% end %>
+            </table>
+         <% end %>
       <% end %>
-   <% end %>
-</div>
+   </div>
+<% end %>
 
 <div class='scheduled_substances'>
-   <h3>Changes in Scheduling Effected by This <%= @statute.class %></h3>
-   <h4><%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %></h4>
+   <h2>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h2>
+   <h3>(<%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>)</h3>
 
    <% if @substance_statute_data.size > 0 %>
       <table>
          <tr>
             <th>Change Type</th>
             <th>Substance Name</th>
+            <th>AKA</th>
             <th>Added By</th>
             <th>Added On</th>
+            <th>Inclusions</th>
             <th>Expired By</th>
-            <th>Expired Date</th>
             <th>Scheduled Level</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Edit Link to Statute</th>
+            <th>Delete Link to Statute</th>
          </tr>
          <% @substance_statute_data.each do |ss| %>
             <tr>
                <td><%= ss[:is_expiration] != true ? 'addition' : 'expiration' %></td>
                <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
+               <td>
+                  <%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %>
+               </td>
 
                <% if ss[:added_by_amendment] %>
-                  <% if ss[:added_by_amendment].is_a?(Statute) %>
-                     <td><%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %></td>
-                  <% else %>
-                     <td>Duplicated Federal</td>
-                  <% end %>
+                  <td>
+                     <% if ss[:added_by_amendment].is_a?(Statute) %>
+                        <%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %>
+                     <% else %>
+                        Duplicated Federal
+                     <% end %>
+                  </td>
                   <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
                <% else %>
                   <td>This Statute or Amendment</td>
                   <td>N/A</td>
                <% end %>
 
+               <% if ss[:substance_statute].has_include_flags? %>
+                  <td class='addition'><%= ss[:substance_statute].include_flags_string %></td>
+               <% else %>
+                  <td>None</td>
+               <% end %>
+
                <% if ss[:expired_by_amendment] %>
                   <td><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
-                  <td><%= ss[:expired_by_amendment].start_date.strftime('%Y-%m-%d') %></td>
                <% else %>
-                  <td></td>
                   <td></td>
                <% end %>
 
@@ -94,8 +112,8 @@
                <% end %>
 
                <% unless ss[:added_by_amendment] %>
-                  <td><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
-                  <td><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?"} %></td>
+                  <td class='button'><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
+                  <td class='button'><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?" } %></td>
                <% else %>
                   <td></td>
                   <td></td>

@@ -19,7 +19,7 @@
 
    <p>
       <%= f.label :substance %><br/>
-      <%= select(:substance_statute, :substance_id, Substance.all.map { |s| [s.name[0..50], s.id] } ) %>
+      <%= select(:substance_statute, :substance_id, Substance.all.sort { |a,b| a.name <=> b.name }.map { |s| [s.name[0..50], s.id] } ) %>
    </p>
 
    <% if @substance_statute.statute.is_a?(StatuteAmendment)%>
