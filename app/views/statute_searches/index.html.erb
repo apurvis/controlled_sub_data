@@ -1,16 +1,16 @@
 <div class='basic_info'>
-<%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
-  <%= label_tag(:search, 'Search by Substance:') %>
-  <%= select(:search, :substance_id, @substance_name_id_map, { include_blank: true }) %><br/>
+   <%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
+      <%= label_tag(:search, 'Search by Substance:') %>
+      <%= select(:search, :substance_id, @substance_name_id_map, { include_blank: true }) %><br/>
 
-  <h4> OR </h4>
+      <h4> OR </h4>
 
-  <%= label_tag(:search_state, 'Search by State:') %>
-  <%= select(:search, :state, Statute::STATES, { include_blank: true }) %><br/>
+      <%= label_tag(:search_state, 'Search by State:') %>
+      <%= select(:search, :state, Statute::STATES, { include_blank: true }) %><br/>
 
-  <%= label_tag(:as_of_date, 'As of Date (Optional)') %>
-  <%= date_field(:search, :as_of_date) %><br/>
+      <%= label_tag(:as_of_date, 'As of Date (Optional)') %>
+      <%= date_field(:search, :as_of_date) %><br/>
 
-  <%= submit_tag('SEARCH') %>
-<% end %>
+      <%= submit_tag('SEARCH') %>
+   <% end %>
 </div>
