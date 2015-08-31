@@ -48,7 +48,7 @@ class StatutesController < ApplicationController
         substance_statute: federal_dupe,
         substance: federal_dupe.substance,
         start_date: @statute.duplicate_federal_as_of_date,
-        added_by_amendment: '',
+        added_by_amendment: nil,
         is_expiration: false,
         expired_by_amendment: federal_dupe.expiring_amendment(@as_of_date),
         schedule_level: federal_dupe.schedule_level

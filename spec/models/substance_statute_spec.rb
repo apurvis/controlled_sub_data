@@ -55,5 +55,18 @@ describe SubstanceStatute do
       expiring_statute.save
       expect(federal_first_regulation.expiring_amendment(expiration_date - 100.days)).to be_nil
     end
+
+    context 'duplicated federal statutes' do
+      let(:duplicated_statute) do
+        Statute.create(duplicate_federal_as_of_date: expiration_date - 1.year, parent_id: federal_statute.id, start_date: expiration_date)
+      end
+
+      it 'should not find the expiration if it expired in a different state' do
+
+      end
+
+      it 'should find the expiration if duped federal then expired' do
+      end
+    end
   end
 end
