@@ -20,10 +20,12 @@ class StatuteComparisonsController < ApplicationController
       @state_two_statutes = @state_two_statutes.where(['start_date <= ?', @as_of_date])
     end
 
-    @state_one_substance_statutes = @state_one_statutes.map { |s| s.substance_statutes }.flatten
+    @state_one_substance_statutes = @state_one_statutes.map { |s| s.substance_statutes.additions }.flatten
+    @state_one_substance_statutes.reject! { |ss| ss.expiration_date && (!@as_of_date || ss.expiration_date <= @as_of_date) }
     @state_one_substance_statutes += @state_one_statutes.map { |s| s.duplicated_federal_substance_statutes }.flatten
 
-    @state_two_substance_statutes = @state_two_statutes.map { |s| s.substance_statutes }.flatten
+    @state_two_substance_statutes = @state_two_statutes.map { |s| s.substance_statutes.additions }.flatten
+    @state_two_substance_statutes.reject! { |ss| ss.expiration_date && (!@as_of_date || ss.expiration_date <= @as_of_date) }
     @state_two_substance_statutes += @state_two_statutes.map { |s| s.duplicated_federal_substance_statutes }.flatten
 
     @state_one_only = []

@@ -21,7 +21,7 @@
 
 <% if @as_of_date %>
    <div class='filter_notification'>
-      <h4>Currently showing only substances regulated before <%= @as_of_date.strftime('%Y-%m-%d') %></h4>
+      <h4>Currently only showing regulations as of <%= @as_of_date.strftime('%Y-%m-%d') %> (additions and expirations after this date will not appear!)</h4>
    </div>
 <% else %>
    <div class='amendments'>

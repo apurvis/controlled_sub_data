@@ -11,7 +11,6 @@ class Substance < ActiveRecord::Base
   validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
   validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
 
-
   def alternate_names
     substance_statutes.map { |ss| ss.substance_alternate_names }.flatten
   end

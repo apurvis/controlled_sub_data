@@ -50,7 +50,7 @@ class StatutesController < ApplicationController
         start_date: @statute.duplicate_federal_as_of_date,
         added_by_amendment: '',
         is_expiration: false,
-        expired_by_amendment: federal_dupe.expiring_amendment,
+        expired_by_amendment: federal_dupe.expiring_amendment(@as_of_date),
         schedule_level: federal_dupe.schedule_level
       }
     end
@@ -63,7 +63,7 @@ class StatutesController < ApplicationController
         start_date: @statute.start_date,
         added_by_amendment: nil,
         is_expiration: ss.is_expiration,
-        expired_by_amendment: ss.expiring_amendment,
+        expired_by_amendment: ss.expiring_amendment(@as_of_date),
         schedule_level: ss.schedule_level
       }
     end
@@ -77,7 +77,7 @@ class StatutesController < ApplicationController
           start_date: amendment.start_date,
           added_by_amendment: amendment,
           is_expiration: ss.is_expiration?,
-          expired_by_amendment: ss.expiring_amendment,
+          expired_by_amendment: ss.expiring_amendment(@as_of_date),
           schedule_level: ss.schedule_level
         }
       end
