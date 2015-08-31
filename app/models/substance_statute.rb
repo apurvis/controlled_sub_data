@@ -34,6 +34,10 @@ class SubstanceStatute < ActiveRecord::Base
     include_flags.size > 0
   end
 
+  def regulates_same_as?(substance_statute)
+    regulation_differences(substance_statute).empty?
+  end
+
   # Comparison method
   def regulation_differences(substance_statute)
     differences = []

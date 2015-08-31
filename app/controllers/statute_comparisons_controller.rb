@@ -7,7 +7,7 @@ class StatuteComparisonsController < ApplicationController
     @state_one = params[:compare][:state_one]
     @state_two = params[:compare][:state_two]
     if @state_one == @state_two
-      flash.alert = "Please choose different states to compare."
+      flash.alert = 'Please choose different states to compare.'
       redirect_to statute_comparisons_path
     end
     @as_of_date = params[:compare][:as_of_date].try(:to_date)
@@ -30,13 +30,13 @@ class StatuteComparisonsController < ApplicationController
     @state_two_only = []
 
     @state_one_substance_statutes.each do |ss|
-      unless @state_two_substance_statutes.any? { |ss2| ss2.substance == ss.substance }
+      unless @state_two_substance_statutes.any? { |ss2| ss2.regulates_same_as?(ss) }
         @state_one_only << ss.substance
       end
     end
 
     @state_two_substance_statutes.each do |ss|
-      unless @state_one_substance_statutes.any? { |ss2| ss2.substance == ss.substance }
+      unless @state_one_substance_statutes.any? { |ss2| ss2.regulates_same_as?(ss) }
         @state_two_only << ss.substance
       end
     end

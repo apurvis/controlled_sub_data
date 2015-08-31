@@ -35,8 +35,6 @@ class Substance < ActiveRecord::Base
       federal_inheritors = Statute.where(['duplicate_federal_as_of_date >= ?', federally_scheduled_date])
       if as_of_date && as_of_date >= federally_scheduled_date
         federal_inheritors = federal_inheritors.where(['duplicate_federal_as_of_date <= ?', as_of_date]).all
-      else
-        federal_inheritors = federal_inheritors.where('duplicate_federal_as_of_date IS NOT NULL').all
       end
       raw_statutes += federal_inheritors
     end

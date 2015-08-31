@@ -73,7 +73,11 @@
          </tr>
          <% @substance_statute_data.each do |ss| %>
             <tr>
-               <td><%= ss[:is_expiration] != true ? 'addition' : 'expiration' %></td>
+               <% if ss[:is_expiration] != true %>
+                  <td class='addition'>addition</td>
+               <% else %>
+                  <td class='expiration'>expiration</td>
+               <% end %>
                <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
                <td>
                   <%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %>
@@ -100,7 +104,7 @@
                <% end %>
 
                <% if ss[:expired_by_amendment] %>
-                  <td><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
+                  <td class='expiration'><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
                <% else %>
                   <td></td>
                <% end %>
