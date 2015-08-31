@@ -4,7 +4,7 @@ FactoryGirl.define do
     start_date '1970-01-01'.to_date
 
     after(:create) do |statute, evaluator|
-      create(:substance_statute, statute: statute, substance: build(:substance))
+      create(:substance_statute, statute: statute, substance: create(:substance))
     end
   end
 
@@ -13,7 +13,7 @@ FactoryGirl.define do
     start_date '1980-08-01'
 
     after(:create) do |statute, evaluator|
-      create(:substance_statute, statute: statute, substance: build(:substance))
+      create(:substance_statute, statute: statute, substance: create(:substance))
     end
   end
 end
