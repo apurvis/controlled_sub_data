@@ -27,5 +27,12 @@ describe SubstanceStatute do
       matching_regulation.include_salts = true
       expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([SubstanceStatute::DIFFERENT_SALTS])
     end
+
+    it 'can identify multiple levels of mismatch' do
+      federal_first_regulation.schedule_level = 5
+      matching_regulation.include_salts = true
+      matching_regulation.schedule_level = 3
+      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([SubstanceStatute::DIFFERENT_SALTS, SubstanceStatute::DIFFERENT_SCHEDULE])
+    end
   end
 end
