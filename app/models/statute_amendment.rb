@@ -1,5 +1,5 @@
 class StatuteAmendment < Statute
-  belongs_to :statute, foreign_key: :parent_id
+  belongs_to :statute, { foreign_key: :parent_id, inverse_of: :statute_amendments }
 
   def formatted_name
     if start_date

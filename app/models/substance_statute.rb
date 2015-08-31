@@ -6,7 +6,7 @@ class SubstanceStatute < ActiveRecord::Base
   belongs_to :statute
   has_many :substance_alternate_names
 
-  scope :additions, -> { where(is_expiration: false) }
+  scope :additions, -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
   scope :expirations, -> { where(is_expiration: true) }
 
   DIFFERENT_SUBSTANCES = 'Different substances'
