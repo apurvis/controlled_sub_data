@@ -6,6 +6,10 @@ class StatuteComparisonsController < ApplicationController
   def new
     @state_one = params[:compare][:state_one]
     @state_two = params[:compare][:state_two]
+    if @state_one == @state_two
+      flash.alert = "Please choose different states to compare"
+      redirect_to statute_comparisons_path
+    end
     @as_of_date = params[:compare][:as_of_date].try(:to_date)
 
     @state_one_statutes = Statute.where(state: @state_one)
@@ -36,10 +40,5 @@ class StatuteComparisonsController < ApplicationController
         @state_two_only << ss.substance
       end
     end
-
-    puts "state one only\n----"
-    puts @state_one_only.map {|s| s.name}.join(",")
-    puts "state two only\n----"
-    puts @state_two_only.map {|s| s.name}.join(",")
   end
 end

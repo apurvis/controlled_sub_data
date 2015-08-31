@@ -7,4 +7,3 @@ bundle exec rails server
 
 #Start psql interactive local session
 #/usr/local/bin/psql -d controlled_sub_data_development
-
