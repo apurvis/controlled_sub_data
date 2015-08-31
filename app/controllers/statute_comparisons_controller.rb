@@ -7,7 +7,7 @@ class StatuteComparisonsController < ApplicationController
     @state_one = params[:compare][:state_one]
     @state_two = params[:compare][:state_two]
     if @state_one == @state_two
-      flash.alert = "Please choose different states to compare"
+      flash.alert = "Please choose different states to compare."
       redirect_to statute_comparisons_path
     end
     @as_of_date = params[:compare][:as_of_date].try(:to_date)
