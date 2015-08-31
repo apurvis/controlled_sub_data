@@ -34,7 +34,7 @@
 
    <p>
       <%= f.label :classification %><br>
-      <%= select(:substance, :substance_classification_id, SubstanceClassification.all.map { |c| [c.name[0..50], c.id] } ) %>
+      <%= select(:substance, :substance_classification_id, SubstanceClassification.all.map { |c| [c.name[0..50], c.id] }, { include_blank: true } ) %>
    </p>
 
    <p>
