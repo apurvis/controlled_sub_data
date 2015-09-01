@@ -18,12 +18,12 @@ class StatuteComparisonsController < ApplicationController
 
     if @as_of_date
       @state_one_statutes = @state_one_statutes.where(['start_date <= ?', @as_of_date])
-      @state_two_statutes = @state_two_statutes.where(['start_date <= ?', @as_of_date]).where(type: nil)
+      @state_two_statutes = @state_two_statutes.where(['start_date <= ?', @as_of_date])
     end
 
     @state_one_substance_statutes = @state_one_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
     @state_two_substance_statutes = @state_two_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
-#    debugger
+
     @state_one_only = []
     @state_two_only = []
 
