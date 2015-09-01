@@ -44,15 +44,6 @@ class StatutesController < ApplicationController
 
     # First collect the federal duplicates
     @substance_statute_data = @statute.effective_substance_statutes_info_hash(as_of: @as_of_date)
-    @substance_statute_data.sort! do |a,b|
-      if a[:start_date] < b[:start_date]
-        -1
-      elsif a[:start_date] > b[:start_date]
-        1
-      else
-        a[:substance].name <=> b[:substance].name
-      end
-    end
   end
 
   def edit

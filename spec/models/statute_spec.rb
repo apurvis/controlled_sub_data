@@ -19,8 +19,11 @@ describe Statute do
       let(:federal_amendment) { StatuteAmendment.create(state: federal_statute.state, start_date: inheritance_date - 1.year, parent_id: federal_statute.id) }
       let!(:expiration) { SubstanceStatute.create(statute: federal_amendment, substance: federal_statute.substance_statutes.first.substance, is_expiration: true) }
 
-      it 'should exclude regulations that have expired on the federal statute before the inheritance date' do
-        expect(inheriting_statute.duplicated_federal_substance_statutes).to eq([])
+      it 'should include both additions and expirations' do
+        expect(inheriting_statute.duplicated_federal_substance_statutes).to eq([
+          federal_statute.substance_statutes.first,
+          expiration
+        ])
       end
 
       it 'should still find them if they expired after the request cutoff or after duplication date' do

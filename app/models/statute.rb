@@ -13,7 +13,7 @@ class Statute < ActiveRecord::Base
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   def effective_substance_statutes_info_hash(options = {})
-    info_hash = effective_substance_statutes.map do |ss|
+    effective_substance_statutes(options).map do |ss|
       added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
         added_by_amendment = 'Duplicated Federal'
@@ -21,19 +21,18 @@ class Statute < ActiveRecord::Base
         added_by_amendment = ss.statute
       end
 
+      effective_date = (ss.statute.federal? && duplicate_federal_as_of_date) ? duplicate_federal_as_of_date : ss.statute.start_date
+
       {
         substance_statute: ss,
         substance: ss.substance,
-        start_date: ss.statute.federal? && duplicate_federal_as_of_date ? ss.statute.duplicate_federal_as_of_date : ss.statute.start_date,
+        start_date: effective_date,
         added_by_amendment: added_by_amendment,
         is_expiration: ss.is_expiration,
         expired_by_amendment: ss.expiring_amendment(@as_of_date),
         schedule_level: ss.schedule_level
       }
-    end
-
-    info_hash.select! { |s| s[:start_date] <= options[:as_of] } if options[:as_of]
-    info_hash.sort do |a,b|
+    end.sort do |a,b|
       if a[:start_date] < b[:start_date]
         -1
       elsif a[:start_date] > b[:start_date]
@@ -54,8 +53,7 @@ class Statute < ActiveRecord::Base
   end
 
   def duplicated_federal_substance_statutes(options = {})
-    regulations = duplicated_federal_statutes(options).map { |s| s.substance_statutes }.flatten
-    reject_expired_and_replaced(regulations)
+    duplicated_federal_statutes(options).map { |s| s.substance_statutes }.flatten
   end
 
   def duplicated_federal_statutes(options = {})
@@ -88,9 +86,15 @@ class Statute < ActiveRecord::Base
   # Then strip out the actual expiration substance_statutes
   # Finally take only the last substance_statute by statute_id to be the valid one.
   def reject_expired_and_replaced(regulations)
+    reject_replaced(reject_expired(regulations)).sort { |a,b| a.statute.start_date <=> b.statute.start_date }
+  end
+
+  def reject_expired(regulations)
     regulations.reject { |ss| regulations.any? { |s| s.is_expiration? && ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
                .reject { |ss| ss.is_expiration? }
-               .reject { |ss| regulations.any? { |s| ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
-               .sort { |a,b| a.statute.start_date <=> b.statute.start_date }
+  end
+
+  def reject_replaced(regulations)
+    regulations.reject { |ss| regulations.any? { |s| ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
   end
 end
