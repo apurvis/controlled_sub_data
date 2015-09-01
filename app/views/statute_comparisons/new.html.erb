@@ -4,36 +4,10 @@
 
 <div class='set_of_statutes'>
    <h2><%= @state_one %> differences from <%= @state_two %></h2>
-   <table>
-      <tr>
-         <th>Name</th>
-         <th>IUPAC</th>
-         <th>AKA</th>
-         <th>Classification</th>
-         <th>DEA Code</th>
-         <th>First Scheduled By</th>
-         <th>Edit</th>
-         <th>Delete</th>
-      </tr>
-
-      <%= render @state_one_only %>
-   </table>
+   <%= render partial: 'comparison_table', locals: { comparisons: @state_one_only } %>
 </div>
 
 <div class='set_of_statutes'>
    <h2><%= @state_two %> differences from <%= @state_one %></h2>
-   <table>
-      <tr>
-         <th>Name</th>
-         <th>IUPAC</th>
-         <th>AKA</th>
-         <th>Classification</th>
-         <th>DEA Code</th>
-         <th>First Scheduled By</th>
-         <th>Edit</th>
-         <th>Delete</th>
-      </tr>
-
-      <%= render @state_two_only %>
-   </table>
+   <%= render partial: 'comparison_table', locals: { comparisons: @state_two_only } %>
 </div>

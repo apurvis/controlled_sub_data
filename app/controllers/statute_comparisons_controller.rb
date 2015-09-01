@@ -24,18 +24,31 @@ class StatuteComparisonsController < ApplicationController
     @state_one_substance_statutes = @state_one_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
     @state_two_substance_statutes = @state_two_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
 
-    @state_one_only = []
-    @state_two_only = []
+    @state_one_only = find_differences(@state_one_substance_statutes, @state_two_substance_statutes)
+    @state_two_only = find_differences(@state_two_substance_statutes, @state_one_substance_statutes)
+  end
 
-    @state_one_substance_statutes.each do |ss|
-      unless @state_two_substance_statutes.any? { |ss2| ss2.regulates_same_as?(ss) }
-        @state_one_only << ss.substance
+  private
+
+  def find_differences(statutes_1, statutes_2)
+    statutes_1.map do |ss|
+      if statutes_2.any? { |ss2| ss2.regulates_same_as?(ss) }
+        nil
+      else
+        same_substance = statutes_2.select { |ss2| ss.substance_id == ss2.substance_id }.first
+        if same_substance
+          { difference: ss.regulation_differences(same_substance).join(', '), substance_statute: ss }
+        else
+          { difference: 'Only Regulated Here', substance_statute:  ss }
+        end
       end
-    end
-
-    @state_two_substance_statutes.each do |ss|
-      unless @state_one_substance_statutes.any? { |ss2| ss2.regulates_same_as?(ss) }
-        @state_two_only << ss.substance
+    end.compact.sort do |a,b|
+      if a[:difference] < b[:difference]
+        -1
+      elsif a[:difference] > b[:difference]
+        1
+      else
+        a[:substance_statute].substance.name <=> b[:substance_statute].substance.name
       end
     end
   end
