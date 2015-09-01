@@ -53,7 +53,7 @@ describe SubstanceStatute do
 
     it 'should not find the expiration if date limited' do
       expiring_statute.save
-      expect(federal_first_regulation.expiring_amendment(expiration_date - 100.days)).to be_nil
+      expect(federal_first_regulation.expiring_amendment(as_of: expiration_date - 100.days)).to be_nil
     end
 
     context 'duplicated federal statutes' do

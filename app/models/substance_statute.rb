@@ -13,28 +13,28 @@ class SubstanceStatute < ActiveRecord::Base
   DIFFERENT_SALTS = 'Different salt/isomer flags'
   DIFFERENT_SCHEDULE = 'Different schedule levels'
 
-  def expiring_amendment(as_of_date = nil)
-    expiring_substance_statute(as_of_date).try(:statute)
-  end
-
-  def expiring_substance_statute(as_of_date = nil)
-    return nil if is_expiration
-
-    base_statute = (statute.statute rescue nil) || statute
-    expiring_statutes = SubstanceStatute.joins(:statute).where(
-      substance_id: substance.id,
-      statute_id: base_statute.statute_amendments.map { |a| a.id }
-    ).where(['statutes.start_date > ?', statute.start_date]).expirations
-
-    if as_of_date
-      expiring_statutes = expiring_statutes.where(['start_date <= ?', as_of_date])
-    end
-
-    expiring_statutes.first
+  def expiring_amendment(options = {})
+    expiring_substance_statute(options).try(:statute)
   end
 
   def expiration_date
     expiring_amendment.try(:start_date)
+  end
+
+  def expiring_substance_statute(options = {})
+    return nil if is_expiration
+
+    base_statute = (statute.statute rescue nil) || statute
+    expiring_statutes = SubstanceStatute.expirations.joins(:statute).where(
+      substance_id: substance.id,
+      statute_id: base_statute.statute_amendments.map { |a| a.id }
+    ).where(['statutes.start_date > ?', statute.start_date])
+
+    if options[:as_of]
+      expiring_statutes = expiring_statutes.where(['start_date <= ?', options[:as_of]])
+    end
+
+    expiring_statutes.first
   end
 
   def include_flags_string

@@ -29,7 +29,7 @@ class Statute < ActiveRecord::Base
         start_date: effective_date,
         added_by_amendment: added_by_amendment,
         is_expiration: ss.is_expiration,
-        expired_by_amendment: ss.expiring_amendment(@as_of_date),
+        expired_by_amendment: ss.expiring_amendment(as_of: @as_of_date),
         schedule_level: ss.schedule_level
       }
     end.sort do |a,b|
