@@ -64,7 +64,7 @@
             <th>Substance Name</th>
             <th>AKA</th>
             <th>Added By</th>
-            <th>Added On</th>
+            <th>Effective On</th>
             <th>Inclusions</th>
             <th>Expired By</th>
             <th>Scheduled Level</th>
@@ -84,19 +84,14 @@
                   <%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %>
                </td>
 
-               <% if ss[:added_by_amendment] %>
-                  <td>
-                     <% if ss[:added_by_amendment].is_a?(Statute) %>
-                        <%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %>
-                     <% else %>
-                        Duplicated Federal
-                     <% end %>
-                  </td>
-                  <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
-               <% else %>
-                  <td>This Statute or Amendment</td>
-                  <td>N/A</td>
-               <% end %>
+               <td>
+                  <% if ss[:added_by_amendment].is_a?(Statute) %>
+                     <%= link_to ss[:added_by_amendment].formatted_name, statute_path(ss[:added_by_amendment]) %>
+                  <% else %>
+                     <%= ss[:added_by_amendment] %>
+                  <% end %>
+               </td>
+               <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
 
                <% if ss[:substance_statute].has_include_flags? %>
                   <td class='addition'><%= ss[:substance_statute].include_flags_string %></td>
@@ -116,7 +111,7 @@
                   <td></td>
                <% end %>
 
-               <% unless ss[:added_by_amendment] %>
+               <% if ss[:added_by_amendment] =~ /^This / %>
                   <td class='button'><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
                   <td class='button'><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?" } %></td>
                <% else %>

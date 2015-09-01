@@ -16,8 +16,10 @@ class Statute < ActiveRecord::Base
     regulations.map do |ss|
       added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
-        added_by_amendment = 'Duplicated Federal'
-      elsif ss.statute.is_a?(StatuteAmendment) && ss.statute != self
+        added_by_amendment = 'Inherited Federal'
+      elsif ss.statute == self
+        added_by_amendment = "This #{ss.statute.class.to_s}"
+      elsif ss.statute.is_a?(StatuteAmendment)
         added_by_amendment = ss.statute
       end
 
