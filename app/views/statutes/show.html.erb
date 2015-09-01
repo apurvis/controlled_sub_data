@@ -13,6 +13,7 @@
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
    <h4><%= link_to "(Edit)", edit_statute_path(@statute) %></h4>
+
    <div class='comments'>
       <h3>COMMENTS:</h3>
       <p><%= @statute.comment %></p>
@@ -79,10 +80,9 @@
                <% else %>
                   <td class='expiration'>expiration</td>
                <% end %>
+
                <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
-               <td>
-                  <%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %>
-               </td>
+               <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %></td>
 
                <td>
                   <% if ss[:added_by_amendment].is_a?(Statute) %>
