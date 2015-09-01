@@ -13,7 +13,7 @@ class Statute < ActiveRecord::Base
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   def effective_substance_statutes_info_hash(options = {})
-    effective_substance_statutes(options).map do |ss|
+    effective_substance_statutes(options.merge(keep_expired: true)).map do |ss|
       added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
         added_by_amendment = 'Duplicated Federal'
@@ -49,7 +49,11 @@ class Statute < ActiveRecord::Base
     regulations += statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
                                      .map { |a| a.substance_statutes }
                                      .flatten
-    reject_expired_and_replaced(regulations)
+    if options[:keep_expired]
+      reject_replaced(regulations)
+    else
+      reject_expired_and_replaced(regulations)
+    end
   end
 
   def duplicated_federal_substance_statutes(options = {})
@@ -95,6 +99,6 @@ class Statute < ActiveRecord::Base
   end
 
   def reject_replaced(regulations)
-    regulations.reject { |ss| regulations.any? { |s| ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
+    regulations.reject { |ss| regulations.any? { |s| !s.is_expiration? && ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
   end
 end

@@ -20,13 +20,10 @@ describe Statute do
       let!(:expiration) { SubstanceStatute.create(statute: federal_amendment, substance: federal_statute.substance_statutes.first.substance, is_expiration: true) }
 
       it 'should include both additions and expirations' do
-        expect(inheriting_statute.duplicated_federal_substance_statutes).to eq([
-          federal_statute.substance_statutes.first,
-          expiration
-        ])
+        expect(inheriting_statute.duplicated_federal_substance_statutes).to eq([federal_statute.substance_statutes.first, expiration])
       end
 
-      it 'should still find them if they expired after the request cutoff or after duplication date' do
+      it 'should find them if they expired after the request cutoff or after duplication date' do
         federal_amendment.start_date = inheritance_date + 1.year
         federal_amendment.save
         expect(inheriting_statute.duplicated_federal_substance_statutes(as_of: inheritance_date)).to eq([federal_statute.substance_statutes.first])
