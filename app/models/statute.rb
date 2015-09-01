@@ -9,7 +9,6 @@ class Statute < ActiveRecord::Base
   validates :start_date, presence: true
 
   FEDERAL = 'FEDERAL'
-
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   def effective_substance_statutes_info_hash(options = {})
@@ -18,7 +17,7 @@ class Statute < ActiveRecord::Base
       added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
         added_by_amendment = 'Duplicated Federal'
-      elsif ss.statute.is_a?(StatuteAmendment)
+      elsif ss.statute.is_a?(StatuteAmendment) && ss.statute != self
         added_by_amendment = ss.statute
       end
 
@@ -45,7 +44,9 @@ class Statute < ActiveRecord::Base
     end
   end
 
-  # Pass an :as_of param to limit results
+  # Pass an :as_of param to limit results by date
+  # Pass the :keep_all option to avoid stripping out overridden regulations (moving from schedule II to III, for instance),
+  # expired statutes, and the expiring amendments themselves
   def effective_substance_statutes(options = {})
     regulations = substance_statutes + duplicated_federal_substance_statutes(options)
     regulations += statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
@@ -53,8 +54,6 @@ class Statute < ActiveRecord::Base
                                      .flatten
     if options[:keep_all]
       regulations
-    elsif options[:keep_expired]
-      reject_replaced(regulations)
     else
       reject_expired_and_replaced(regulations)
     end
