@@ -13,6 +13,7 @@ class SubstanceStatute < ActiveRecord::Base
   DIFFERENT_SALTS = 'Different salt/isomer flags'
   DIFFERENT_SCHEDULE = 'Different schedule levels'
 
+  # This is sort of broken in the case of inheriting federal statutes
   def expiring_amendment(options = {})
     expiring_substance_statute(options).try(:statute)
   end

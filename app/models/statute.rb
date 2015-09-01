@@ -13,7 +13,8 @@ class Statute < ActiveRecord::Base
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
   def effective_substance_statutes_info_hash(options = {})
-    effective_substance_statutes(options.merge(keep_expired: true)).map do |ss|
+    regulations = effective_substance_statutes(options.merge(keep_all: true))
+    regulations.map do |ss|
       added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
         added_by_amendment = 'Duplicated Federal'
@@ -21,6 +22,7 @@ class Statute < ActiveRecord::Base
         added_by_amendment = ss.statute
       end
 
+      expired_by_amendment = regulations.select { |r| r.is_expiration? && r.substance_id == ss.substance_id && r.statute.start_date > ss.statute.start_date }.first.try(:statute)
       effective_date = (ss.statute.federal? && duplicate_federal_as_of_date) ? duplicate_federal_as_of_date : ss.statute.start_date
 
       {
@@ -28,8 +30,8 @@ class Statute < ActiveRecord::Base
         substance: ss.substance,
         start_date: effective_date,
         added_by_amendment: added_by_amendment,
-        is_expiration: ss.is_expiration,
-        expired_by_amendment: ss.expiring_amendment(as_of: @as_of_date),
+        is_expiration: ss.is_expiration?,
+        expired_by_amendment: expired_by_amendment,
         schedule_level: ss.schedule_level
       }
     end.sort do |a,b|
@@ -49,7 +51,9 @@ class Statute < ActiveRecord::Base
     regulations += statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
                                      .map { |a| a.substance_statutes }
                                      .flatten
-    if options[:keep_expired]
+    if options[:keep_all]
+      regulations
+    elsif options[:keep_expired]
       reject_replaced(regulations)
     else
       reject_expired_and_replaced(regulations)
