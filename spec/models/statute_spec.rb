@@ -34,12 +34,16 @@ describe Statute do
     context 'effective regulations as of date' do
       let(:state_amendment) { StatuteAmendment.create(state: inheriting_statute.state, start_date: inheritance_date + 1.year, parent_id: inheriting_statute.id) }
 
-      context 'no expirations' do
-        let(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
+      context 'amendment additions' do
+        let!(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
 
         it 'should find the inherited and amended regulations' do
           expect(inheriting_statute.effective_substance_statutes).to eq(federal_statute.substance_statutes + inheriting_statute.substance_statutes + state_amendment.substance_statutes)
         end
+      end
+
+      context 'amendment_additions that are just property changes' do
+        let(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
       end
 
       context 'with expirations' do
@@ -53,9 +57,6 @@ describe Statute do
           expect(inheriting_statute.effective_substance_statutes(as_of: inheritance_date)).to eq([federal_statute.substance_statutes.first, inheriting_statute.substance_statutes.first])
         end
       end
-    end
-
-    context 'when additions are just changes in properties' do
     end
   end
 end

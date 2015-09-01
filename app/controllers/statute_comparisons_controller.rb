@@ -12,22 +12,18 @@ class StatuteComparisonsController < ApplicationController
     end
     @as_of_date = params[:compare][:as_of_date].try(:to_date)
 
-    @state_one_statutes = Statute.where(state: @state_one)
-    @state_two_statutes = Statute.where(state: @state_two)
+    # Avoid the amendments because their regulations are found in the effective_substance_statutes method
+    @state_one_statutes = Statute.where(state: @state_one).where(type: nil)
+    @state_two_statutes = Statute.where(state: @state_two).where(type: nil)
 
     if @as_of_date
       @state_one_statutes = @state_one_statutes.where(['start_date <= ?', @as_of_date])
-      @state_two_statutes = @state_two_statutes.where(['start_date <= ?', @as_of_date])
+      @state_two_statutes = @state_two_statutes.where(['start_date <= ?', @as_of_date]).where(type: nil)
     end
 
-    @state_one_substance_statutes = @state_one_statutes.map { |s| s.substance_statutes.additions }.flatten
-    @state_one_substance_statutes.reject! { |ss| ss.expiration_date && (!@as_of_date || ss.expiration_date <= @as_of_date) }
-    @state_one_substance_statutes += @state_one_statutes.map { |s| s.duplicated_federal_substance_statutes }.flatten
-
-    @state_two_substance_statutes = @state_two_statutes.map { |s| s.substance_statutes.additions }.flatten
-    @state_two_substance_statutes.reject! { |ss| ss.expiration_date && (!@as_of_date || ss.expiration_date <= @as_of_date) }
-    @state_two_substance_statutes += @state_two_statutes.map { |s| s.duplicated_federal_substance_statutes }.flatten
-
+    @state_one_substance_statutes = @state_one_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
+    @state_two_substance_statutes = @state_two_statutes.map { |s| s.effective_substance_statutes(as_of: @as_of_date) }.flatten.uniq
+#    debugger
     @state_one_only = []
     @state_two_only = []
 
