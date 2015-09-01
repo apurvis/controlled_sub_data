@@ -33,15 +33,29 @@ describe Statute do
 
     context 'effective regulations as of date' do
       let(:state_amendment) { StatuteAmendment.create(state: inheriting_statute.state, start_date: inheritance_date + 1.year, parent_id: inheriting_statute.id) }
-      let!(:expiration) { SubstanceStatute.create(statute: state_amendment, substance: federal_statute.substance_statutes.first.substance, is_expiration: true) }
 
-      it 'should exclude regulations that have expired in the local amendments' do
-        expect(inheriting_statute.effective_substance_statutes).to eq([inheriting_statute.substance_statutes.first])
+      context 'no expirations' do
+        let(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
+
+        it 'should find the inherited and amended regulations' do
+          expect(inheriting_statute.effective_substance_statutes).to eq(federal_statute.substance_statutes + inheriting_statute.substance_statutes + state_amendment.substance_statutes)
+        end
       end
 
-      it 'should include expired statutes if looking before their expiration date' do
-        expect(inheriting_statute.effective_substance_statutes(as_of: inheritance_date)).to eq([inheriting_statute.substance_statutes.first, federal_statute.substance_statutes.first])
+      context 'with expirations' do
+        let!(:expiration) { SubstanceStatute.create(statute: state_amendment, substance: federal_statute.substance_statutes.first.substance, is_expiration: true) }
+
+        it 'should exclude regulations that have expired in the local amendments' do
+          expect(inheriting_statute.effective_substance_statutes).to eq([inheriting_statute.substance_statutes.first])
+        end
+
+        it 'should include expired statutes if looking before their expiration date' do
+          expect(inheriting_statute.effective_substance_statutes(as_of: inheritance_date)).to eq([federal_statute.substance_statutes.first, inheriting_statute.substance_statutes.first])
+        end
       end
+    end
+
+    context 'when additions are just changes in properties' do
     end
   end
 end

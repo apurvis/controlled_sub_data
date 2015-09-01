@@ -15,22 +15,23 @@ class Statute < ActiveRecord::Base
   def effective_substance_statutes(options = {})
     regulations = substance_statutes + duplicated_federal_substance_statutes(options)
     regulations += statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
-                                            .map { |a| a.substance_statutes }
-                                            .flatten
-    regulations.reject { |ss| regulations.any? { |s| s.is_expiration? && ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
-               .reject { |ss| ss.is_expiration? }
+                                     .map { |a| a.substance_statutes }
+                                     .flatten
+    reject_expired_and_replaced(regulations)
   end
 
   def duplicated_federal_substance_statutes(options = {})
-    regulations = duplicated_federal_statutes(options).map { |s| s.substance_statutes }.flatten.compact
-    regulations.reject { |ss| regulations.any? { |s| s.is_expiration? && ss.substance_id == s.substance_id } }
-               .reject { |ss| ss.is_expiration? }
+    regulations = duplicated_federal_statutes(options).map { |s| s.substance_statutes }.flatten
+    reject_expired_and_replaced(regulations)
   end
 
   def duplicated_federal_statutes(options = {})
     if duplicate_federal_as_of_date
-      statutes = Statute.where(state: FEDERAL).where(['start_date <= ?', duplicate_federal_as_of_date]).all
-      options[:as_of] ? statutes.select { |s| s.start_date <= options[:as_of] } : statutes
+      statutes = Statute.where(state: FEDERAL).where(['start_date <= ?', duplicate_federal_as_of_date])
+      if options[:as_of]
+        statutes = statutes.where(['start_date <= ?', options[:as_of]])
+      end
+      statutes.all
     else
       []
     end
@@ -42,5 +43,17 @@ class Statute < ActiveRecord::Base
     else
       "#{state}/XXXX-XX-XX"
     end
+  end
+
+  private
+
+  # First strip out the substance_statutes that have a later expiration in the regulations set
+  # Then strip out the actual expiration substance_statutes
+  # Finally take only the last substance_statute by statute_id to be the valid one.
+  def reject_expired_and_replaced(regulations)
+    regulations.reject { |ss| regulations.any? { |s| s.is_expiration? && ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
+               .reject { |ss| ss.is_expiration? }
+               .reject { |ss| regulations.any? { |s| ss.substance_id == s.substance_id && s.statute.start_date > ss.statute.start_date } }
+               .sort { |a,b| a.statute.start_date <=> b.statute.start_date }
   end
 end
