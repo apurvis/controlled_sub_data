@@ -43,47 +43,7 @@ class StatutesController < ApplicationController
     end
 
     # First collect the federal duplicates
-    @substance_statute_data = @statute.duplicated_federal_substance_statutes.map do |federal_dupe|
-      {
-        substance_statute: federal_dupe,
-        substance: federal_dupe.substance,
-        start_date: @statute.duplicate_federal_as_of_date,
-        added_by_amendment: nil,
-        is_expiration: false,
-        expired_by_amendment: federal_dupe.expiring_amendment(@as_of_date),
-        schedule_level: federal_dupe.schedule_level
-      }
-    end
-
-    # Next collect any actual statute data
-    @statute.substance_statutes.each do |ss|
-      @substance_statute_data << {
-        substance_statute: ss,
-        substance: ss.substance,
-        start_date: @statute.start_date,
-        added_by_amendment: nil,
-        is_expiration: ss.is_expiration,
-        expired_by_amendment: ss.expiring_amendment(@as_of_date),
-        schedule_level: ss.schedule_level
-      }
-    end
-
-    # Then collect the amendment additions
-    @statute.statute_amendments.each do |amendment|
-      amendment.substance_statutes.additions.each do |ss|
-        @substance_statute_data << {
-          substance_statute: ss,
-          substance: ss.substance,
-          start_date: amendment.start_date,
-          added_by_amendment: amendment,
-          is_expiration: ss.is_expiration?,
-          expired_by_amendment: ss.expiring_amendment(@as_of_date),
-          schedule_level: ss.schedule_level
-        }
-      end
-    end
-
-    @substance_statute_data.select! { |s| s[:start_date] <= @as_of_date } if @as_of_date
+    @substance_statute_data = @statute.effective_substance_statutes_info_hash(as_of: @as_of_date)
     @substance_statute_data.sort! do |a,b|
       if a[:start_date] < b[:start_date]
         -1

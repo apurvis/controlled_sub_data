@@ -12,6 +12,38 @@ class Statute < ActiveRecord::Base
 
   STATES = [FEDERAL, 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
+  def effective_substance_statutes_info_hash(options = {})
+    info_hash = effective_substance_statutes.map do |ss|
+      added_by_amendment = nil
+      if duplicate_federal_as_of_date && ss.statute.federal?
+        added_by_amendment = 'Duplicated Federal'
+      elsif ss.statute.is_a?(StatuteAmendment)
+        added_by_amendment = ss.statute
+      end
+
+      {
+        substance_statute: ss,
+        substance: ss.substance,
+        start_date: ss.statute.federal? && duplicate_federal_as_of_date ? ss.statute.duplicate_federal_as_of_date : ss.statute.start_date,
+        added_by_amendment: added_by_amendment,
+        is_expiration: ss.is_expiration,
+        expired_by_amendment: ss.expiring_amendment(@as_of_date),
+        schedule_level: ss.schedule_level
+      }
+    end
+
+    info_hash.select! { |s| s[:start_date] <= options[:as_of] } if options[:as_of]
+    info_hash.sort do |a,b|
+      if a[:start_date] < b[:start_date]
+        -1
+      elsif a[:start_date] > b[:start_date]
+        1
+      else
+        a[:substance].name <=> b[:substance].name
+      end
+    end
+  end
+
   # Pass an :as_of param to limit results
   def effective_substance_statutes(options = {})
     regulations = substance_statutes + duplicated_federal_substance_statutes(options)
@@ -44,6 +76,10 @@ class Statute < ActiveRecord::Base
     else
       "#{state}/XXXX-XX-XX"
     end
+  end
+
+  def federal?
+    state == FEDERAL
   end
 
   private
