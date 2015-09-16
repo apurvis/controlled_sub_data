@@ -20,12 +20,18 @@ class SubstanceStatutesController < ApplicationController
   end
 
   def create
-    @substance_statute = SubstanceStatute.new(substance_statutes_params)
-
-    if @substance_statute.save
-      redirect_to @substance_statute.statute
+    temp_params = params['substance_statute']
+    if prior_regulation = SubstanceStatute.where(substance_id: temp_params['substance_id'], statute_id: temp_params['statute_id']).first
+      flash.alert = 'This substance is already scheduled by this statute!'
+      redirect_to Statute.where(id: temp_params['statute_id']).first
     else
-      render 'new'
+      @substance_statute = SubstanceStatute.new(substance_statutes_params)
+
+      if @substance_statute.save
+        redirect_to @substance_statute.statute
+      else
+        render 'new'
+      end
     end
   end
 

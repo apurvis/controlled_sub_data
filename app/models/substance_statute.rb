@@ -6,14 +6,14 @@ class SubstanceStatute < ActiveRecord::Base
   belongs_to :statute
   has_many :substance_alternate_names
 
-  scope :additions, -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
+  scope :additions,   -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
   scope :expirations, -> { where(is_expiration: true) }
 
   DIFFERENT_SUBSTANCES = 'Different substances'
   DIFFERENT_SALTS = 'Different salt/isomer flags'
   DIFFERENT_SCHEDULE = 'Different schedule levels'
 
-  # This is sort of broken in the case of inheriting federal statutes
+  # This won't really work in the case where a substance is added, then expired, then added again
   def expiring_amendment(options = {})
     expiring_substance_statute(options).try(:statute)
   end
