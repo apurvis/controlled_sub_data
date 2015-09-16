@@ -79,17 +79,23 @@
          <th>Statute</th>
          <th>State</th>
          <th>Start Date</th>
-         <th>View</th>
+         <th>Substance-Statute Link</th>
          <th>Edit</th>
       </tr>
 
       <% @substance.regulated_by_statutes.each do |s| %>
+         <% substance_statute = SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first %>
          <tr>
             <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
             <td><%= s.state %></td>
             <td><%= s.start_date %></td>
-            <td><%= link_to 'link', substance_statute_path(SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first) %></td>
-            <td><%= link_to 'edit', edit_substance_statute_path(SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first) %></td>
+            <% if substance_statute %>
+               <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
+               <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
+            <% else %>
+               <td class='button'>inherited</td>
+               <td class='button'>inherited</td>
+            <% end %>
          </tr>
       <% end %>
    </table>
