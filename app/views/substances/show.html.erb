@@ -79,6 +79,8 @@
          <th>Statute</th>
          <th>State</th>
          <th>Start Date</th>
+         <th>Level</th>
+         <th>Inclusions</th>
          <th>Substance-Statute Link</th>
          <th>Edit</th>
       </tr>
@@ -90,9 +92,13 @@
             <td><%= s.state %></td>
             <td><%= s.start_date %></td>
             <% if substance_statute %>
+               <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %>
+               <td><%= substance_statute.include_flags_string %></td>
                <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
                <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
             <% else %>
+               <td class='button'>inherited</td>
+               <td class='button'>inherited</td>
                <td class='button'>inherited</td>
                <td class='button'>inherited</td>
             <% end %>

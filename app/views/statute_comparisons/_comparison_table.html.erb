@@ -7,7 +7,11 @@
    <% comparisons.each do |c| %>
       <tr>
          <td><%= link_to c[:substance_statute].substance.name, c[:substance_statute].substance %></td>
-         <td><%= c[:difference] %></td>
+         <% if c[:difference] == 'Only Regulated Here' %>
+            <td class='expiration'><%= c[:difference] %></td>
+         <% else %>
+            <td class='middle'><%= c[:difference] %></td>
+         <% end %>
          <td><%= link_to c[:substance_statute].statute.formatted_name, c[:substance_statute].statute %></td>
       </tr>
    <% end %>
