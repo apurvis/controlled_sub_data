@@ -8,7 +8,7 @@ class Audit < ActiveRecord::Base
         "<strong>old #{k}</strong>: #{audited_changes[k][0]}<br /><strong>new #{k}</strong>: #{audited_changes[k][1]}"
       end.join("<br /><br />")
     else
-      audited_changes.pretty_inspect
+      audited_changes.to_s
     end
   end
 
