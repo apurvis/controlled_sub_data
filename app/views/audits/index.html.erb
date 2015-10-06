@@ -1,0 +1,13 @@
+<table>
+   <tr>
+      <th>User</th>
+      <th>Type</th>
+      <th>Object</th>
+      <th>Action</th>
+      <th>Changes</th>
+   </tr>
+
+   <%= render @audits %>
+</table>
+
+<%= will_paginate @audits %>

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users
+  resources :audits
 
   #authenticate :user, lambda { |u| u.admin? } do
   #  mount Upmin::Engine => '/admin'
