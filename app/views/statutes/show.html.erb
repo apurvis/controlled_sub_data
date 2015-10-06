@@ -35,6 +35,7 @@
                   <th>Amendment Identifier</th>
                   <th>Title</th>
                   <th>Blue Book Code</th>
+                  <th>Changes</th>
                   <th>Edit</th>
                   <th>Delete</th>
                </tr>
@@ -44,8 +45,13 @@
                      <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
                      <td><%= amendment.name %></td>
                      <td><%= amendment.blue_book_code %></td>
+                     <% if amendment.substance_statutes.size > 0 %>
+                        <td><%= amendment.substance_statutes.size %></td>
+                     <% else %>
+                        <td class='expiration'>0</td>
+                     <% end %>
                      <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
-                     <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: "Are you sure?" } %></td>
+                     <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
                   </tr>
                <% end %>
             </table>
