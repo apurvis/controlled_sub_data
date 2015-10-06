@@ -2,7 +2,11 @@
    <td><%= audit.user.email %></td>
    <td><%= audit.created_at.utc %></td>
    <td><%= audit.auditable_type %></td>
-   <td><%= link_to("#{audit.audited_object.id}", audit.audited_object) %></td>
+   <% if audit.audited_object.try(:id) %>
+      <td><%= link_to("#{audit.audited_object.id}", audit.audited_object) %></td>
+   <% else %>
+      <td>N/A</td>
+   <% end %>
    <td><%= audit.action %></td>
    <td><%= audit.change_string.html_safe %></td>
 </tr>
