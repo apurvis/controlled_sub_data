@@ -1,5 +1,6 @@
 <tr>
    <td><%= audit.user.email %></td>
+   <td><%= audit.created_at.utc %></td>
    <td><%= audit.auditable_type %></td>
    <td><%= link_to("#{audit.audited_object.id}", audit.audited_object) %></td>
    <td><%= audit.action %></td>
