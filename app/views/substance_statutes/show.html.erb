@@ -1,7 +1,12 @@
 <div class='basic_info'>
    <h2>Substance Statute Link (<%= link_to 'Edit', edit_substance_statute_path(@substance_statute) %>)</h2>
    <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
-   <h3>Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %></h3>
+   <h3>
+      Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %>
+      <% if !@substance_statute.statute.blue_book_code.empty? %>
+         (<%= "#{@substance_statute.statute.blue_book_code}" %>)
+      <% end %>
+   </h3>
    <h3>
       <% if @substance_statute.is_expiration? %>
          <span class='expiration'>EXPIRATION</span>
