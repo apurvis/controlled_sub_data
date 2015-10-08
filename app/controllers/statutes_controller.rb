@@ -33,7 +33,7 @@ class StatutesController < ApplicationController
   end
 
   def show
-    @statute = Statute.where(id: params['id']).first
+    @statute = Statute.with_deleted.where(id: params['id']).first
     @as_of_date = params[:as_of_date].try(:to_date)
 
     if @statute.is_a?(StatuteAmendment)

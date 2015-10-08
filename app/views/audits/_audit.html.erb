@@ -7,6 +7,12 @@
    <% else %>
       <td>N/A</td>
    <% end %>
-   <td><%= audit.action %></td>
+   <% if audit.action == 'destroy' %>
+      <td class='expiration'><%= audit.action %></td>
+   <% elsif audit.action == 'create' %>
+     <td class='addition'><%= audit.action %></td>
+   <% else %>
+      <td><%= audit.action %></td>
+   <% end %>
    <td class='monospace'><%= audit.change_string.html_safe %></td>
 </tr>

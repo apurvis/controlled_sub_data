@@ -14,7 +14,7 @@ class SubstancesController < ApplicationController
   end
 
   def show
-    @substance = Substance.where(id: params['id']).first
+    @substance = Substance.with_deleted.where(id: params['id']).first
   end
 
   def edit

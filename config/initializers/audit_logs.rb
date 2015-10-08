@@ -13,6 +13,6 @@ class Audited::Adapters::ActiveRecord::Audit
   end
 
   def audited_object
-    auditable_type.safe_constantize.where(id: auditable_id).first
+    auditable_type.safe_constantize.with_deleted.where(id: auditable_id).first
   end
 end

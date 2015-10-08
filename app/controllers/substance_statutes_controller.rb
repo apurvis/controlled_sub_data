@@ -3,7 +3,7 @@ class SubstanceStatutesController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def show
-    @substance_statute = SubstanceStatute.where(id: params['id']).first
+    @substance_statute = SubstanceStatute.with_deleted.where(id: params['id']).first
   end
 
   def edit
