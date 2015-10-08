@@ -1,14 +1,3 @@
-<table>
-   <tr>
-      <th>User</th>
-      <th>Created At</th>
-      <th>Type</th>
-      <th>Object</th>
-      <th>Action</th>
-      <th>Changes</th>
-   </tr>
-
-   <%= render @audits %>
-</table>
+<%= render partial: 'audit_table', locals: { audits: @audits } %>
 
 <%= will_paginate @audits %>
