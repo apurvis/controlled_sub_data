@@ -131,6 +131,6 @@
 </div>
 
 <div class='audit_log'>
-   <%= render partial: 'audits/audit_table', locals: { audits: @statute.audits.order('created_at DESC').all } %>
+   <%= render partial: 'audits/audit_table', locals: { audits: @statute.audits.all.reverse } %>
 </div>
 
