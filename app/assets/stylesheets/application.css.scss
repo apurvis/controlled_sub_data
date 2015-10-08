@@ -77,6 +77,12 @@ div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.qui
    width: 70%;
 }
 
+.audit_log {
+   @extend .basic_info;
+   margin-top: 10px;
+   background-color: #CCFFCC;
+}
+
 div.filter_notification {
    color: red;
    margin-top: 5px;

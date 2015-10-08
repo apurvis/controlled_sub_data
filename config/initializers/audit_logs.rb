@@ -1,4 +1,4 @@
-class Audit < ActiveRecord::Base
+class Audited::Adapters::ActiveRecord::Audit
   belongs_to :user
   serialize :audited_changes
 

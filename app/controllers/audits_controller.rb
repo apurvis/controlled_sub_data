@@ -3,6 +3,6 @@ class AuditsController < ApplicationController
   before_action :admin_only
 
   def index
-    @audits = Audit.order('created_at DESC').paginate(page: params[:page])
+    @audits = Audited::Adapters::ActiveRecord::Audit.order('created_at DESC').paginate(page: params[:page])
   end
 end
