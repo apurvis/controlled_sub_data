@@ -1,3 +1,14 @@
-<%= render partial: 'audit_table', locals: { audits: @audits } %>
+<table>
+   <tr>
+      <th>User</th>
+      <th>Created At</th>
+      <th>Type</th>
+      <th>Object</th>
+      <th>Action</th>
+      <th>Changes</th>
+   </tr>
+
+   <%= render @audits %>
+</table>
 
 <%= will_paginate @audits %>
