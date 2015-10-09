@@ -68,7 +68,7 @@
       <table>
          <tr>
             <th>Change Type</th>
-            <th>Substance Name</th>
+            <th>Regulates Substance</th>
             <th>AKA</th>
             <th>Added By</th>
             <th>Effective On</th>
@@ -87,7 +87,7 @@
                   <td class='expiration'>expiration</td>
                <% end %>
 
-               <td><%= link_to ss[:substance].name, ss[:substance] %></td>
+               <td><%= link_to ss[:substance].name, ss[:substance_statute] %></td>
                <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, san) }.join(', ').html_safe %></td>
 
                <td>

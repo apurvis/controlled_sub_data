@@ -81,7 +81,7 @@ div.statute_list, div.quick_links {
 .audit_log {
    @extend .basic_info;
    background-color: #CCFFCC;
-   width: 80%;
+   width: auto;
 }
 
 .extended_info {
