@@ -3,7 +3,7 @@
    <h3>Substance: <%= link_to @substance_statute.substance.name, substance_path(@substance_statute.substance) %></h3>
    <h3>
       Statute: <%= link_to @substance_statute.statute.formatted_name, statute_path(@substance_statute.statute) %>
-      <% if !@substance_statute.statute.blue_book_code.empty? %>
+      <% if !@substance_statute.statute.blue_book_code.blank? %>
          (<%= "#{@substance_statute.statute.blue_book_code}" %>)
       <% end %>
    </h3>
