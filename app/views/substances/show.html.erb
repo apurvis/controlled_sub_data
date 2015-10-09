@@ -109,6 +109,8 @@
    </div>
 </div>
 
-<div class='audit_log'>
-   <%= render partial: 'audits/audit_table', locals: { audits: @substance.audits.all.reverse } %>
-</div>
+<% if @substance.audits.size > 0 %>
+   <div class='audit_log'>
+      <%= render partial: 'audits/audit_table', locals: { audits: @substance.audits.all.reverse } %>
+   </div>
+<% end %>

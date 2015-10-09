@@ -130,7 +130,8 @@
    <% end %>
 </div>
 
-<div class='audit_log'>
-   <%= render partial: 'audits/audit_table', locals: { audits: @statute.audits.all.reverse } %>
-</div>
-
+<% if @statute.audits.size > 0 %>
+   <div class='audit_log'>
+      <%= render partial: 'audits/audit_table', locals: { audits: @statute.audits.all.reverse } %>
+   </div>
+<% end %>
