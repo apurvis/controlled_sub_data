@@ -62,7 +62,7 @@ div {
    float: left;
 }
 
-div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.quick_links {
+div.statute_list, div.quick_links {
    width: 100%;
 }
 
@@ -70,6 +70,7 @@ div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.qui
    background-color: #E6F0FF;
    border: 1px solid black;
    clear: both;
+   margin-top: 10px;
    padding-left: 10px;
    padding-bottom: 10px;
    padding-right: 10px;
@@ -79,8 +80,14 @@ div.statute_list, div.scheduled_substances, div.amendments, div.comment, div.qui
 
 .audit_log {
    @extend .basic_info;
-   margin-top: 10px;
    background-color: #CCFFCC;
+   width: 80%;
+}
+
+.extended_info {
+   @extend .basic_info;
+   width: auto;
+   background-color: #CCFFFF;
 }
 
 div.filter_notification {

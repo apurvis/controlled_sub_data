@@ -36,7 +36,7 @@
 </div>
 
 <hr>
-<div>
+<div class='extended_info'>
    <h3>Additional information about how this substance is scheduled by this statute</h2>
    <table>
       <% @substance_statute.attributes.keys.select { |a| a.starts_with?('include_') }.each do |k| %>

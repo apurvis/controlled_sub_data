@@ -72,39 +72,41 @@
    </div>
 <% end %>
 
-<div class='statute_list'>
-   <h2>Regulated by Statutes</h2>
-   <table>
-      <tr>
-         <th>Statute</th>
-         <th>State</th>
-         <th>Start Date</th>
-         <th>Level</th>
-         <th>Inclusions</th>
-         <th>Substance-Statute Link</th>
-         <th>Edit</th>
-      </tr>
-
-      <% @substance.regulated_by_statutes.each do |s| %>
-         <% substance_statute = SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first %>
+<div class='extended_info'>
+   <div class='statute_list'>
+      <h2>Regulated by Statutes</h2>
+      <table>
          <tr>
-            <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
-            <td><%= s.state %></td>
-            <td><%= s.start_date %></td>
-            <% if substance_statute %>
-               <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %>
-               <td><%= substance_statute.include_flags_string %></td>
-               <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
-               <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
-            <% else %>
-               <td class='button'>inherited</td>
-               <td class='button'>inherited</td>
-               <td class='button'>inherited</td>
-               <td class='button'>inherited</td>
-            <% end %>
+            <th>Statute</th>
+            <th>State</th>
+            <th>Start Date</th>
+            <th>Level</th>
+            <th>Inclusions</th>
+            <th>Substance-Statute Link</th>
+            <th>Edit</th>
          </tr>
-      <% end %>
-   </table>
+
+         <% @substance.regulated_by_statutes.each do |s| %>
+            <% substance_statute = SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first %>
+            <tr>
+               <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
+               <td><%= s.state %></td>
+               <td><%= s.start_date %></td>
+               <% if substance_statute %>
+                  <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %>
+                  <td><%= substance_statute.include_flags_string %></td>
+                  <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
+                  <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
+               <% else %>
+                  <td class='button'>inherited</td>
+                  <td class='button'>inherited</td>
+                  <td class='button'>inherited</td>
+                  <td class='button'>inherited</td>
+               <% end %>
+            </tr>
+         <% end %>
+      </table>
+   </div>
 </div>
 
 <div class='audit_log'>

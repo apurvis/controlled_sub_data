@@ -25,8 +25,8 @@
       <h4>Currently only showing regulations as of <%= @as_of_date.strftime('%Y-%m-%d') %> (additions and expirations after this date will not appear!)</h4>
    </div>
 <% else %>
-   <div class='amendments'>
-      <% if !@statute.is_a?(StatuteAmendment) %>
+   <% if !@statute.is_a?(StatuteAmendment) %>
+      <div class='extended_info'>
          <h2>Amendments (<%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>)</h2>
 
          <% if !@statute.statute_amendments.empty? %>
@@ -56,11 +56,11 @@
                <% end %>
             </table>
          <% end %>
-      <% end %>
-   </div>
+      </div>
+   <% end %>
 <% end %>
 
-<div class='scheduled_substances'>
+<div class='extended_info'>
    <h2>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h2>
    <h3>(<%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>)</h3>
 
@@ -87,8 +87,8 @@
                   <td class='expiration'>expiration</td>
                <% end %>
 
-               <td><%= link_to ss[:substance].name, substance_statute_path(ss[:substance_statute]) %></td>
-               <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %></td>
+               <td><%= link_to ss[:substance].name, ss[:substance] %></td>
+               <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, san) }.join(', ').html_safe %></td>
 
                <td>
                   <% if ss[:added_by_amendment].is_a?(Statute) %>
@@ -121,8 +121,8 @@
                   <td class='button'><%= link_to 'Edit', edit_substance_statute_path(ss[:substance_statute]) %></td>
                   <td class='button'><%= link_to 'Delete', substance_statute_path(ss[:substance_statute]), method: :delete, data: { confirm: "Are you sure?" } %></td>
                <% else %>
-                  <td></td>
-                  <td></td>
+                  <td>N/A</td>
+                  <td>N/A</td>
                <% end %>
             </tr>
          <% end %>

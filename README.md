@@ -44,7 +44,13 @@ When you create a statute, you must provide all of the following:
 
 * State (or FEDERAL)
 * Effective Date
+
+You can optionally provide
+
+* Duplicates federal statute date (if this statute is a clone of the federal statutes at a given time)
+* Expiration date
 * Blue Book Code
+* A freeform comment with any additional info you wish
 
 You then add substances to the statute by clicking on "Add a substance to this statute"
 
@@ -75,6 +81,18 @@ Navigate to a SubstanceStatute; click "Add alternate name".
 You can search for statutes by substance, and you can specify an optional "As of date".  All statutes applying to the substance and starting before the "as of date" will be displayed.
 
 Alternate names will appear in the list of substances (but link to search results for the canonical substance name)
+
+### Comparing statutes
+
+You can compare regulations across two states (or federal) as of any given date.
+
+If you provide no date, they will be compared as of today.
+
+There are several levels of difference:
+
+1. A substance might ONLY be regulated in one of the two places being compared as of that point in time.
+2. A substance might only have its isomers/preparations/etc regulated in each of the two places as of that point in time.  You will have to manually compare them to figure out exactly what those differences are.
+2. A substance might be regulated at a different schedule level in each of the places as of that point in time.
 
 ## Technical Info
 
