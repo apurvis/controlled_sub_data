@@ -1,6 +1,11 @@
 <td>
    <%= link_to user.email, user %>
 </td>
+
+<td>
+   <%= user.audits.size %>
+</td>
+
 <td>
    <%= form_for(user) do |f| %>
       <%= f.select(:role, User.roles.keys.map { |role| [role.titleize, role] }) %>
