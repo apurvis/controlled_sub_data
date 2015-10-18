@@ -2,13 +2,12 @@
    <% if @statute.is_a?(StatuteAmendment) %>
       <h2>Amends Statute: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
    <% else %>
-      <h2>Title: <%= @statute.name %></h2>
+      <h2>Blue Book Code: <%= @statute.blue_book_code %></h2>
    <% end %>
 
    <h3>State: <%= @statute.state %></h3>
    <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
    <h4>Expiration Date: <%= @statute.expiration_date %></h4>
-   <h4>Blue Book Code: <%= @statute.blue_book_code %></h4>
    <% if @statute.duplicate_federal_as_of_date %>
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>
@@ -33,7 +32,6 @@
             <table>
                <tr>
                   <th>Amendment Identifier</th>
-                  <th>Title</th>
                   <th>Blue Book Code</th>
                   <th>Changes</th>
                   <th>Edit</th>
@@ -43,7 +41,6 @@
                <% @statute.statute_amendments.each do |amendment| %>
                   <tr>
                      <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-                     <td><%= amendment.name %></td>
                      <td><%= amendment.blue_book_code %></td>
                      <% if amendment.substance_statutes.size > 0 %>
                         <td><%= amendment.substance_statutes.size %></td>
