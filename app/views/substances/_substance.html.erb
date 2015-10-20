@@ -1,7 +1,7 @@
 <tr>
    <td><%= link_to substance.name, substance_path(substance) %></td>
    <td><%= substance.alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %></td>
-   <td><%= substance.chemical_formula %></td>
+   <td class='monospace'><%= substance.chemical_formula %></td>
    <td><%= substance.comment %></td>
    <% if substance.substance_classification.try(:name) %>
       <td><%= link_to substance.substance_classification.name, substance_classification_path(substance.substance_classification) %></td>
