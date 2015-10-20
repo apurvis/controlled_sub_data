@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018215441) do
+ActiveRecord::Schema.define(version: 20151020153701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -53,7 +54,7 @@ ActiveRecord::Schema.define(version: 20151018215441) do
     t.text     "comment"
   end
 
-  add_index "statutes", ["deleted_at"], name: "index_statutes_on_deleted_at", using: :btree
+  add_index "statutes", ["deleted_at", "start_date"], name: "index_statutes_on_deleted_at_and_start_date", using: :btree
   add_index "statutes", ["state", "start_date"], name: "index_statutes_on_state_and_start_date", unique: true, using: :btree
 
   create_table "substance_alternate_names", force: :cascade do |t|
@@ -105,9 +106,9 @@ ActiveRecord::Schema.define(version: 20151018215441) do
     t.text     "comment"
   end
 
-  add_index "substance_statutes", ["deleted_at"], name: "index_substance_statutes_on_deleted_at", using: :btree
-  add_index "substance_statutes", ["statute_id"], name: "index_substance_statutes_on_statute_id", using: :btree
-  add_index "substance_statutes", ["substance_id", "statute_id", "schedule_level"], name: "idx_substance_schedule_level", unique: true, using: :btree
+  add_index "substance_statutes", ["deleted_at", "is_expiration", "statute_id"], name: "idx_deleted_statute_expiration", using: :btree
+  add_index "substance_statutes", ["deleted_at", "statute_id"], name: "index_substance_statutes_on_deleted_at_and_statute_id", using: :btree
+  add_index "substance_statutes", ["deleted_at", "substance_id", "statute_id", "schedule_level"], name: "idx_deleted_substance_schedule_level", unique: true, using: :btree
 
   create_table "substances", force: :cascade do |t|
     t.string   "name"

@@ -14,7 +14,6 @@ class Statute < ActiveRecord::Base
   def effective_substance_statutes_info_hash(options = {})
     regulations = effective_substance_statutes(options.merge(keep_all: true))
     regulations.map do |ss|
-      added_by_amendment = nil
       if duplicate_federal_as_of_date && ss.statute.federal?
         added_by_amendment = 'Inherited Federal'
       elsif ss.statute == self
@@ -26,7 +25,7 @@ class Statute < ActiveRecord::Base
       expired_by_amendment = regulations.select { |r| r.is_expiration? && r.substance_id == ss.substance_id && r.statute.start_date > ss.statute.start_date }.first.try(:statute)
       if expired_by_amendment
         expiration_string = "Explicit Removal by #{expired_by_amendment.formatted_name}"
-      elsif ss.expiration_date
+      elsif ss.statute.expiration_date
         expired_by_amendment ||= ss.statute
         expiration_string = "#{ss.expiration_date.strftime('%Y-%m-%d')} Expiration of #{ss.statute.formatted_name}"
       end
@@ -59,8 +58,8 @@ class Statute < ActiveRecord::Base
   # Pass the :keep_all option to avoid stripping out overridden regulations (moving from schedule II to III, for instance),
   # expired statutes, and the expiring amendments themselves
   def effective_substance_statutes(options = {})
-    regulations = substance_statutes + duplicated_federal_substance_statutes(options)
-    amendments = statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
+    regulations = substance_statutes.includes([:substance, :substance_alternate_names]) + duplicated_federal_substance_statutes(options)
+    amendments = statute_amendments.includes(substance_statutes: [:substance, :substance_alternate_names]).select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
 
     if options[:keep_all]
       regulations + amendments.map { |a| a.substance_statutes }.flatten

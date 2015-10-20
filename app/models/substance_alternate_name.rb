@@ -5,7 +5,7 @@ class SubstanceAlternateName < ActiveRecord::Base
   # should probably delegate through substance_statute as having a substance_id in a SubstanceAlternateName is
   # deprecated
   belongs_to :substance
-  belongs_to :substance_statute
+  belongs_to :substance_statute, inverse_of: :substance_alternate_names
 
   validates :name, presence: true
 

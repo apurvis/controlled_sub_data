@@ -2,8 +2,8 @@ class SubstanceStatute < ActiveRecord::Base
   acts_as_paranoid
   audited
 
-  belongs_to :substance
-  belongs_to :statute
+  belongs_to :substance, inverse_of: :substance_statutes
+  belongs_to :statute, inverse_of: :substance_statutes
   has_many :substance_alternate_names
 
   scope :additions,   -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
