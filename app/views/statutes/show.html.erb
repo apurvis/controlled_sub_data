@@ -46,7 +46,6 @@
             <th>Regulates Substance</th>
             <th>AKA</th>
             <th>Added By</th>
-            <th>Effective On</th>
             <th>Inclusions</th>
             <th>Comments</th>
             <th>Expired By</th>
@@ -73,7 +72,6 @@
                      <%= ss[:added_by_amendment] %>
                   <% end %>
                </td>
-               <td><%= ss[:start_date].strftime('%Y-%m-%d') %></td>
 
                <% if ss[:substance_statute].has_include_flags? %>
                   <td class='addition'><%= ss[:substance_statute].include_flags_string %></td>

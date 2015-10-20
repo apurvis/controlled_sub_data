@@ -12,7 +12,11 @@
    <% statutes.each do |statute| %>
       <tr>
          <td><%= link_to(statute.formatted_name, statute_path(statute)) %></td>
-         <td><%= statute.expiration_date %></td>
+         <% if statute.expiration_date %>
+            <td class='expiration'><%= statute.expiration_date %></td>
+         <% else %>
+            <td></td>
+         <% end %>
          <td><%= statute.blue_book_code %></td>
          <td><%= statute.comment %></td>
 
