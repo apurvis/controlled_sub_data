@@ -1,5 +1,5 @@
 <tr>
-   <td><%= link_to substance.name.titleize, substance_path(substance) %></td>
+   <td><%= link_to substance.name, substance_path(substance) %></td>
    <td><%= substance.alternate_names.map { |san| link_to(san.name, substance_alternate_name_path(san)) }.join(', ').html_safe %></td>
    <td><%= substance.chemical_formula %></td>
    <td><%= substance.comment %></td>
