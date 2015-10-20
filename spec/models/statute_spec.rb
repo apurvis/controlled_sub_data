@@ -46,7 +46,7 @@ describe Statute do
         let(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
       end
 
-      context 'with expirations' do
+      context 'with explicit expirations' do
         let!(:expiration) { SubstanceStatute.create(statute: state_amendment, substance: federal_statute.substance_statutes.first.substance, is_expiration: true) }
 
         it 'should exclude regulations that have expired in the local amendments' do
@@ -55,6 +55,13 @@ describe Statute do
 
         it 'should include expired statutes if looking before their expiration date' do
           expect(inheriting_statute.effective_substance_statutes(as_of: inheritance_date)).to eq([federal_statute.substance_statutes.first, inheriting_statute.substance_statutes.first])
+        end
+      end
+
+      context 'with amendments that have themselves expired' do
+        before do
+          state_amendment.expiration_date = inheritance_date + 2.years
+          state_amendment.save
         end
       end
     end
