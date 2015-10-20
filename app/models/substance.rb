@@ -1,3 +1,5 @@
+require 'wikipedia'
+
 class Substance < ActiveRecord::Base
   acts_as_paranoid
   audited
@@ -38,6 +40,41 @@ class Substance < ActiveRecord::Base
       raw_statutes += federal_inheritors
     end
     raw_statutes
+  end
+
+  def wikipedia_smiles_format
+    smiles = wikipedia_info_box.select { |i| i =~ /smiles\s+=/i }.first
+    smiles ? smiles.split(' = ').last.strip : nil
+  end
+
+  def wikipedia_iupac_format
+    iupac = wikipedia_info_box.select { |i| i =~ /IUPAC_*name\s+=/i }.first
+    return nil unless iupac
+    iupac.split(' = ').last.strip.gsub(/'''|''/, '')
+  end
+
+  def wikipedia_info_box
+    wikipedia_id = wikipedia_page['query']['pages'].first.first
+    info_box_data = wikipedia_page['query']['pages'][wikipedia_id]['revisions'].first['*']
+    info_box_data.split("\n")
+  end
+
+  def wikipedia_page
+    return @wikipedia_json if @wikipedia_json
+
+    json = JSON.parse(Wikipedia.find(name).json)
+    if json['query']['pages'].keys.first == '-1'
+      return nil unless alternate_names.size > 0
+
+      alternate_names.each do |alternate_name|
+        json = JSON.parse(Wikipedia.find(alternate_name.name).json)
+        unless json['query']['pages'].keys.first == '-1'
+          break
+        end
+        return nil
+      end
+    end
+    @wikipedia_json = json
   end
 
   def self.find_or_create_substance(name, options = {})

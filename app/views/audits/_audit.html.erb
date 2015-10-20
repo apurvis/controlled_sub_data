@@ -1,5 +1,5 @@
 <tr>
-   <td><%= audit.user.email %></td>
+   <td><%= audit.user.try(:email) || 'Unknown' %></td>
    <td><%= audit.created_at.utc %></td>
    <td><%= audit.auditable_type %></td>
    <% if audit.audited_object.try(:id) %>

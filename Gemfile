@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'audited-activerecord', '~> 4.0'
+gem 'awesome_print'
 gem 'bootstrap-sass'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise'
@@ -17,6 +18,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'simple_form'
 gem 'uglifier', '>= 1.3.0'
 gem 'upmin-admin'
+gem 'wikipedia-client'
 gem 'will_paginate'
 
 group :development, :test do
