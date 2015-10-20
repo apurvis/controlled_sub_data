@@ -11,7 +11,7 @@ class SubstancesController < ApplicationController
                                   OR LOWER(substances.chemical_formula) LIKE '%#{params[:search][:substring].downcase}%'
                                   OR chemical_formula_smiles_format LIKE '%#{params[:search][:substring].downcase}%'")
     else
-      @substances = Substance
+      @substances = Substance.includes(substance_statutes: [:substance_alternate_names, :statute])
     end
     @substances = @substances.order('LOWER(substances.name) ASC').paginate(page: params[:page])
   end
