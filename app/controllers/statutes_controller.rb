@@ -42,7 +42,6 @@ class StatutesController < ApplicationController
       @scheduled_substance_message = 'Add a substance to this statute'
     end
 
-    # First collect the federal duplicates
     @substance_statute_data = @statute.effective_substance_statutes_info_hash(as_of: @as_of_date)
   end
 
