@@ -64,6 +64,11 @@
          </table>
       </div>
    <% end %>
+
+   <div class='comments'>
+      <h3>COMMENTS:</h3>
+      <p><%= @substance.comment %></p>
+   </div>
 </div>
 
 <% if @substance.comment && !@substance.comment.blank? %>

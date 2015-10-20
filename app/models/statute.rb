@@ -33,7 +33,8 @@ class Statute < ActiveRecord::Base
         added_by_amendment: added_by_amendment,
         is_expiration: ss.is_expiration?,
         expired_by_amendment: expired_by_amendment,
-        schedule_level: ss.schedule_level
+        schedule_level: ss.schedule_level,
+        comment: ss.comment
       }
     end.sort do |a,b|
       if a[:start_date] < b[:start_date]

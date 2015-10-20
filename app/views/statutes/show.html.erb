@@ -29,29 +29,7 @@
          <h2>Amendments (<%= link_to 'Add an amendment to this statute', { controller: 'statute_amendments', action: :new, parent_id: @statute.id } %>)</h2>
 
          <% if !@statute.statute_amendments.empty? %>
-            <table>
-               <tr>
-                  <th>Amendment Identifier</th>
-                  <th>Blue Book Code</th>
-                  <th>Changes</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-               </tr>
-
-               <% @statute.statute_amendments.each do |amendment| %>
-                  <tr>
-                     <td><%= link_to amendment.formatted_name, statute_path(amendment) %></td>
-                     <td><%= amendment.blue_book_code %></td>
-                     <% if amendment.substance_statutes.size > 0 %>
-                        <td><%= amendment.substance_statutes.size %></td>
-                     <% else %>
-                        <td class='expiration'>0</td>
-                     <% end %>
-                     <td class='button'><%= link_to 'Edit', edit_statute_path(amendment) %></td>
-                     <td class='button'><%= link_to 'Delete', statute_path(amendment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                  </tr>
-               <% end %>
-            </table>
+            <%= render partial: 'statute_table', locals: { statutes: @statute.statute_amendments } %>
          <% end %>
       </div>
    <% end %>
@@ -70,6 +48,7 @@
             <th>Added By</th>
             <th>Effective On</th>
             <th>Inclusions</th>
+            <th>Comments</th>
             <th>Expired By</th>
             <th>Scheduled Level</th>
             <th>Edit Link to Statute</th>
@@ -101,6 +80,8 @@
                <% else %>
                   <td>None</td>
                <% end %>
+
+               <td><%= ss[:comment] %></td>
 
                <% if ss[:expired_by_amendment] %>
                   <td class='expiration'><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>

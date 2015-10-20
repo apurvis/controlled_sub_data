@@ -5,28 +5,6 @@
    <% end %>
 <% end %>
 
-<table>
-   <tr>
-      <th>Name</th>
-      <th>State</th>
-      <th>Start Date</th>
-      <th>Expiration Date</th>
-      <th>Blue Book Code</th>
-      <th>Edit</th>
-      <th>Delete</th>
-   </tr>
-
-   <% @statutes.each do |statute| %>
-      <tr>
-         <td><%= link_to(statute.formatted_name, statute_path(statute)) %></td>
-         <td><%= statute.state %></td>
-         <td><%= statute.start_date %></td>
-         <td><%= statute.expiration_date %></td>
-         <td><%= statute.blue_book_code %></td>
-         <td class='button'><%= link_to 'Edit', edit_statute_path(statute) %></td>
-         <td class='button'><%= link_to 'Delete', statute_path(statute), method: :delete, data: { confirm: "Are you sure?" } %></td>
-      <tr>
-   <% end %>
-</table>
+<%= render partial: 'statute_table', locals: { statutes: @statutes, show_state: true } %>
 
 <h2><%= link_to "Create New Statute", new_statute_path %></h2>
