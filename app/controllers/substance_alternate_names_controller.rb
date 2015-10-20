@@ -30,7 +30,7 @@ class SubstanceAlternateNamesController < ApplicationController
     @substance_alternate_name = SubstanceAlternateName.new(substance_alternate_name_params)
 
     if @substance_alternate_name.save
-      redirect_to @substance_alternate_name
+      redirect_to @substance_alternate_name.substance_statute
     else
       render 'new'
     end
