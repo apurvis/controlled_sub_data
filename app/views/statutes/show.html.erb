@@ -1,3 +1,7 @@
+<% content_for :title do %>
+   <%= @statute.formatted_name %>
+<% end %>
+
 <div class='basic_info'>
    <% if @statute.is_a?(StatuteAmendment) %>
       <h2>Amends Statute: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
@@ -82,7 +86,9 @@
                <td><%= ss[:comment] %></td>
 
                <% if ss[:expired_by_amendment] %>
-                  <td class='expiration'><%= link_to ss[:expired_by_amendment].formatted_name, statute_path(ss[:expired_by_amendment]) %></td>
+                  <td class='expiration'>
+                     <%= link_to("#{ss[:expiration_string]}", ss[:expired_by_amendment]) %>
+                  </td>
                <% else %>
                   <td></td>
                <% end %>

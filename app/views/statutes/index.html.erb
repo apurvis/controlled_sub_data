@@ -1,3 +1,7 @@
+<% content_for :title do %>
+   <%= 'Statutes' %>
+<% end %>
+
 <% if @substance %>
   <h3>Statutes that regulate <%= link_to(@substance.name, substance_path(@substance)) %></h3>
   <% if @as_of_date %>

@@ -1,3 +1,7 @@
+<% content_for :title do %>
+   <%= @substance.name %>
+<% end %>
+
 <div class='basic_info'>
    <h1><%= @substance.name %> (<%= link_to 'Edit', edit_substance_path(@substance) %>)</h1>
 

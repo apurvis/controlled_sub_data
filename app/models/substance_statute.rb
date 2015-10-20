@@ -19,7 +19,7 @@ class SubstanceStatute < ActiveRecord::Base
   end
 
   def expiration_date
-    expiring_amendment.try(:start_date)
+    expiring_amendment.try(:start_date) || statute.expiration_date
   end
 
   def expiring_substance_statute(options = {})

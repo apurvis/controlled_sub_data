@@ -1,3 +1,7 @@
+<% content_for :title do %>
+   <%= 'Search Controlled Sub Data' %>
+<% end %>
+
 <div class='basic_info'>
    <h2>STATUTE SEARCH</h2>
    <%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>

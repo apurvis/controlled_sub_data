@@ -40,10 +40,26 @@ describe Statute do
         it 'should find the inherited and amended regulations' do
           expect(inheriting_statute.effective_substance_statutes).to eq(federal_statute.substance_statutes + inheriting_statute.substance_statutes + state_amendment.substance_statutes)
         end
-      end
 
-      context 'amendment_additions that are just property changes' do
-        let(:addition) { SubstanceStatute.create(statute: state_amendment, substance: create(:substance)) }
+        context 'that are just property changes' do
+          it 'seems to work right now but no spec'
+        end
+
+        context 'for an expired amendment' do
+          let(:expiration_date) { inheritance_date + 2.years }
+          before do
+            state_amendment.expiration_date = expiration_date
+            state_amendment.save
+          end
+
+          it 'should NOT find the amended regulations as of now' do
+            expect(inheriting_statute.effective_substance_statutes).to eq(federal_statute.substance_statutes + inheriting_statute.substance_statutes)
+          end
+
+          it 'should find the amended regulations before the expiration date' do
+            expect(inheriting_statute.effective_substance_statutes(as_of: expiration_date - 10.days)).to eq(federal_statute.substance_statutes + inheriting_statute.substance_statutes + state_amendment.substance_statutes)
+          end
+        end
       end
 
       context 'with explicit expirations' do
@@ -55,13 +71,6 @@ describe Statute do
 
         it 'should include expired statutes if looking before their expiration date' do
           expect(inheriting_statute.effective_substance_statutes(as_of: inheritance_date)).to eq([federal_statute.substance_statutes.first, inheriting_statute.substance_statutes.first])
-        end
-      end
-
-      context 'with amendments that have themselves expired' do
-        before do
-          state_amendment.expiration_date = inheritance_date + 2.years
-          state_amendment.save
         end
       end
     end

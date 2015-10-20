@@ -24,6 +24,13 @@ class Statute < ActiveRecord::Base
       end
 
       expired_by_amendment = regulations.select { |r| r.is_expiration? && r.substance_id == ss.substance_id && r.statute.start_date > ss.statute.start_date }.first.try(:statute)
+      if expired_by_amendment
+        expiration_string = "Explicit Removal by #{expired_by_amendment.formatted_name}"
+      elsif ss.expiration_date
+        expired_by_amendment ||= ss.statute
+        expiration_string = "#{ss.expiration_date.strftime('%Y-%m-%d')} Expiration of #{ss.statute.formatted_name}"
+      end
+
       effective_date = (ss.statute.federal? && duplicate_federal_as_of_date) ? duplicate_federal_as_of_date : ss.statute.start_date
 
       {
@@ -33,6 +40,7 @@ class Statute < ActiveRecord::Base
         added_by_amendment: added_by_amendment,
         is_expiration: ss.is_expiration?,
         expired_by_amendment: expired_by_amendment,
+        expiration_string: expiration_string,
         schedule_level: ss.schedule_level,
         comment: ss.comment
       }
@@ -52,12 +60,17 @@ class Statute < ActiveRecord::Base
   # expired statutes, and the expiring amendments themselves
   def effective_substance_statutes(options = {})
     regulations = substance_statutes + duplicated_federal_substance_statutes(options)
-    regulations += statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
-                                     .map { |a| a.substance_statutes }
-                                     .flatten
+    amendments = statute_amendments.select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
+
     if options[:keep_all]
-      regulations
+      regulations + amendments.map { |a| a.substance_statutes }.flatten
     else
+      if options[:as_of]
+        amendments.select! { |a| !a.expiration_date || a.expiration_date > options[:as_of] }
+      else
+        amendments.select! { |a| !a.expiration_date || a.expiration_date > Date.today }
+      end
+      regulations += amendments.map { |a| a.substance_statutes }.flatten
       reject_expired_and_replaced(regulations)
     end
   end
