@@ -5,9 +5,8 @@
 <div class='basic_info'>
    <% if @statute.is_a?(StatuteAmendment) %>
       <h2>Amends Statute: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
-   <% else %>
-      <h2>Blue Book Code: <%= @statute.blue_book_code %></h2>
    <% end %>
+   <h2>Blue Book Code: <%= @statute.blue_book_code %></h2>
 
    <h3>State: <%= @statute.state %></h3>
    <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
