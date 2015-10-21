@@ -25,10 +25,11 @@ class Substance < ActiveRecord::Base
   end
 
   def current_classification(state)
+    current_substance_statute(state).try(:substance_classification)
   end
 
   def current_substance_statute(state)
-    substance_statutes.join('statutes ON statutes.id=substance_statutes.id').where(state: state).order('statutes.created_at ASC')
+    substance_statutes.joins(:statute).where(["statutes.state = ?", state]).order('statutes.created_at DESC').first
   end
 
   def first_scheduled_date

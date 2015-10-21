@@ -29,7 +29,7 @@
       </p>
    <% end %>
 
-   <%= render partial: 'isomer_checkboxes', locals: { f: f } %>
+   <%= render partial: 'include_flags_checkboxes', locals: { f: f, klass: SubstanceStatute } %>
 
    <p>
       <%= f.label :schedule_level %><br/>

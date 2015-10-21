@@ -1,5 +1,6 @@
 <div class='basic_info'>
    <h1><%= @classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@classification) %>)</h1>
+   <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @classification } %>
 </div>
 
 <div style='margin-top: 10px;'>

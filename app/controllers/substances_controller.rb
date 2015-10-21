@@ -13,7 +13,7 @@ class SubstancesController < ApplicationController
                                   OR LOWER(substance_statutes.comment) LIKE '%#{params[:search][:substring].downcase}%'
                                   OR LOWER(substances.comment) LIKE '%#{params[:search][:substring].downcase}%'")
     else
-      @substances = Substance.includes(substance_statutes: [:substance_alternate_names, :statute])
+      @substances = Substance.includes(substance_statutes: [:substance_alternate_names, :statute, :substance_classification])
     end
     @substances = @substances.order('LOWER(substances.name) ASC').paginate(page: params[:page])
   end

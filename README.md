@@ -1,6 +1,6 @@
 # Controlled Sub Data
 
-A basic CRUD application to help the Immigrant Defense Project and other public defender offices collate information on discrepancies between state and federal controlled substance statutes.
+A basic CRUD application to help lawyers collate information on the evolution of controlled substance legislation.
 
 ### Naming Conventions
 
@@ -10,7 +10,7 @@ String identifiers for amendments to statutes are identified by the statute iden
 
 ### On spelling discrepancies
 
-If there are spelling discrepancies for a substance name between different statutes, you should create two different statutes, because it's unclear right now that this is not a substantive difference.
+If there are spelling discrepancies for a substance name between different statutes, you should create two different substances, because it's unclear right now that this is not a substantive difference.
 
 ---
 

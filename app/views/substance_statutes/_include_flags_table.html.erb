@@ -1,0 +1,12 @@
+<table>
+   <% flagged.attributes.keys.select { |a| a.starts_with?('include_') }.each do |k| %>
+      <tr>
+         <td><%= k.humanize %>?</td>
+         <% if flagged.send("#{k}?".to_sym) %>
+            <td class='addition'><%= flagged.send("#{k}?".to_sym) %></td>
+         <% else %>
+            <td><%= flagged.send("#{k}?".to_sym) %></td>
+         <% end %>
+      </tr>
+   <% end %>
+</table>

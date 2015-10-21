@@ -17,7 +17,7 @@
       <%= f.text_area :name, :cols => "50", :rows => "10" %>
    </p>
 
-   <%= render partial: 'substance_statutes/isomer_checkboxes', locals: { f: f } %>
+   <%= render partial: 'substance_statutes/include_flags_checkboxes', locals: { f: f, klass: SubstanceClassification } %>
 
    <p>
       <%= f.submit %>

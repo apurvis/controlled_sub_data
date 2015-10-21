@@ -7,12 +7,13 @@
 
    <table class='properties'>
       <tr>
-         <td class='properties'>Current Status</td>
-         <td class='property'></td>
-      </tr>
-      <tr>
-         <td class='properties'>Current Classification</td>
-         <td class='property'></td>
+         <td class='properties'>Current Federal Classification</td>
+         <% if @substance.current_classification('FEDERAL') %>
+            <td class='property'><%= link_to(@substance.current_classification('FEDERAL').name, @substance.current_classification('FEDERAL')) %></td>
+         <% else %>
+            <td></td>
+         <% end %>
+
       </tr>
       <tr>
          <td class='properties'>Chemical Name (IUPAC):</td>
