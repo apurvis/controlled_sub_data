@@ -85,7 +85,7 @@
                </td>
 
                <% if ss[:substance_statute].has_include_flags? %>
-                  <td class='addition'><%= ss[:substance_statute].include_flags_string %></td>
+                  <td class='addition'><small><%= ss[:substance_statute].include_flags_string %><small></td>
                <% else %>
                   <td>None</td>
                <% end %>
