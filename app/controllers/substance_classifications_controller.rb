@@ -56,6 +56,6 @@ class SubstanceClassificationsController < ApplicationController
   private
 
   def substance_classification_params
-    params.require(:substance_classification).permit([:name] + SubstanceClassification.available_flags)
+    params.require(:substance_classification).permit([:name, :comment] + SubstanceClassification.available_flags)
   end
 end
