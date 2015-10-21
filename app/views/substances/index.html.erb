@@ -1,19 +1,5 @@
 <h2><%= link_to 'Create New Substance', new_substance_path %></h2>
 
-<table>
-   <tr>
-      <th>Name</th>
-      <th>AKA</th>
-      <th>IUPAC</th>
-      <th>Comment</th>
-      <th>Classification</th>
-      <th>DEA Code</th>
-      <th>First Scheduled By</th>
-      <th>Edit</th>
-      <th>Delete</th>
-   </tr>
-
-   <%= render @substances %>
-</table>
+<%= render partial: 'substance_table', locals: { substances: @substances } %>
 
 <%= will_paginate @substances %>

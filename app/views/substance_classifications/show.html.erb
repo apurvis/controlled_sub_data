@@ -1,21 +1,5 @@
 <div class='basic_info'>
    <h1><%= @classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@classification) %>)</h1>
 </div>
-<div>
-   <h3>Substances in this Classification</h3>
-   <table>
-      <tr>
-         <th>Substance ID</th>
-         <th>Name</th>
-         <th>DEA Code</th>
-      </tr>
 
-      <% @classification.substances.each do |s| %>
-         <tr>
-            <td><%= link_to "#{s.id}", substance_path(s) %></td>
-            <td><%= link_to s.name, substance_path(s) %></td>
-            <td><%= s.dea_code %></td>
-         </tr>
-      <% end %>
-   </table>
-</div>
+<%= render partial: 'substances/substance_table', locals: { substances: @classification.substances } %>

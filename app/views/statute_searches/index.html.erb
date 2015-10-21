@@ -3,14 +3,23 @@
 <% end %>
 
 <div class='basic_info'>
+   <h2>SUBSTANCE SEARCH BY SUBSTRING (includes alternate names, chemical formulas, and comments)</h2>
+   <%= form_tag(substances_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
+      <%= text_field(:search, :substring, size: 50) %>
+
+      <%= submit_tag('SEARCH') %>
+   <% end %>
+</div>
+
+<div class='basic_info'>
    <h2>STATUTE SEARCH</h2>
    <%= form_tag(statutes_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
-      <%= label_tag(:search, 'Search by Substance:') %>
+      <%= label_tag(:search, 'Search for Statutes Scheduling:') %>
       <%= select(:search, :substance_id, @substance_name_id_map, { include_blank: true }) %><br/>
 
       <h4> OR </h4>
 
-      <%= label_tag(:search_state, 'Search by State:') %>
+      <%= label_tag(:search_state, 'Search for Effective Statutes in a state as of some date:') %>
       <%= select(:search, :state, @states, { include_blank: true }) %><br/>
 
       <%= label_tag(:as_of_date, 'As of Date (Optional)') %>
@@ -20,11 +29,3 @@
    <% end %>
 </div>
 
-<div class='basic_info'>
-   <h2>SUBSTANCE SEARCH BY SUBSTRING (includes alternate names, chemical formulas, and comments)</h2>
-   <%= form_tag(substances_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
-      <%= text_field(:search, :substring, size: 50) %>
-
-      <%= submit_tag('SEARCH') %>
-   <% end %>
-</div>
