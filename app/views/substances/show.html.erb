@@ -92,7 +92,7 @@
          </tr>
 
          <% @substance.regulated_by_statutes.each do |s| %>
-            <% substance_statute = SubstanceStatute.additions.where(substance_id: @substance.id, statute_id: s.id).first %>
+            <% substance_statute = SubstanceStatute.where(substance_id: @substance.id, statute_id: s.id).first %>
             <tr>
                <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
                <td><%= s.state %></td>
@@ -103,10 +103,16 @@
                   <td></td>
                <% end %>
                <% if substance_statute %>
-                  <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %>
-                  <td><%= simple_format(substance_statute.comment) %></td>
-                  <td><%= substance_statute.include_flags_string %></td>
-                  <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
+                  <% if substance_statute.is_expiration? %>
+                     <td class='expiration'>Expiration</td>
+                     <td><%= simple_format(substance_statute.comment) %></td>
+                     <td></td>
+                  <% elsif substance_statute %>
+                     <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %></td>
+                     <td><%= simple_format(substance_statute.comment) %></td>
+                     <td><%= substance_statute.include_flags_string %></td>
+                  <% end %>
+                  <td class='button'><%= link_to 'view link', substance_statute %></td>
                   <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
                <% else %>
                   <td class='button'>inherited</td>
