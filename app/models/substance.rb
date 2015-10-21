@@ -54,9 +54,17 @@ class Substance < ActiveRecord::Base
   end
 
   def wikipedia_info_box
-    wikipedia_id = wikipedia_page['query']['pages'].first.first
-    info_box_data = wikipedia_page['query']['pages'][wikipedia_id]['revisions'].first['*']
+    info_box_data = wikipedia_pages['revisions'].first['*']
     info_box_data.split("\n")
+  end
+
+  def wikipedia_pages
+    wikipedia_id = wikipedia_page['query']['pages'].first.first
+    wikipedia_page['query']['pages'][wikipedia_id]
+  end
+
+  def wikipedia_url
+    wikipedia_pages['fullurl']
   end
 
   def wikipedia_page

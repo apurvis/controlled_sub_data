@@ -34,6 +34,12 @@
             <td class='expiration'>Not currently regulated</td>
          <% end %>
       </tr>
+      <% if (@substance.wikipedia_url rescue nil) %>
+         <tr>
+            <td class='properties'>Wikipedia</td>
+            <td class='property'><%= link_to 'Wikipedia Link', @substance.wikipedia_url %></td>
+         </tr>
+      <% end %>
    </table>
    <p></p>
 
