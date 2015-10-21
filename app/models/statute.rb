@@ -58,8 +58,8 @@ class Statute < ActiveRecord::Base
   # Pass the :keep_all option to avoid stripping out overridden regulations (moving from schedule II to III, for instance),
   # expired statutes, and the expiring amendments themselves
   def effective_substance_statutes(options = {})
-    regulations = substance_statutes.includes([:substance, :substance_alternate_names]) + duplicated_federal_substance_statutes(options)
-    amendments = statute_amendments.includes(substance_statutes: [:substance, :substance_alternate_names]).select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
+    regulations = substance_statutes.includes([:substance, :substance_alternate_names, :substance_classification]) + duplicated_federal_substance_statutes(options)
+    amendments = statute_amendments.includes(substance_statutes: [:substance, :substance_alternate_names, :substance_classification]).select { |a| !options[:as_of] || a.start_date <= options[:as_of] }
 
     if options[:keep_all]
       regulations + amendments.map { |a| a.substance_statutes }.flatten

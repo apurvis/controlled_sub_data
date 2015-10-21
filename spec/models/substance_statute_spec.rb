@@ -69,4 +69,19 @@ describe SubstanceStatute do
       end
     end
   end
+
+  context 'include flags' do
+    let(:flag) { { include_isomers: true } }
+    let(:substance_classification) { SubstanceClassification.create(flag.merge(name: 'Classification')) }
+
+    it 'should not have any inherited flags' do
+      expect(federal_first_regulation.include_flags).to be_empty
+    end
+
+    it 'should inherit flags' do
+      federal_first_regulation.substance_classification_id = substance_classification.id
+      federal_first_regulation.save
+      expect(federal_first_regulation.include_flags).to eq([flag.keys.first.to_s])
+    end
+  end
 end

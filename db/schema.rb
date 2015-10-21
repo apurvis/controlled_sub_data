@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020153701) do
+ActiveRecord::Schema.define(version: 20151021145018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -72,9 +71,23 @@ ActiveRecord::Schema.define(version: 20151020153701) do
 
   create_table "substance_classifications", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.datetime "deleted_at"
+    t.boolean  "include_salts"
+    t.boolean  "include_derivatives"
+    t.boolean  "include_mixtures"
+    t.boolean  "include_isomers"
+    t.boolean  "include_optical_isomers"
+    t.boolean  "include_geometric_isomers"
+    t.boolean  "include_positional_isomers"
+    t.boolean  "include_salts_of_isomers"
+    t.boolean  "include_salts_of_optical_isomers"
+    t.boolean  "include_esters"
+    t.boolean  "include_ethers"
+    t.boolean  "include_compounds"
+    t.boolean  "include_materials"
+    t.boolean  "include_preparations"
   end
 
   add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree
@@ -104,6 +117,7 @@ ActiveRecord::Schema.define(version: 20151020153701) do
     t.boolean  "include_materials"
     t.boolean  "include_preparations"
     t.text     "comment"
+    t.integer  "substance_classification_id"
   end
 
   add_index "substance_statutes", ["deleted_at", "is_expiration", "statute_id"], name: "idx_deleted_statute_expiration", using: :btree
@@ -117,7 +131,6 @@ ActiveRecord::Schema.define(version: 20151020153701) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
-    t.integer  "substance_classification_id"
     t.datetime "deleted_at"
     t.string   "comment"
   end

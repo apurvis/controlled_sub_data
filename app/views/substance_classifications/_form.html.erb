@@ -1,11 +1,11 @@
-<%= form_for @classification do |f| %>
-   <% if @classification.errors.any? %>
+<%= form_for @substance_classification do |f| %>
+   <% if @substance_classification.errors.any? %>
       <div id="error_explanation">
          <h2>
-            <%= pluralize(@classification.errors.count, "error") %> prohibited this classification from being saved:
+            <%= pluralize(@substance_classification.errors.count, "error") %> prohibited this classification from being saved:
          </h2>
          <ul>
-            <% @classification.errors.full_messages.each do |msg| %>
+            <% @substance_classification.errors.full_messages.each do |msg| %>
                <li><%= msg %></li>
             <% end %>
          </ul>
@@ -14,8 +14,10 @@
 
    <p>
       <%= f.label :name %><br>
-      <%= f.text_area :name, :cols => "50", :rows => "10" %>
+      <%= f.text_area :name, cols: '50', rows: '10' %>
    </p>
+
+   <%= render partial: 'substance_statutes/include_flags_checkboxes', locals: { f: f, klass: SubstanceClassification } %>
 
    <p>
       <%= f.submit %>

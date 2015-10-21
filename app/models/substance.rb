@@ -21,6 +21,18 @@ class Substance < ActiveRecord::Base
     statutes.first
   end
 
+  def current_statute(state)
+    fail NotImplementedError
+  end
+
+  def current_classification(state)
+    current_substance_statute(state).try(:substance_classification)
+  end
+
+  def current_substance_statute(state)
+    substance_statutes.joins(:statute).where(["statutes.state = ?", state]).order('statutes.created_at DESC').first
+  end
+
   def first_scheduled_date
     first_regulating_statute.try(:start_date)
   end
@@ -83,5 +95,9 @@ class Substance < ActiveRecord::Base
       end
     end
     @wikipedia_json = json
+  end
+
+  def to_s
+    name
   end
 end

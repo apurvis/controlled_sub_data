@@ -1,10 +1,14 @@
 class SubstanceStatute < ActiveRecord::Base
+  include IncludeFlags
+
   acts_as_paranoid
   audited
 
   belongs_to :substance, inverse_of: :substance_statutes
   belongs_to :statute, inverse_of: :substance_statutes
+  belongs_to :substance_classification, inverse_of: :substance_statutes
   has_many :substance_alternate_names
+
 
   scope :additions,   -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
   scope :expirations, -> { where(is_expiration: true) }
@@ -38,14 +42,6 @@ class SubstanceStatute < ActiveRecord::Base
     expiring_statutes.first
   end
 
-  def include_flags_string
-    include_flags.map { |f| f.sub(/^include_/, '').humanize }.join(', ')
-  end
-
-  def has_include_flags?
-    include_flags.size > 0
-  end
-
   def regulates_same_as?(substance_statute)
     regulation_differences(substance_statute).empty?
   end
@@ -61,11 +57,5 @@ class SubstanceStatute < ActiveRecord::Base
     end
 
     differences
-  end
-
-  protected
-
-  def include_flags
-    self.attributes.select { |k,v| k =~ /^include_/ && v == true }.keys
   end
 end

@@ -58,26 +58,13 @@ class SubstanceStatutesController < ApplicationController
   private
 
   def substance_statutes_params
-    params.require(:substance_statute).permit(
+    params.require(:substance_statute).permit([
       :substance_id,
       :statute_id,
       :schedule_level,
       :is_expiration,
       :comment,
-      :include_salts,
-      :include_derivatives,
-      :include_mixtures,
-      :include_isomers,
-      :include_optical_isomers,
-      :include_geometric_isomers,
-      :include_positional_isomers,
-      :include_salts_of_isomers,
-      :include_salts_of_optical_isomers,
-      :include_esters,
-      :include_ethers,
-      :include_compounds,
-      :include_materials,
-      :include_preparations
-    )
+      :substance_classification_id
+    ] + SubstanceStatute.available_flags)
   end
 end

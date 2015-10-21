@@ -16,7 +16,7 @@ describe StatuteComparisonsController do
     extra_substance = SubstanceStatute.create(substance: substance, statute: federal_statute)
     get :new, compare: { state_one: federal_statute.state, state_two: state_statute.state }
 
-    expect(assigns(:state_one_only)).to eq(federal_statute.substance_statutes.reverse.map { |ss| { difference: "Only Regulated Here", substance_statute: ss } })
+    expect(assigns(:state_one_only)).to eq(federal_statute.substance_statutes.map { |ss| { difference: "Only Regulated Here", substance_statute: ss } })
     expect(assigns(:state_two_only)).to eq(state_statute.substance_statutes.map { |ss| { difference: "Only Regulated Here", substance_statute: ss } })
   end
 end

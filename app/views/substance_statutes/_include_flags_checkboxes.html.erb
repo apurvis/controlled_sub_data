@@ -1,0 +1,7 @@
+<p>
+   <% klass.available_flags.each do |flag| %>
+      <%= f.label flag %>
+      <%= check_box(klass.name.underscore.to_sym, flag) %>
+      <br/>
+   <% end %>
+</p>

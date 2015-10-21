@@ -48,6 +48,7 @@
             <th>Change Type</th>
             <th>Regulates Substance</th>
             <th>AKA</th>
+            <th>Classification</th>
             <th>Added By</th>
             <th>Inclusions</th>
             <th>Comments</th>
@@ -67,6 +68,12 @@
 
                <td><%= link_to ss[:substance].name, ss[:substance_statute] %></td>
                <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, san) }.join(', ').html_safe %></td>
+
+               <% if ss[:substance_statute].substance_classification %>
+                  <td><%= link_to(ss[:substance_statute].substance_classification.name, ss[:substance_statute]) %></td>
+               <% else %>
+                  <td></td>
+               <% end %>
 
                <td>
                   <% if ss[:added_by_amendment].is_a?(Statute) %>
