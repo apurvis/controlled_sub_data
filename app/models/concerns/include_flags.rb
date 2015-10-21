@@ -5,7 +5,7 @@ module IncludeFlags
 
   module ClassMethods
     def available_flags
-      column_names.select { |k| k =~ /^include_/ }.map(&:to_sym)
+      column_names.select { |k| k =~ /^include_/ }.map(&:to_sym).sort
     end
   end
 
@@ -22,6 +22,6 @@ module IncludeFlags
     if self.is_a?(SubstanceStatute) && substance_classification && !substance_classification.include_flags.empty?
       flags += substance_classification.include_flags
     end
-    flags
+    flags.sort
   end
 end
