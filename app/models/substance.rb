@@ -76,20 +76,4 @@ class Substance < ActiveRecord::Base
     end
     @wikipedia_json = json
   end
-
-  def self.find_or_create_substance(name, options = {})
-    s = nil
-    name = name.strip
-    s = Substance.where(name: name).first
-    s = Substance.new(name: name) unless s
-
-    if options[:classification]
-      s.substance_classification_id = SubstanceClassification.find_or_create_substance_classification(options[:classification]).id
-    end
-
-    s.dea_code = options[:dea_code] if options[:dea_code]
-    s.save
-
-    s
-  end
 end

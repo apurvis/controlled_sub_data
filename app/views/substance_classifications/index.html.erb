@@ -5,7 +5,8 @@
       <th>ID</th>
       <th>Name</th>
       <th>Number of Substances In Category</th>
-      <th></th>
+      <th>Edit</th>
+      <th>Delete
    </tr>
 
    <% @classifications.each do |c| %>
@@ -14,6 +15,7 @@
          <td><%= link_to c.name, substance_classification_path(c) %></td>
          <td><%= c.substances.size %>
          <td class='button'><%= link_to 'Edit', edit_substance_classification_path(c) %></td>
+         <td class='button'><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <tr>
    <% end %>
 
@@ -21,6 +23,7 @@
       <td></td>
       <td>Unclassified</td>
       <td><%= @unclassified_count %></td>
+      <td></td>
       <td></td>
    </tr>
 </table>

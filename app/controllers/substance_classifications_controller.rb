@@ -39,6 +39,20 @@ class SubstanceClassificationsController < ApplicationController
     end
   end
 
+  def destroy
+    @classification = SubstanceClassification.where(id: params['id']).first
+
+    if @classification.substances.size > 0
+      flash.alert = "You can't delete a classification that still has #{@classification.substances.size} substances attached!"
+    else
+      notice = "Successfully deleted #{@classification.name}"
+      @classification.destroy
+      flash.notice = notice
+    end
+
+    redirect_to substance_classifications_path
+  end
+
   private
 
   def substance_classification_params
