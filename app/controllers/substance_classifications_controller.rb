@@ -4,7 +4,7 @@ class SubstanceClassificationsController < ApplicationController
 
   def index
     @classifications = SubstanceClassification.all
-    @unclassified_count = Substance.where(substance_classification_id: nil).size
+    @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 
   def show

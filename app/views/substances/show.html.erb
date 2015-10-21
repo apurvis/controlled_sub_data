@@ -7,12 +7,12 @@
 
    <table class='properties'>
       <tr>
-         <td class='properties'>Classification:</td>
-         <td class='property'>
-            <% if @substance.substance_classification.try(:name) %>
-               <%= link_to @substance.substance_classification.name, substance_classification_path(@substance.substance_classification) %>
-            <% end %>
-         </td>
+         <td class='properties'>Current Status</td>
+         <td class='property'></td>
+      </tr>
+      <tr>
+         <td class='properties'>Current Classification</td>
+         <td class='property'></td>
       </tr>
       <tr>
          <td class='properties'>Chemical Name (IUPAC):</td>
@@ -90,6 +90,7 @@
             <th>State</th>
             <th>Start Date</th>
             <th>Expiration Date</th>
+            <th>Classification</th>
             <th>Level</th>
             <th>Comment</th>
             <th>Inclusions</th>
@@ -110,10 +111,16 @@
                <% end %>
                <% if substance_statute %>
                   <% if substance_statute.is_expiration? %>
+                     <td class='expiration'>N/A</td>
                      <td class='expiration'>Expiration</td>
                      <td><%= simple_format(substance_statute.comment) %></td>
                      <td></td>
                   <% elsif substance_statute %>
+                     <% if substance_statute.substance_classification %>
+                        <td><%= link_to substance_statute.substance_classification.name, substance_statute.substance_classification %></td>
+                     <% else %>
+                        <td></td>
+                     <% end %>
                      <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %></td>
                      <td><%= simple_format(substance_statute.comment) %></td>
                      <td><%= substance_statute.include_flags_string %></td>
@@ -121,6 +128,7 @@
                   <td class='button'><%= link_to 'view link', substance_statute %></td>
                   <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>
                <% else %>
+                  <td class='button'>inherited</td>
                   <td class='button'>inherited</td>
                   <td class='button'>inherited</td>
                   <td class='button'>inherited</td>

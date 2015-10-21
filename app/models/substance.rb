@@ -21,6 +21,16 @@ class Substance < ActiveRecord::Base
     statutes.first
   end
 
+  def current_statute(state)
+  end
+
+  def current_classification(state)
+  end
+
+  def current_substance_statute(state)
+    substance_statutes.join('statutes ON statutes.id=substance_statutes.id').where(state: state).order('statutes.created_at ASC')
+  end
+
   def first_scheduled_date
     first_regulating_statute.try(:start_date)
   end
@@ -83,5 +93,9 @@ class Substance < ActiveRecord::Base
       end
     end
     @wikipedia_json = json
+  end
+
+  def to_s
+    name
   end
 end

@@ -31,7 +31,10 @@ It also contains links to a rolling change log in the form of ```StatuteAmendmen
 `Statutes` can also have their own expiration date, as of which time all regulations extending from that statute will be considered invalid.
 
 ### SubstanceStatutes
-A ```SubstanceStatute``` record contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
+A ```SubstanceStatute``` record contains information about how a particular ```Statute``` applies to a particular ```Substance```.  Things like how the substance was classified by that statute, whether the the ```Statute``` (or amendment) also regulated stereo isomers/preparations/whatever, comments about application, and more.
+
+### SubstanceClassification
+A `SubstanceClassification` is a grouping of substances as per the statutes, e.g. "Stimulants".  The classification of a substance can dictate some of the derivative/mixture/isomer information about how that substance is scheduled.
 
 ### SubstanceAlternateName
 A ```SubstanceAlternateName``` is another string that is attached to a ```SubstanceStatute```.  It is an "AKA" or equivalent string for that substance as it is regulated by that statute.

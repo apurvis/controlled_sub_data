@@ -1,4 +1,4 @@
-<h2><%= link_to 'Create new Classification', new_substance_classification_path %></h2>
+<h2><%= link_to 'Create New Classification', new_substance_classification_path %></h2>
 
 <table>
    <tr>
@@ -13,7 +13,7 @@
       <tr>
          <td><%= link_to "#{c.id}", substance_classification_path(c) %></td>
          <td><%= link_to c.name, substance_classification_path(c) %></td>
-         <td><%= c.substances.size %>
+         <td><%= c.substance_statutes.size %>
          <td class='button'><%= link_to 'Edit', edit_substance_classification_path(c) %></td>
          <td class='button'><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <tr>
