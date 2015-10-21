@@ -2,6 +2,4 @@
    <h1>Schedule <%= @roman_level %></h1>
 </div>
 
-<div style='margin-top: 10px;'>
-   <%= render partial: 'substances/substance_table', locals: { substances: @substances } %>
-</div>
+<%= render partial: 'substances/substance_table', locals: { substances: @substances } %>

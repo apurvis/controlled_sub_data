@@ -1,11 +1,13 @@
 <div class='basic_info'>
    <h1><%= @substance_classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@substance_classification) %>)</h1>
+   <div class='comments'>
+      <h3>COMMENTS:</h3>
+      <p><%= simple_format(@substance_classification.comment) %></p>
+   </div>
    <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @substance_classification } %>
 </div>
 
-<div style='margin-top: 10px;'>
-   <%= render partial: 'substances/substance_table', locals: { substances: @substance_classification.substances } %>
-</div>
+<%= render partial: 'substances/substance_table', locals: { substances: @substance_classification.substances } %>
 
 <% if @substance_classification.audits.size > 0 %>
    <div class='audit_log'>

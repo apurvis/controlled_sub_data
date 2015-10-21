@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021145018) do
+ActiveRecord::Schema.define(version: 20151021190407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20151021145018) do
     t.boolean  "include_compounds"
     t.boolean  "include_materials"
     t.boolean  "include_preparations"
+    t.text     "comment"
   end
 
   add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree

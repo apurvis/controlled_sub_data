@@ -1,14 +1,16 @@
-<table>
-   <% flagged.class.available_flags.each do |k| %>
-      <tr>
-         <td><%= k.to_s.humanize %>?</td>
-         <% if flagged.send("#{k}?".to_sym) %>
-            <td class='addition'><%= flagged.send("#{k}?".to_sym) %></td>
-         <% elsif flagged.respond_to?(:substance_classification) && flagged.substance_classification.try(:send, "#{k}?".to_sym)%>
-            <td class='addition_toned_down'>true</td>
-         <% else %>
-            <td><%= flagged.send("#{k}?".to_sym) %></td>
-         <% end %>
-      </tr>
-   <% end %>
-</table>
+<div style='margin-top: 10px;'>
+   <table>
+      <% flagged.class.available_flags.each do |k| %>
+         <tr>
+            <td><%= k.to_s.humanize %>?</td>
+            <% if flagged.send("#{k}?".to_sym) %>
+               <td class='addition'><%= flagged.send("#{k}?".to_sym) %></td>
+            <% elsif flagged.respond_to?(:substance_classification) && flagged.substance_classification.try(:send, "#{k}?".to_sym)%>
+               <td class='addition_toned_down'>true</td>
+            <% else %>
+               <td><%= flagged.send("#{k}?".to_sym) %></td>
+            <% end %>
+         </tr>
+      <% end %>
+   </table>
+</div>
