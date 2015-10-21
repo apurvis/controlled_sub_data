@@ -21,7 +21,7 @@
 </div>
 
 <div class='basic_info'>
-   <h2>SUBSTANCE SEARCH BY SUBSTRING (includes alternate names and chemical formulas)</h2>
+   <h2>SUBSTANCE SEARCH BY SUBSTRING (includes alternate names, chemical formulas, and comments)</h2>
    <%= form_tag(substances_path, method: :get, class: 'navbar-form', id: 'search-form') do %>
       <%= text_field(:search, :substring, size: 50) %>
 

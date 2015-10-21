@@ -71,7 +71,7 @@
 
    <div class='comments'>
       <h3>COMMENTS:</h3>
-      <p><%= @substance.comment %></p>
+      <p><%= simple_format(@substance.comment) %></p>
    </div>
 </div>
 
@@ -104,7 +104,7 @@
                <% end %>
                <% if substance_statute %>
                   <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %>
-                  <td><%= substance_statute.comment %></td>
+                  <td><%= simple_format(substance_statute.comment) %></td>
                   <td><%= substance_statute.include_flags_string %></td>
                   <td class='button'><%= link_to 'view link', substance_statute_path(substance_statute) %></td>
                   <td class='button'><%= link_to 'edit link', edit_substance_statute_path(substance_statute) %></td>

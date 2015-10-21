@@ -18,7 +18,7 @@
 
    <div class='comments'>
       <h3>COMMENTS:</h3>
-      <p><%= @statute.comment %></p>
+      <p><%= simple_format(@statute.comment) %></p>
    </div>
 </div>
 
@@ -82,7 +82,7 @@
                   <td>None</td>
                <% end %>
 
-               <td><%= ss[:comment] %></td>
+               <td><%= simple_format(ss[:comment]) %></td>
 
                <% if ss[:expired_by_amendment] %>
                   <td class='expiration'>

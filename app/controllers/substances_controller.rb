@@ -9,7 +9,9 @@ class SubstancesController < ApplicationController
                              .where("LOWER(substances.name) LIKE '%#{params[:search][:substring].downcase}%'
                                   OR LOWER(substance_alternate_names.name) LIKE '%#{params[:search][:substring].downcase}%'
                                   OR LOWER(substances.chemical_formula) LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR chemical_formula_smiles_format LIKE '%#{params[:search][:substring].downcase}%'")
+                                  OR chemical_formula_smiles_format LIKE '%#{params[:search][:substring].downcase}%'
+                                  OR LOWER(substance_statutes.comment) LIKE '%#{params[:search][:substring].downcase}%'
+                                  OR LOWER(substances.comment) LIKE '%#{params[:search][:substring].downcase}%'")
     else
       @substances = Substance.includes(substance_statutes: [:substance_alternate_names, :statute])
     end

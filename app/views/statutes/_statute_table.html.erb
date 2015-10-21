@@ -18,7 +18,7 @@
             <td></td>
          <% end %>
          <td><%= statute.blue_book_code %></td>
-         <td><%= statute.comment %></td>
+         <td><%= simple_format(statute.comment) %></td>
 
          <% if statute.substance_statutes.size > 0 %>
             <td><%= statute.substance_statutes.size %></td>
