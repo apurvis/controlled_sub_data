@@ -2,4 +2,6 @@
    <h1><%= @classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@classification) %>)</h1>
 </div>
 
-<%= render partial: 'substances/substance_table', locals: { substances: @classification.substances } %>
+<div style='margin-top: 10px;'>
+   <%= render partial: 'substances/substance_table', locals: { substances: @classification.substances } %>
+</div>

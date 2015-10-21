@@ -1,6 +1,6 @@
 class SubstanceStatutesController < ApplicationController
   before_action :authenticate_user!
-  before_action :vip_only, except: [:index, :show]
+  before_action :vip_only, except: [:show]
 
   def show
     @substance_statute = SubstanceStatute.with_deleted.where(id: params['id']).first
@@ -8,10 +8,6 @@ class SubstanceStatutesController < ApplicationController
 
   def edit
     @substance_statute = SubstanceStatute.where(id: params['id']).first
-  end
-
-  def index
-    @substance_statutes = SubstanceStatute.all
   end
 
   def new

@@ -2,8 +2,11 @@
    <li><%= link_to 'Substances', substances_path %></li>
    <li><%= link_to 'Statutes', statutes_path %></li>
    <li><%= link_to 'Classifications', substance_classifications_path %></li>
+   <li><%= link_to 'Schedule Levels', schedule_levels_path %>
    <li><%= link_to 'Search', statute_searches_path %></li>
    <li><%= link_to 'Compare', statute_comparisons_path %></li>
+   <li><%= link_to 'Audit Logs', audits_path %></li>
+   <li><%= link_to 'Alternate Names', substance_alternate_names_path %></li>
    <li><%= link_to 'Documentation', 'https://github.com/apurvis/controlled_sub_data/blob/master/README.md' %></li>
 
    <li><%= link_to 'Edit Account', edit_user_registration_path %></li>
@@ -11,3 +14,4 @@
 <% else %>
    <li><%= link_to 'Sign In', new_user_session_path %></li>
 <% end %>
+

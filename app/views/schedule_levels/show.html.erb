@@ -1,21 +1,7 @@
-<h2>Schedule <%= @roman_level %></h2>
-<br/>
-<h3>Substances Scheduled at this Level and Where</h3>
-<br/>
-<table>
-   <tr>
-      <th>Substance ID</th>
-      <th>Substance Name</th>
-      <th>DEA Code</th>
-      <th>Statute</th>
-   </tr>
+<div class='basic_info'>
+   <h1>Schedule <%= @roman_level %></h1>
+</div>
 
-   <% @substance_statutes.each do |ss| %>
-      <tr>
-         <td><%= link_to "#{ss.substance.id}", substance_path(ss.substance) %></td>
-         <td><%= link_to ss.substance.name, substance_path(ss.substance) %></td>
-         <td><%= ss.substance.dea_code %></td>
-         <td><%= link_to ss.statute.formatted_name, statute_path(ss.statute) %></td>
-      </tr>
-   <% end %>
-</table>
+<div style='margin-top: 10px;'>
+   <%= render partial: 'substances/substance_table', locals: { substances: @substances } %>
+</div>
