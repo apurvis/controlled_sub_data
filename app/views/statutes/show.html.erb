@@ -72,7 +72,7 @@
                <% if ss[:substance_statute].substance_classification %>
                   <td><%= link_to(ss[:substance_statute].substance_classification.name, ss[:substance_statute]) %></td>
                <% else %>
-                  <td></td>
+                  <td class='expiration_toned_down'>Unknown</td>
                <% end %>
 
                <td>
