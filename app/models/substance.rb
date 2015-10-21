@@ -22,6 +22,7 @@ class Substance < ActiveRecord::Base
   end
 
   def current_statute(state)
+    fail NotImplementedError
   end
 
   def current_classification(state)

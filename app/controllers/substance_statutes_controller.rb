@@ -63,7 +63,8 @@ class SubstanceStatutesController < ApplicationController
       :statute_id,
       :schedule_level,
       :is_expiration,
-      :comment
+      :comment,
+      :substance_classification_id
     ] + SubstanceStatute.available_flags)
   end
 end

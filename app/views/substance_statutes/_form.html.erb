@@ -29,6 +29,11 @@
       </p>
    <% end %>
 
+   <p>
+      <%= f.label :classification %><br>
+      <%= select(:substance_statute, :substance_classification_id, SubstanceClassification.all.map { |c| [c.name[0..50], c.id] }, { include_blank: true } ) %>
+   </p>
+
    <%= render partial: 'include_flags_checkboxes', locals: { f: f, klass: SubstanceStatute } %>
 
    <p>

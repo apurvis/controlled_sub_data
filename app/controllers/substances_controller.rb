@@ -66,6 +66,6 @@ class SubstancesController < ApplicationController
   private
 
   def substance_params
-    params.require(:substance).permit(:name, :dea_code, :substance_classification_id, :chemical_formula, :chemical_formula_smiles_format, :comment)
+    params.require(:substance).permit(:name, :dea_code, :chemical_formula, :chemical_formula_smiles_format, :comment)
   end
 end

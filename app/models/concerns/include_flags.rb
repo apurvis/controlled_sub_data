@@ -18,6 +18,10 @@ module IncludeFlags
   end
 
   def include_flags
-    self.attributes.select { |k,v| k =~ /^include_/ && v == true }.keys
+    flags = self.attributes.select { |k,v| k =~ /^include_/ && v == true }.keys
+    if self.is_a?(SubstanceStatute) && substance_classification && !substance_classification.include_flags.empty?
+      flags += substance_classification.include_flags
+    end
+    flags
   end
 end
