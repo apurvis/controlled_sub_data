@@ -40,6 +40,7 @@
 
 <div class='extended_info'>
    <h2>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h2>
+   <p><span class='addition'>Click the name of the substance to view the link between the substance and the statute</span></p>
    <h3>(<%= link_to @scheduled_substance_message, { controller: 'substance_statutes', action: :new, statute_id: @statute.id } %>)</h3>
 
    <% if @substance_statute_data.size > 0 %>
@@ -54,8 +55,8 @@
             <th>Comments</th>
             <th>Expired By</th>
             <th>Scheduled Level</th>
-            <th>Edit Link to Statute</th>
-            <th>Delete Link to Statute</th>
+            <th>Edit</th>
+            <th>Delete</th>
          </tr>
 
          <% @substance_statute_data.each do |ss| %>
