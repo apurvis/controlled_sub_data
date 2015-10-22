@@ -13,6 +13,7 @@ class ScheduleLevelsController < ApplicationController
     @level = params['id'].to_i
     @roman_level = ScheduleLevelsController::LEVELS.keys[@level - 1]
     @substances = SubstanceStatute.where(schedule_level: @level).map { |ss| ss.substance }
+    @classifications = SubstanceClassification.where(schedule_level: @level).order(name: :asc)
   end
 
   def index

@@ -1,6 +1,7 @@
 <tr>
    <th>Name</th>
    <th>Established By</th>
+   <th>Schedule Level</th>
    <th>Comment</th>
    <th>Number of Substances In Category</th>
    <th>Include Flags</th>
@@ -16,6 +17,13 @@
       <% else %>
          <td class='expiration'>Unknown</td>
       <% end %>
+
+      <% if c.schedule_level %>
+         <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[c.schedule_level - 1], { controller: 'schedule_levels', action: :show, id: c.schedule_level } %></td>
+      <% else %>
+         <td></td>
+      <% end %>
+
       <td><%= c.comment %></td>
       <td><%= c.substance_statutes.size %></td>
       <% if c.has_include_flags? %>

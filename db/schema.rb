@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022093558) do
+ActiveRecord::Schema.define(version: 20151022105339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20151022093558) do
     t.boolean  "include_preparations"
     t.text     "comment"
     t.integer  "statute_id"
+    t.integer  "schedule_level"
   end
 
   add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree

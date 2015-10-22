@@ -2,4 +2,14 @@
    <h1>Schedule <%= @roman_level %></h1>
 </div>
 
+<div class='purple_info'>
+   <h3>Classifications Established At This Level</h3>
+   <% if !@classifications.empty? %>
+      <table>
+         <%= render partial: 'substance_classifications/classification_table', locals: { classifications: @classifications } %>
+      </table>
+   <% end %>
+</div>
+
+
 <%= render partial: 'substances/substance_table', locals: { substances: @substances } %>

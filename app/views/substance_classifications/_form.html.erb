@@ -23,6 +23,11 @@
    </p>
 
    <p>
+      <%= f.label :established_at_schedule_level %>
+      <%= number_field(:substance_classification, :schedule_level, in: 1.0..5, step: 1) %>
+   </p>
+
+   <p>
       <%= f.label :comment, 'Comment' %><br/>
       <%= f.text_area(:comment, cols: '60', rows: '10') %>
    </p>
