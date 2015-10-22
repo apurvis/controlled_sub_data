@@ -13,6 +13,7 @@
    <% end %>
 
    <% if @substance_classification.is_a?(ClassificationAmendment) %>
+      <h1>WARNING: There is a bug wherein the edit form is not populated with the underlying data for ClassificationAmendments.  This means if you don't set all the properties correctly exactly as they were, when you submit the changes anything you didn't set up again will be erased.  Use with caution until this is fixed.</h1>
       <% if @parent %>
          <h3>Amending: <%= link_to(@parent.name, @parent) %></h3>
          <%= f.hidden_field :parent_id, value: @parent.id %>
@@ -44,7 +45,7 @@
       <%= f.text_area(:comment, cols: '60', rows: '10') %>
    </p>
 
-   <%= render partial: 'substance_statutes/include_flags_checkboxes', locals: { f: f, klass: SubstanceClassification } %>
+   <%= render partial: 'substance_statutes/include_flags_checkboxes', locals: { f: f, klass: @substance_classification.class } %>
 
    <p>
       <%= f.submit %>

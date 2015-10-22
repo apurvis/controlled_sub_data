@@ -2,8 +2,6 @@ class SubstanceClassificationsController < ApplicationController
   before_action :authenticate_user!
   before_action :vip_only, except: [:index, :show]
 
-  PARAMS = [:comment, :statute_id, :schedule_level]
-
   def index
     @classifications = SubstanceClassification.where(type: nil).order(name: :asc).all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
@@ -69,6 +67,6 @@ class SubstanceClassificationsController < ApplicationController
   private
 
   def substance_classification_params
-    base_params = params.require(:substance_classification).permit(PARAMS + [:name] + SubstanceClassification.available_flags)
+    params.require(:substance_classification).permit([:comment, :statute_id, :parent_id, :schedule_level, :name] + SubstanceClassification.available_flags)
   end
 end

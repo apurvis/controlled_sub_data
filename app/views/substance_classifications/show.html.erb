@@ -1,6 +1,9 @@
 <div class='basic_info'>
    <% if @substance_classification.is_a?(ClassificationAmendment) %>
-      <h2>Amends Classification: <%= link_to(@substance_classification.substance_classification.to_s, @substance_classification.substance_classification) %></h2>
+      <h2>
+         Amends Classification: <%= link_to(@substance_classification.substance_classification.to_s, @substance_classification.substance_classification) %>
+         (<%= link_to 'edit', edit_classification_amendment_path(@substance_classification) %>)
+      </h2>
    <% else %>
       <h1><%= @substance_classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@substance_classification) %>)</h1>
    <% end %>

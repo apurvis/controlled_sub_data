@@ -26,7 +26,17 @@ class ClassificationAmendmentsController < SubstanceClassificationsController
     end
   end
 
+  def update
+    @substance_classification = SubstanceClassification.where(id: params[:id]).first
+
+    if @substance_classification.update(substance_classification_params)
+      redirect_to @substance_classification
+    else
+      render 'edit'
+    end
+  end
+
   def substance_classification_params
-    params.require(:classification_amendment).permit([:parent_id] + PARAMS + SubstanceClassification.available_flags)
+    params.require(:classification_amendment).permit([:comment, :statute_id, :parent_id, :schedule_level, :name] + SubstanceClassification.available_flags)
   end
 end
