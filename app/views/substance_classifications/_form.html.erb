@@ -12,19 +12,26 @@
       </div>
    <% end %>
 
-   <p>
-      <%= f.label :name %><br>
-      <%= f.text_area :name, cols: '50', rows: '5' %>
-   </p>
+   <% if @substance_classification.is_a?(ClassificationAmendment) %>
+      <p>
+         <%= f.label :amends_classification %><br>
+         <%= select(@substance_classification.class.to_s.underscore.to_sym, :parent_id, SubstanceClassification.where(type: nil).map { |c| [c.name, c.id]}) %>
+      </p>
+   <% else %>
+      <p>
+         <%= f.label :name %><br>
+         <%= f.text_area :name, cols: '50', rows: '5' %>
+      </p>
+   <% end %>
 
    <p>
       <%= f.label :established_by_this_statute %>
-      <%= select(:substance_classification, :statute_id, Statute.order(start_date: :asc).all.map { |s| [s.formatted_name, s.id] }, { include_blank: true }) %>
+      <%= select(@substance_classification.class.to_s.underscore.to_sym, :statute_id, Statute.order(start_date: :asc).all.map { |s| [s.formatted_name, s.id] }, { include_blank: true }) %>
    </p>
 
    <p>
       <%= f.label :established_at_schedule_level %>
-      <%= number_field(:substance_classification, :schedule_level, in: 1.0..5, step: 1) %>
+      <%= number_field(@substance_classification.class.to_s.underscore.to_sym, :schedule_level, in: 1.0..5, step: 1) %>
    </p>
 
    <p>

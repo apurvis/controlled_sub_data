@@ -1,5 +1,10 @@
 <div class='basic_info'>
-   <h1><%= @substance_classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@substance_classification) %>)</h1>
+   <% if @substance_classification.is_a?(ClassificationAmendment) %>
+      <h2>Amends Classification: <%= link_to(@substance_classification.substance_classification.to_s, @substance_classification.substance_classification) %></h2>
+   <% else %>
+      <h1><%= @substance_classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@substance_classification) %>)</h1>
+   <% end %>
+
    <h2>Established by this statute: <%= @substance_classification.statute ? link_to(@substance_classification.statute.formatted_name, @substance_classification.statute) : '' %></h2>
    <h2>At Level:
       <% if @substance_classification.schedule_level %>
@@ -12,6 +17,18 @@
    </div>
    <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @substance_classification } %>
 </div>
+
+<% if !@substance_classification.is_a?(ClassificationAmendment) %>
+   <div class='extended_info'>
+      <h2>Amendments (<%= link_to 'Add an amendment to this classification', { controller: 'substance_classifications', action: :new, parent_id: @substance_classification.id } %>)</h2>
+
+      <% unless @substance_classification.classification_amendments.empty? %>
+         <table>
+            <%= render partial: 'classification_table', locals: { classifications: @substance_classification.classification_amendments } %>
+         </table>
+      <% end %>
+   </div>
+<% end %>
 
 <%= render partial: 'substances/substance_table', locals: { substances: @substance_classification.substances } %>
 

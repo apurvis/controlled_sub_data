@@ -2,8 +2,10 @@ class SubstanceClassificationsController < ApplicationController
   before_action :authenticate_user!
   before_action :vip_only, except: [:index, :show]
 
+  PARAMS = [:comment, :statute_id, :schedule_level]
+
   def index
-    @classifications = SubstanceClassification.order(name: :asc).all
+    @classifications = SubstanceClassification.where(type: nil).order(name: :asc).all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 
@@ -19,11 +21,19 @@ class SubstanceClassificationsController < ApplicationController
   end
 
   def new
-    @substance_classification = SubstanceClassification.new(statute_id: params[:statute_id])
+    if params[:parent_id]
+      @substance_classification = ClassificationAmendment.new(parent_id: params[:parent_id])
+    else
+      @substance_classification = SubstanceClassification.new(statute_id: params[:statute_id])
+    end
   end
 
   def create
-    @substance_classification = SubstanceClassification.new(substance_classification_params)
+    if params[:parent_id]
+      @substance_classification = ClassificationAmendment.new(substance_classification_params)
+    else
+      @substance_classification = SubstanceClassification.new(substance_classification_params)
+    end
 
     if @substance_classification.save
       redirect_to @substance_classification
@@ -59,6 +69,6 @@ class SubstanceClassificationsController < ApplicationController
   private
 
   def substance_classification_params
-    params.require(:substance_classification).permit([:name, :comment, :statute_id, :schedule_level] + SubstanceClassification.available_flags)
+    base_params = params.require(:substance_classification).permit(PARAMS + [:name] + SubstanceClassification.available_flags)
   end
 end
