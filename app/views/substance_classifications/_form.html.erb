@@ -18,6 +18,11 @@
    </p>
 
    <p>
+      <%= f.label :established_by_this_statute %>
+      <%= select(:substance_classification, :statute_id, Statute.order(start_date: :asc).all.map { |s| [s.formatted_name, s.id] }, { include_blank: true }) %>
+   </p>
+
+   <p>
       <%= f.label :comment, 'Comment' %><br/>
       <%= f.text_area(:comment, cols: '60', rows: '10') %>
    </p>

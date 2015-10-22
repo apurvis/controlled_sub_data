@@ -4,6 +4,7 @@ class Statute < ActiveRecord::Base
 
   has_many :substance_statutes
   has_many :statute_amendments, -> { order(:start_date) }, { foreign_key: :parent_id, inverse_of: :statute }
+  has_many :substance_classifications
 
   validates :state, presence: true, length: { minimum: 2 }
   validates :start_date, presence: true

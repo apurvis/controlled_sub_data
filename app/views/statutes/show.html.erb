@@ -38,6 +38,13 @@
    <% end %>
 <% end %>
 
+<div class='audit_log'>
+   <h3>Classifications Established By This Statute (<%= link_to('Add a Classification', new_substance_classification_path) %>)</h3>
+   <table>
+      <%= render partial: 'substance_classifications/classification_table', locals: { classifications: @statute.substance_classifications } %>
+   </table>
+</div>
+
 <div class='extended_info'>
    <h2>Changes in Scheduling Effected by This <%= !@statute.is_a?(StatuteAmendment) ? 'Statute and Its Amendments' : @statute.class %></h2>
    <p><span class='addition'>Click the name of the substance to view the link between the substance and the statute</span></p>

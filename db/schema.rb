@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021190407) do
+ActiveRecord::Schema.define(version: 20151022093558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20151021190407) do
     t.boolean  "include_materials"
     t.boolean  "include_preparations"
     t.text     "comment"
+    t.integer  "statute_id"
   end
 
   add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 20151021190407) do
 
   add_index "substance_statutes", ["deleted_at", "is_expiration", "statute_id"], name: "idx_deleted_statute_expiration", using: :btree
   add_index "substance_statutes", ["deleted_at", "statute_id"], name: "index_substance_statutes_on_deleted_at_and_statute_id", using: :btree
+  add_index "substance_statutes", ["deleted_at", "substance_classification_id"], name: "idx_deleted_at_classification", using: :btree
   add_index "substance_statutes", ["deleted_at", "substance_id", "statute_id", "schedule_level"], name: "idx_deleted_substance_schedule_level", unique: true, using: :btree
 
   create_table "substances", force: :cascade do |t|
@@ -135,6 +137,7 @@ ActiveRecord::Schema.define(version: 20151021190407) do
     t.integer  "dea_code",                                    comment: "Administrative Controlled Substances Code Number. See https://en.wikipedia.org/wiki/Administrative_Controlled_Substances_Code_Number"
     t.datetime "deleted_at"
     t.string   "comment"
+    t.string   "wikipedia_url"
   end
 
   add_index "substances", ["deleted_at"], name: "index_substances_on_deleted_at", using: :btree

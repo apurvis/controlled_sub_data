@@ -1,0 +1,31 @@
+<tr>
+   <th>ID</th>
+   <th>Name</th>
+   <th>Established By</th>
+   <th>Comment</th>
+   <th>Number of Substances In Category</th>
+   <th>Include Flags</th>
+   <th>Edit</th>
+   <th>Delete
+</tr>
+
+<% classifications.each do |c| %>
+   <tr>
+      <td><%= link_to "#{c.id}", substance_classification_path(c) %></td>
+      <td><%= link_to c.name, substance_classification_path(c) %></td>
+      <% if c.statute %>
+         <td><%= link_to(c.statute.formatted_name, c.statute) %></td>
+      <% else %>
+         <td class='expiration'>Unknown</td>
+      <% end %>
+      <td><%= c.comment %></td>
+      <td><%= c.substance_statutes.size %></td>
+      <% if c.has_include_flags? %>
+         <td class='addition'><%= c.include_flags_string %></td>
+      <% else %>
+         <td>None</td>
+      <% end %>
+      <td class='button'><%= link_to 'Edit', edit_substance_classification_path(c) %></td>
+      <td class='button'><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+   <tr>
+<% end %>

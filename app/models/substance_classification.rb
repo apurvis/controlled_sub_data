@@ -5,6 +5,7 @@ class SubstanceClassification < ActiveRecord::Base
   audited
 
   has_many :substance_statutes
+  belongs_to :statute, inverse_of: :substance_classifications
   validates_uniqueness_of :name
 
   def substances

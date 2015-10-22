@@ -1,5 +1,6 @@
 <div class='basic_info'>
    <h1><%= @substance_classification.name %> (<%= link_to 'edit', edit_substance_classification_path(@substance_classification) %>)</h1>
+   <h2>Established by this statute: <%= @substance_classification.statute ? link_to(@substance_classification.statute.formatted_name, @substance_classification.statute) : '' %></h2>
    <div class='comments'>
       <h3>COMMENTS:</h3>
       <p><%= simple_format(@substance_classification.comment) %></p>
