@@ -11,4 +11,12 @@ class SubstanceClassification < ActiveRecord::Base
   def substances
     substance_statutes.map { |ss| ss.substance }.uniq.sort { |a,b| a.name <=> b.name }
   end
+
+  def to_s
+    if statute
+      "#{name} (#{statute.start_date.strftime('%Y-%m-%d')})"
+    else
+      name
+    end
+  end
 end

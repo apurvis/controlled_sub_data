@@ -5,7 +5,7 @@
 
    <% @levels.each do |k,v| %>
       <tr>
-         <td><%= link_to k, { controller: 'schedule_levels', action: :show, id: v } %></td>
+         <td><%= link_to "Schedule #{k}", { controller: 'schedule_levels', action: :show, id: v } %></td>
       <tr>
    <% end %>
 </table>

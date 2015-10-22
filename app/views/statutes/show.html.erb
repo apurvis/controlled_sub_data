@@ -40,11 +40,11 @@
 
 <div class='purple_info'>
    <h3>Classifications Established By This Statute (<%= link_to('Add a Classification', new_substance_classification_path(statute_id: @statute.id)) %>)</h3>
-	<% if !@statute.substance_classifications.empty? %>
+   <% if !@statute.substance_classifications.empty? %>
       <table>
          <%= render partial: 'substance_classifications/classification_table', locals: { classifications: @statute.substance_classifications } %>
       </table>
-	<% end %>
+   <% end %>
 </div>
 
 <div class='extended_info'>
@@ -80,7 +80,7 @@
                <td><%= ss[:substance_statute].substance_alternate_names.map { |san| link_to(san.name, san) }.join(', ').html_safe %></td>
 
                <% if ss[:substance_statute].substance_classification %>
-                  <td><%= link_to(ss[:substance_statute].substance_classification.name, ss[:substance_statute]) %></td>
+                  <td><%= link_to(ss[:substance_statute].substance_classification.to_s, ss[:substance_statute]) %></td>
                <% else %>
                   <td class='expiration_toned_down'>Unknown</td>
                <% end %>
