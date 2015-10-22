@@ -9,6 +9,9 @@ class SubstanceClassificationsController < ApplicationController
 
   def show
     @substance_classification = SubstanceClassification.where(id: params[:id]).first
+    if @substance_classification.schedule_level
+      @roman_level = ScheduleLevelsController::LEVELS.keys[@substance_classification.schedule_level - 1]
+    end
   end
 
   def edit
