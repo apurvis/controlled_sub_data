@@ -90,6 +90,11 @@ div.statute_list, div.quick_links {
    background-color: #CCFFFF;
 }
 
+.purple_info {
+   @extend .extended_info;
+   background-color: #D1D1C2;
+}
+
 div.filter_notification {
    color: red;
    margin-top: 5px;

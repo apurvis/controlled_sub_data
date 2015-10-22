@@ -76,15 +76,12 @@ class Substance < ActiveRecord::Base
   end
 
   def wikipedia_url
-    puts ""
-    return read_attribute(:wikipedia_url) if read_attribute(:wikipedia_url)
+    return read_attribute(:wikipedia_url) unless read_attribute(:wikipedia_url).blank?
     if url = wikipedia_pages['fullurl']
-      self.wikipedia_url = url
-      self.save
+      self.update_columns(wikipedia_url: url)
     end
     url
   end
-
 
   def wikipedia_page
     return @wikipedia_json if @wikipedia_json

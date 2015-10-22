@@ -3,20 +3,20 @@ class SubstanceClassificationsController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @classifications = SubstanceClassification.all
+    @classifications = SubstanceClassification.order(name: :asc).all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 
   def show
-    @substance_classification = SubstanceClassification.where(id: params['id']).first
+    @substance_classification = SubstanceClassification.where(id: params[:id]).first
   end
 
   def edit
-    @substance_classification = SubstanceClassification.where(id: params['id']).first
+    @substance_classification = SubstanceClassification.where(id: params[:id]).first
   end
 
   def new
-    @substance_classification = SubstanceClassification.new
+    @substance_classification = SubstanceClassification.new(statute_id: params[:statute_id])
   end
 
   def create
@@ -30,7 +30,7 @@ class SubstanceClassificationsController < ApplicationController
   end
 
   def update
-    @substance_classification = SubstanceClassification.where(id: params['id']).first
+    @substance_classification = SubstanceClassification.where(id: params[:id]).first
 
     if @substance_classification.update(substance_classification_params)
       redirect_to @substance_classification
@@ -40,7 +40,7 @@ class SubstanceClassificationsController < ApplicationController
   end
 
   def destroy
-    @substance_classification = SubstanceClassification.where(id: params['id']).first
+    @substance_classification = SubstanceClassification.where(id: params[:id]).first
 
     if @substance_classification.substances.size > 0
       flash.alert = "You can't delete a classification that still has #{@substance_classification.substances.size} substances attached!"
