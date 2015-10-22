@@ -31,6 +31,11 @@
    </p>
 
    <p>
+      <%= f.label :link_to_original_text %><br>
+      <%= f.text_field :external_link, size: 80 %>
+   </p>
+
+   <p>
       <%= f.label :start_date %><br>
       <%= date_field(:statute, :start_date) %>
    </p>

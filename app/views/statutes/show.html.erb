@@ -3,14 +3,27 @@
 <% end %>
 
 <div class='basic_info'>
+   <h2><span class='addition'><%= @statute.state %></span></h2>
    <% if @statute.is_a?(StatuteAmendment) %>
       <h2>Amends Statute: <%= link_to @statute.statute.formatted_name, statute_path(@statute.statute) %>
    <% end %>
    <h2>Blue Book Code: <%= @statute.blue_book_code %></h2>
 
-   <h3>State: <%= @statute.state %></h3>
-   <h4>Effective Date: <%= @statute.start_date.strftime('%Y-%m-%d') %></h4>
-   <h4>Expiration Date: <%= @statute.expiration_date %></h4>
+   <table class='properties'>
+      <tr>
+         <td class='properties'>Effective Date</td>
+         <td class='property'><%= @statute.start_date.strftime('%Y-%m-%d') %></td>
+      </tr>
+      <tr>
+         <td class='properties'>Expiration Date</td>
+         <td class='property'><%= @statute.expiration_date %></td>
+      </tr>
+      <tr>
+         <td class='properties'>External Link</td>
+         <td class='property'><%= @statute.external_link ? link_to('Original Text', @statute.external_link) : '' %></td>
+      </tr>
+   </table>
+
    <% if @statute.duplicate_federal_as_of_date %>
       <h4>Duplicates the federal statutes as of <%= @statute.duplicate_federal_as_of_date.strftime('%Y-%m-%d') %></h4>
    <% end %>

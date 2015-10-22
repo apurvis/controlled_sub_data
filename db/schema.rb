@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022105339) do
+ActiveRecord::Schema.define(version: 20151022125119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20151022105339) do
     t.integer  "parent_id",                                 comment: "ID of the parent statute if this is an amendment"
     t.date     "duplicate_federal_as_of_date"
     t.text     "comment"
+    t.string   "external_link"
   end
 
   add_index "statutes", ["deleted_at", "start_date"], name: "index_statutes_on_deleted_at_and_start_date", using: :btree
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 20151022105339) do
     t.text     "comment"
     t.integer  "statute_id"
     t.integer  "schedule_level"
+    t.integer  "parent_id"
   end
 
   add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree

@@ -33,7 +33,7 @@ class StatutesController < ApplicationController
   end
 
   def show
-    @statute = Statute.with_deleted.includes(statute_amendments: { substance_statutes: :substance }).where(id: params['id']).first
+    @statute = Statute.with_deleted.includes(statute_amendments: { substance_statutes: :substance }).where(id: params[:id]).first
     @as_of_date = params[:as_of_date].try(:to_date)
 
     if @statute.is_a?(StatuteAmendment)
@@ -46,7 +46,7 @@ class StatutesController < ApplicationController
   end
 
   def edit
-    @statute = Statute.where(id: params['id']).first
+    @statute = Statute.where(id: params[:id]).first
   end
 
   def new
@@ -64,7 +64,7 @@ class StatutesController < ApplicationController
   end
 
   def update
-    @statute = Statute.where(id: params['id']).first
+    @statute = Statute.where(id: params[:id]).first
 
     if @statute.update(statute_params)
       redirect_to @statute
@@ -74,7 +74,7 @@ class StatutesController < ApplicationController
   end
 
   def destroy
-    @statute = Statute.where(id: params['id']).first
+    @statute = Statute.where(id: params[:id]).first
 
     if @statute.statute_amendments.size > 0
       flash.alert = "You can't delete a statute that still has amendments!  This has #{@statute.statute_amendments.size} amendments; please remove them first and try again."
@@ -104,7 +104,8 @@ class StatutesController < ApplicationController
       :blue_book_code,
       :expiration_date,
       :duplicate_federal_as_of_date,
-      :comment
+      :comment,
+      :external_link
     )
   end
 end
