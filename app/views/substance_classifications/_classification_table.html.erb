@@ -1,5 +1,4 @@
 <tr>
-   <th>ID</th>
    <th>Name</th>
    <th>Established By</th>
    <th>Comment</th>
@@ -11,7 +10,6 @@
 
 <% classifications.each do |c| %>
    <tr>
-      <td><%= link_to "#{c.id}", substance_classification_path(c) %></td>
       <td><%= link_to c.name, substance_classification_path(c) %></td>
       <% if c.statute %>
          <td><%= link_to(c.statute.formatted_name, c.statute) %></td>

@@ -40,9 +40,11 @@
 
 <div class='purple_info'>
    <h3>Classifications Established By This Statute (<%= link_to('Add a Classification', new_substance_classification_path(statute_id: @statute.id)) %>)</h3>
-   <table>
-      <%= render partial: 'substance_classifications/classification_table', locals: { classifications: @statute.substance_classifications } %>
-   </table>
+	<% if !@statute.substance_classifications.empty? %>
+      <table>
+         <%= render partial: 'substance_classifications/classification_table', locals: { classifications: @statute.substance_classifications } %>
+      </table>
+	<% end %>
 </div>
 
 <div class='extended_info'>
