@@ -20,7 +20,7 @@
 
 <% if !@substance_classification.is_a?(ClassificationAmendment) %>
    <div class='extended_info'>
-      <h2>Amendments (<%= link_to 'Add an amendment to this classification', { controller: 'substance_classifications', action: :new, parent_id: @substance_classification.id } %>)</h2>
+      <h2>Amendments (<%= link_to('Add an amendment to this classification', new_classification_amendment_path(parent_id: @substance_classification.id)) %>)</h2>
 
       <% unless @substance_classification.classification_amendments.empty? %>
          <table>

@@ -7,7 +7,7 @@ class StatuteAmendmentsController < StatutesController
       @parent_statute = Statute.where(id: params['parent_id']).first
       @statute = StatuteAmendment.new(parent_id: @parent_statute.id, state: @parent_statute.state)
     else
-      raise "No parent statute id provided!"
+      fail "No parent statute id provided!"
     end
   end
 
