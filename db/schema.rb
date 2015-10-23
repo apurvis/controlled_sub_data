@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022133616) do
+ActiveRecord::Schema.define(version: 20151023155846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,8 +97,7 @@ ActiveRecord::Schema.define(version: 20151022133616) do
     t.string   "type"
   end
 
-  add_index "substance_classifications", ["deleted_at"], name: "index_substance_classifications_on_deleted_at", using: :btree
-  add_index "substance_classifications", ["name"], name: "index_substance_classifications_on_name", unique: true, using: :btree
+  add_index "substance_classifications", ["deleted_at", "name", "schedule_level"], name: "idx_deleted_name_level", unique: true, using: :btree
 
   create_table "substance_statutes", force: :cascade do |t|
     t.integer  "substance_id"
