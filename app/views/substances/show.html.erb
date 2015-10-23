@@ -9,7 +9,7 @@
       <tr>
          <td class='properties'>Current Federal Classification</td>
          <% if @substance.current_classification('FEDERAL') %>
-            <td class='property'><%= link_to(@substance.current_classification('FEDERAL').name, @substance.current_classification('FEDERAL')) %></td>
+            <td class='property'><%= link_to(@substance.current_classification('FEDERAL').to_s, @substance.current_classification('FEDERAL')) %></td>
          <% else %>
             <td></td>
          <% end %>
