@@ -13,8 +13,8 @@ class SubstanceClassification < ActiveRecord::Base
   end
 
   def to_s
-    if statute
-      "#{name} (#{statute.start_date.strftime('%Y-%m-%d')})"
+    if schedule_level
+      "#{name} (#{ScheduleLevelsController::LEVELS.keys[@level - 1]})"
     else
       name
     end
