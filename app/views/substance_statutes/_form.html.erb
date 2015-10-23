@@ -31,7 +31,7 @@
 
    <p>
       <%= f.label :classification %><br>
-      <%= select(:substance_statute, :substance_classification_id, SubstanceClassification.all.map { |c| [c.to_s, c.id] }, { include_blank: true } ) %>
+      <%= select(:substance_statute, :substance_classification_id, SubstanceClassification.all.sort { |a,b| a.to_s <=> b.to_s }.map { |c| [c.to_s, c.id] }, { include_blank: true } ) %>
    </p>
 
    <%= render partial: 'include_flags_checkboxes', locals: { f: f, klass: SubstanceStatute } %>

@@ -14,7 +14,7 @@
          <span class='addition'>ADDITION</span>
       <% end %>
    </h3>
-   <h3>Scheduled Classification: <%= @substance_statute.substance_classification ? link_to(@substance_statute.substance_classification.name, @substance_statute.substance_classification) : '' %></h3>
+   <h3>Scheduled Classification: <%= @substance_statute.substance_classification ? link_to(@substance_statute.substance_classification.to_s, @substance_statute.substance_classification) : '' %></h3>
    <h3>Schedule Level: <%= @substance_statute.schedule_level ? @substance_statute.schedule_level : 'Unspecified' %></h3>
 
    <div class='alternate_names'>
