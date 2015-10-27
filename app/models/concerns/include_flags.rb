@@ -10,7 +10,7 @@ module IncludeFlags
   end
 
   def include_flags_string
-    include_flags.map { |f| f.sub(/^include_/, '').humanize }.join(', ')
+    include_flags.map { |f| f.sub(/^include_/, '').humanize }.uniq.join(', ')
   end
 
   def has_include_flags?
