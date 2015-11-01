@@ -12,13 +12,20 @@
    <h2>At Level:
       <% if @substance_classification.schedule_level %>
          <%= link_to "Schedule #{@roman_level}", { controller: 'schedule_levels', action: :show, id: @substance_classification.schedule_level } %>
+      <% elsif @substance_classification.try(:substance_classification).try(:schedule_level) %>
+         (Inherits Level <%= @substance_classification.substance_classification.schedule_level %> from <%= link_to(@substance_classification.substance_classification.to_s, @substance_classification.substance_classification) %>)
       <% end %>
    </h2>
    <div class='comments'>
       <h3>COMMENTS:</h3>
       <p><%= simple_format(@substance_classification.comment) %></p>
    </div>
-   <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @substance_classification } %>
+   <div class='extended_info'>
+     <h3>Additional information about how this classification is scheduled by this statute</h3>
+      <p><span class='addition'>This color means the flag came from this classification/amendment</span></p>
+      <p><span class='addition_toned_down'>This color means the flag came from the original classification</span></p>
+      <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @substance_classification } %>
+   </div>
 </div>
 
 <% if !@substance_classification.is_a?(ClassificationAmendment) %>

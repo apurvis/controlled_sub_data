@@ -3,7 +3,7 @@ class SubstanceClassificationsController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @classifications = SubstanceClassification.where(type: nil).order(name: :asc).all
+    @classifications = SubstanceClassification.where(type: nil).order(:name, :schedule_level).all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 

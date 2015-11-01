@@ -12,23 +12,10 @@
       </div>
    <% end %>
 
-   <% if @substance_classification.is_a?(ClassificationAmendment) %>
-      <h1>WARNING: There is a bug wherein the edit form is not populated with the underlying data for ClassificationAmendments.  This means if you don't set all the properties correctly exactly as they were, when you submit the changes anything you didn't set up again will be erased.  Use with caution until this is fixed.</h1>
-      <% if @parent %>
-         <h3>Amending: <%= link_to(@parent.name, @parent) %></h3>
-         <%= f.hidden_field :parent_id, value: @parent.id %>
-      <% else %>
-         <p>
-            <%= f.label :amends_classification %><br>
-            <%= select(@substance_classification.class.to_s.underscore.to_sym, :parent_id, SubstanceClassification.where(type: nil).map { |c| [c.name, c.id] }) %>
-         </p>
-      <% end %>
-   <% else %>
-      <p>
-         <%= f.label :name %><br>
-         <%= f.text_area :name, cols: '50', rows: '5' %>
-      </p>
-   <% end %>
+   <p>
+      <%= f.label :name %><br>
+      <%= f.text_area :name, cols: '50', rows: '5' %>
+   </p>
 
    <p>
       <%= f.label :established_by_this_statute %>

@@ -1,0 +1,46 @@
+<%= form_for @classification_amendment do |f| %>
+   <% if @classification_amendment.errors.any? %>
+      <div id="error_explanation">
+         <h2>
+            <%= pluralize(@classification_amendment.errors.count, "error") %> prohibited this classification from being saved:
+         </h2>
+         <ul>
+            <% @classification_amendment.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+            <% end %>
+         </ul>
+      </div>
+   <% end %>
+
+   <% if @parent %>
+      <h3>Amending: <%= link_to(@parent.name, @parent) %></h3>
+      <%= f.hidden_field :parent_id, value: @parent.id %>
+   <% else %>
+      <p>
+         <%= f.label :amends_classification %><br>
+         <%= select(@classification_amendment.class.to_s.underscore.to_sym, :parent_id, SubstanceClassification.where(type: nil).map { |c| [c.name, c.id] }) %>
+      </p>
+   <% end %>
+
+   <p>
+      <%= f.label :established_by_this_statute %>
+      <%= select(@classification_amendment.class.to_s.underscore.to_sym, :statute_id, Statute.order(start_date: :asc).all.map { |s| [s.formatted_name, s.id] }, { include_blank: true }) %>
+   </p>
+
+   <p>
+      <%= f.label :established_at_schedule_level %>
+      <%= number_field(@classification_amendment.class.to_s.underscore.to_sym, :schedule_level, in: 1.0..5, step: 1) %>
+       (Leave blank to inherit the schedule from the amended classification)
+   </p>
+
+   <p>
+      <%= f.label :comment, 'Comment' %><br/>
+      <%= f.text_area(:comment, cols: '60', rows: '10') %>
+   </p>
+
+   <%= render partial: 'substance_statutes/include_flags_checkboxes', locals: { f: f, klass: @classification_amendment.class } %>
+
+   <p>
+      <%= f.submit %>
+   </p>
+<% end %>

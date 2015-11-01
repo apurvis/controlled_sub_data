@@ -3,12 +3,12 @@ class ClassificationAmendmentsController < SubstanceClassificationsController
     if params[:parent_id]
       @parent = SubstanceClassification.where(id: params[:parent_id]).first
     end
-    @substance_classification = ClassificationAmendment.new(parent_id: params[:parent_id], statute_id: params[:statute_id])
+    @classification_amendment = ClassificationAmendment.new(parent_id: params[:parent_id], statute_id: params[:statute_id])
   end
 
   def edit
-    @substance_classification = ClassificationAmendment.where(id: params[:id]).first
-    @parent = @substance_classification.substance_classification
+    @classification_amendment = ClassificationAmendment.where(id: params[:id]).first
+    @parent = @classification_amendment.substance_classification
   end
 
   def create
@@ -16,10 +16,10 @@ class ClassificationAmendmentsController < SubstanceClassificationsController
       flash.alert = 'No parent classification provided!'
       redirect_to substance_classifications_path
     else
-      @substance_classification = ClassificationAmendment.new(substance_classification_params)
+      @classification_amendment = ClassificationAmendment.new(substance_classification_params)
 
-      if @substance_classification.save
-        redirect_to @substance_classification
+      if @classification_amendment.save
+        redirect_to @classification_amendment
       else
         render 'new'
       end
@@ -27,10 +27,10 @@ class ClassificationAmendmentsController < SubstanceClassificationsController
   end
 
   def update
-    @substance_classification = SubstanceClassification.where(id: params[:id]).first
+    @classification_amendment = ClassificationAmendment.where(id: params[:id]).first
 
-    if @substance_classification.update(substance_classification_params)
-      redirect_to @substance_classification
+    if @classification_amendment.update(substance_classification_params)
+      redirect_to @classification_amendment
     else
       render 'edit'
     end

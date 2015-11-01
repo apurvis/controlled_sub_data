@@ -20,6 +20,8 @@
 
       <% if c.schedule_level %>
          <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[c.schedule_level - 1], { controller: 'schedule_levels', action: :show, id: c.schedule_level } %></td>
+      <% elsif c.is_a?(ClassificationAmendment) %>
+         <td>Inherited</td>
       <% else %>
          <td></td>
       <% end %>
