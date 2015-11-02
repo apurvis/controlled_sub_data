@@ -21,9 +21,9 @@
       <p><%= simple_format(@substance_classification.comment) %></p>
    </div>
    <div class='extended_info'>
-     <h3>Additional information about how this classification is scheduled by this statute</h3>
+     <h3>Additional information about how this classification is scheduled by this statute and prior classification amendments</h3>
       <p><span class='addition'>This color means the flag came from this classification/amendment</span></p>
-      <p><span class='addition_toned_down'>This color means the flag came from the original classification</span></p>
+      <p><span class='addition_toned_down'>This color means the flag came from the original classification or an earlier amendment</span></p>
       <%= render partial: 'substance_statutes/include_flags_table', locals: { flagged: @substance_classification } %>
    </div>
 </div>

@@ -9,7 +9,6 @@ class SubstanceStatute < ActiveRecord::Base
   belongs_to :substance_classification, inverse_of: :substance_statutes
   has_many :substance_alternate_names
 
-
   scope :additions,   -> { where('is_expiration = FALSE OR is_expiration IS NULL') }
   scope :expirations, -> { where(is_expiration: true) }
 
@@ -47,12 +46,12 @@ class SubstanceStatute < ActiveRecord::Base
   end
 
   # Comparison method
-  def regulation_differences(substance_statute)
+  def regulation_differences(substance_statute, options = {})
     differences = []
     if substance_id != substance_statute.substance_id
       differences << DIFFERENT_SUBSTANCES
     else
-      differences << DIFFERENT_SALTS unless include_flags.sort == substance_statute.include_flags.sort
+      differences << DIFFERENT_SALTS unless include_flags(options).sort == substance_statute.include_flags(options).sort
       differences << DIFFERENT_SCHEDULE unless schedule_level == substance_statute.schedule_level
     end
 

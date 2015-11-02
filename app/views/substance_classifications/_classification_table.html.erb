@@ -33,6 +33,7 @@
       <% else %>
          <td>None</td>
       <% end %>
+      
       <% if c.is_a?(ClassificationAmendment) %>
          <td class='button'><%= link_to 'Edit', edit_classification_amendment_path(c) %></td>
       <% else %>

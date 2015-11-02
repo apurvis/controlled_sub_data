@@ -37,7 +37,7 @@ class StatuteComparisonsController < ApplicationController
       else
         same_substance = statutes_2.select { |ss2| ss.substance_id == ss2.substance_id }.first
         if same_substance
-          { difference: ss.regulation_differences(same_substance).join(', '), substance_statute: ss }
+          { difference: ss.regulation_differences(same_substance, as_of: @as_of_date).join(', '), substance_statute: ss }
         else
           { difference: 'Only Regulated Here', substance_statute:  ss }
         end

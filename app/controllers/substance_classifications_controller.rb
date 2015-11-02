@@ -3,12 +3,12 @@ class SubstanceClassificationsController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @classifications = SubstanceClassification.where(type: nil).order(:name, :schedule_level).all
+    @classifications = SubstanceClassification.where(type: nil).order(:name, :schedule_level).includes(:classification_amendments).all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 
   def show
-    @substance_classification = SubstanceClassification.where(id: params[:id]).first
+    @substance_classification = SubstanceClassification.where(id: params[:id]).includes([:classification_amendments, substance_statutes: [:substance]]).first
     if @substance_classification.schedule_level
       @roman_level = ScheduleLevelsController::LEVELS.keys[@substance_classification.schedule_level - 1]
     end

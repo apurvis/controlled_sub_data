@@ -3,9 +3,10 @@
       <% flagged.class.available_flags.each do |k| %>
          <tr>
             <td><%= k.to_s.humanize %>?</td>
+
             <% if flagged.send("#{k}?".to_sym) %>
                <td class='addition'><%= flagged.send("#{k}?".to_sym) %></td>
-            <% elsif flagged.respond_to?(:substance_classification) && flagged.substance_classification.try(:send, "#{k}?".to_sym)%>
+            <% elsif flagged.try(:substance_classification).try(:include_flags).try(:include?, k.to_s) %>
                <td class='addition_toned_down'>true</td>
             <% else %>
                <td><%= flagged.send("#{k}?".to_sym) %></td>

@@ -24,9 +24,37 @@ describe SubstanceStatute do
       expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SCHEDULE])
     end
 
-    it 'identifies salt and isomer mismatches' do
-      matching_regulation.include_salts = true
-      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+    context 'salt and isomer changes' do
+      it 'identifies direct salt and isomer mismatches' do
+        matching_regulation.include_salts = true
+        expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+      end
+
+      context 'with classifications' do
+        let(:classification) { SubstanceClassification.create(name: 'opiates', include_salts: true) }
+        
+        before do
+          matching_regulation.substance_classification = classification
+          matching_regulation.save
+        end
+
+        it 'identifies salt and isomer mismatches from classifications' do
+          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+        end
+
+        context 'with an as_of time' do
+          it 'excludes salt and isomers when the classification has no statute and as_of is provided' do
+            expect(federal_first_regulation.regulation_differences(matching_regulation, as_of: Date.today)).to eq([])
+          end
+
+          it 'identifies salt and isomer mismatches from classifications with an as of date' do
+            amendment = StatuteAmendment.create(parent_id: federal_statute.id, start_date: federal_statute.start_date + 1.day)
+            classification.statute_id = amendment.id
+            classification.save
+            expect(federal_first_regulation.regulation_differences(matching_regulation, as_of: Date.today)).to eq([described_class::DIFFERENT_SALTS])
+          end
+        end
+      end
     end
 
     it 'can identify multiple levels of mismatch' do
