@@ -15,7 +15,8 @@ class SubstanceClassification < ActiveRecord::Base
   end
 
   def to_s
-    base_name = schedule_level ? "#{name} (#{ScheduleLevelsController::LEVELS.keys[schedule_level - 1]})" : name
+    base_name = schedule_level ? "(#{ScheduleLevelsController::LEVELS.keys[schedule_level - 1]}) #{name}" : name
+    base_name += " (#{statute.state.upcase})" if statute
     base_name += " (Amended #{statute.start_date})" if self.is_a?(ClassificationAmendment) && statute
     base_name
   end
