@@ -32,7 +32,7 @@ describe SubstanceStatute do
 
       context 'with classifications' do
         let(:classification) { SubstanceClassification.create(name: 'opiates', include_salts: true) }
-        
+
         before do
           matching_regulation.substance_classification = classification
           matching_regulation.save
