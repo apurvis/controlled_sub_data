@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023155846) do
+ActiveRecord::Schema.define(version: 20160114025329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20151023155846) do
   end
 
   add_index "statutes", ["deleted_at", "start_date"], name: "index_statutes_on_deleted_at_and_start_date", using: :btree
-  add_index "statutes", ["state", "start_date"], name: "index_statutes_on_state_and_start_date", unique: true, using: :btree
+  add_index "statutes", ["state", "start_date"], name: "index_statutes_on_state_and_start_date", using: :btree
 
   create_table "substance_alternate_names", force: :cascade do |t|
     t.integer  "substance_id"
