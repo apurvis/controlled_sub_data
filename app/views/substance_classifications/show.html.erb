@@ -1,3 +1,7 @@
+<% content_for :title do %>
+   <%= @substance_classification.to_s %>
+<% end %>
+
 <div class='basic_info'>
    <% if @substance_classification.is_a?(ClassificationAmendment) %>
       <h2>
