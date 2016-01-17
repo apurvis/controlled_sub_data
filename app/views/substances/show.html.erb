@@ -117,7 +117,7 @@
                      <td></td>
                   <% elsif substance_statute %>
                      <% if substance_statute.substance_classification %>
-                        <td><%= link_to substance_statute.substance_classification.name, substance_statute.substance_classification %></td>
+                        <td><%= link_to substance_statute.substance_classification %></td>
                      <% else %>
                         <td></td>
                      <% end %>
