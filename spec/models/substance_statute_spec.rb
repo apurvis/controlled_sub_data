@@ -25,16 +25,18 @@ describe SubstanceStatute do
     end
 
     context 'salt and isomer changes' do
-      it 'identifies direct salt and isomer mismatches' do
-        matching_regulation.include_salts = true
-        expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+      context 'direct comparison' do
+        it 'identifies direct salt and isomer mismatches' do
+          matching_regulation.include_salts = true
+          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+        end
       end
 
       context 'with classifications' do
         let(:classification) { SubstanceClassification.create(name: 'opiates', include_salts: true) }
 
         before do
-          matching_regulation.substance_classification = classification
+          matching_regulation.substance_classification_id = classification.id
           matching_regulation.save
         end
 

@@ -4,15 +4,18 @@ class SubstanceStatutesController < ApplicationController
 
   def show
     @substance_statute = SubstanceStatute.with_deleted.where(id: params['id']).first
+    @possible_classifications = possible_classifications_for(@substance_statute.statute.state)
   end
 
   def edit
     @substance_statute = SubstanceStatute.where(id: params['id']).first
+    @possible_classifications = possible_classifications_for(@substance_statute.statute.state)
   end
 
   def new
     @statute = Statute.where(id: params['statute_id'].to_i).first
     @substance_statute = SubstanceStatute.new(statute_id: @statute.id)
+    @possible_classifications = possible_classifications_for(@statute.state)
   end
 
   def create
@@ -66,5 +69,9 @@ class SubstanceStatutesController < ApplicationController
       :comment,
       :substance_classification_id
     ] + SubstanceStatute.available_flags)
+  end
+
+  def possible_classifications_for(state)
+    SubstanceClassification.joins(:statute).where(['statutes.state = ?', state]).sort { |a,b| a.to_s <=> b.to_s }
   end
 end

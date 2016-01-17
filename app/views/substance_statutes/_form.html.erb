@@ -19,7 +19,7 @@
 
    <p>
       <%= f.label :substance %><br/>
-      <%= select(:substance_statute, :substance_id, Substance.all.sort { |a,b| a.name <=> b.name }.map { |s| [s.name[0..50], s.id] } ) %>
+      <%= select(:substance_statute, :substance_id, Substance.all.sort { |a,b| a.name.downcase <=> b.name.downcase }.map { |s| [s.name[0..50], s.id] } ) %>
    </p>
 
    <% if @substance_statute.statute.is_a?(StatuteAmendment)%>
@@ -31,13 +31,13 @@
 
    <p>
       <%= f.label :classification %><br>
-      <%= select(:substance_statute, :substance_classification_id, SubstanceClassification.all.sort { |a,b| a.to_s <=> b.to_s }.map { |c| [c.to_s, c.id] }, { include_blank: true } ) %>
+      <%= select(:substance_statute, :substance_classification_id, @possible_classifications.map { |c| [c.to_s, c.id] }, { include_blank: true } ) %>
    </p>
 
    <%= render partial: 'include_flags_checkboxes', locals: { f: f, klass: SubstanceStatute } %>
 
    <p>
-      <%= f.label :schedule_level %><br/>
+      <%= f.label :schedule_level, 'Schedule Level (Set this only if the classification does not include a schedule level)' %><br/>
       <%= number_field(:substance_statute, :schedule_level, in: 1.0..5, step: 1) %>
    </p>
 
