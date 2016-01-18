@@ -86,8 +86,8 @@
       <h2>Regulated by Statutes</h2>
       <table>
          <tr>
-            <th>Statute</th>
             <th>State</th>
+            <th>Statute</th>
             <th>Start Date</th>
             <th>Expiration Date</th>
             <th>Classification</th>
@@ -101,8 +101,8 @@
          <% @substance.regulated_by_statutes.each do |s| %>
             <% substance_statute = SubstanceStatute.where(substance_id: @substance.id, statute_id: s.id).first %>
             <tr>
-               <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
                <td><%= s.state %></td>
+               <td><%= link_to "#{s.formatted_name}", statute_path(s) %></td>
                <td><%= s.start_date %></td>
                <% if s.expiration_date %>
                   <td class='expiration'><%= s.expiration_date.strftime('%Y-%m-%d') %></td>
