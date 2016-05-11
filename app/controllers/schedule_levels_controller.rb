@@ -6,7 +6,8 @@ class ScheduleLevelsController < ApplicationController
     'II'  => 2,
     'III' => 3,
     'IV'  => 4,
-    'V'   => 5
+    'V'   => 5,
+    'VI'  => 6
   }
 
   def show
