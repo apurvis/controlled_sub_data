@@ -18,7 +18,7 @@
    <% else %>
       <p>
          <%= f.label :amends_classification %><br>
-         <%= select(@classification_amendment.class.to_s.underscore.to_sym, :parent_id, SubstanceClassification.where(type: nil).map { |c| [c.name, c.id] }) %>
+         <%= select(@classification_amendment.class.to_s.underscore.to_sym, :parent_id, SubstanceClassification.where(type: nil).map { |c| [c.to_s, c.id] }) %>
       </p>
    <% end %>
 
