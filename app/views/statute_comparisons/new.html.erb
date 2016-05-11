@@ -3,11 +3,11 @@
 </div>
 
 <div class='set_of_statutes'>
-   <h2><%= @state_one %> differences from <%= @state_two %></h2>
-   <%= render partial: 'comparison_table', locals: { comparisons: @state_one_only } %>
+   <h2><%= @state_two %> differences from <%= @state_one %></h2>
+   <%= render partial: 'comparison_table', locals: { comparisons: @state_two_only } %>
 </div>
 
 <div class='set_of_statutes'>
-   <h2><%= @state_two %> differences from <%= @state_one %></h2>
-   <%= render partial: 'comparison_table', locals: { comparisons: @state_two_only } %>
+   <h2><%= @state_one %> differences from <%= @state_two %></h2>
+   <%= render partial: 'comparison_table', locals: { comparisons: @state_one_only } %>
 </div>
