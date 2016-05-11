@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114025329) do
+ActiveRecord::Schema.define(version: 20160511040138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(version: 20160114025329) do
     t.boolean  "include_preparations"
     t.text     "comment"
     t.integer  "substance_classification_id"
+    t.boolean  "include_salts_of_esters"
+    t.boolean  "include_salts_of_ethers"
   end
 
   add_index "substance_statutes", ["deleted_at", "is_expiration", "statute_id"], name: "idx_deleted_statute_expiration", using: :btree
