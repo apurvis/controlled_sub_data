@@ -20,7 +20,7 @@
       </tr>
       <tr>
          <td class='properties'>External Link</td>
-         <td class='property'><%= @statute.external_link ? link_to('Original Text', @statute.external_link) : '' %></td>
+         <td class='property'><%= @statute.external_link.present? ? link_to('Original Text', @statute.external_link) : '' %></td>
       </tr>
    </table>
 
