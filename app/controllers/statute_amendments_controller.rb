@@ -40,6 +40,11 @@ class StatuteAmendmentsController < StatutesController
   end
 
   def statute_amendment_params
-    params.require(:statute_amendment).permit(:parent_id, :blue_book_code, :comment)
+    params.require(:statute_amendment).permit(
+      :parent_id,
+      :blue_book_code,
+      :comment,
+      :external_link
+    )
   end
 end
