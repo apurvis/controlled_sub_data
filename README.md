@@ -67,7 +67,7 @@ You also have the option of choosing a "Duplicate FEDERAL as of date".  If you c
 
 Under the hood, statute amendments are just statutes with a parent statute that they are amending.
 
-You then add/remove substances to the statute by clicking on "Add a substance to/Expire a substance from this statute".  To amend statutes in ways that expire scheduling of substance, check is "Is this an expiration?" checkbox
+You then add/remove substances to the statute by clicking on "Add a substance to/Expire a substance from this statute".  To amend statutes in ways that expire scheduling of substance, check is "Is this an expiration?" checkbox.
 
 ### Adding/Expiring Substances to Statutes or Statute Amendments
 
