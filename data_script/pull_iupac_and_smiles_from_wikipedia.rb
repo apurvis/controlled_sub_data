@@ -3,14 +3,18 @@ Substance.all.each do |s|
   puts "Looking for #{s.name} with #{s.alternate_names.size} alternate names..."
 
   if s.chemical_formula.blank?
-    puts "  IUPAC: #{s.wikipedia_iupac_format}"
-    s.chemical_formula = s.wikipedia_iupac_format
+    if (iupac = s.wikipedia_iupac_format)
+      puts "  IUPAC: #{iupac}"
+      s.chemical_formula = iupac
+      s.save
+    end
   end
 
   if s.chemical_formula_smiles_format.blank?
-    puts "  SMILE: #{s.wikipedia_smiles_format}"
-    s.chemical_formula_smiles_format = s.wikipedia_smiles_format
+    if (smiles = s.wikipedia_smiles_format)
+      puts "  SMILE: #{smiles}"
+      s.chemical_formula_smiles_format = smiles
+      s.save
+    end
   end
-
-  s.save
 end
