@@ -46,13 +46,21 @@ class SubstanceStatute < ActiveRecord::Base
 
   # Comparison method
   def regulation_differences(substance_statute, options = {})
-    differences = []
-    if substance_id != substance_statute.substance_id
-      differences << DIFFERENT_SUBSTANCES
-    else
-      differences << DIFFERENT_SALTS unless include_flags(options).sort == substance_statute.include_flags(options).sort
-    end
+    raise ArgumentError("Takes a SubstanceStatute") unless substance_statute.is_a?(SubstanceStatute)
 
-    differences
+    return [DIFFERENT_SUBSTANCES] if substance_id != substance_statute.substance_id
+
+    if include_flags(options).sort == substance_statute.include_flags(options).sort
+      []
+    else
+      [DIFFERENT_SALTS]
+    end
+  end
+
+  # These are the ones that come from the classification, not the SubstanceStatute itself
+  def derived_include_flags(options = {})
+    return [] unless substance_classification.try(:in_effect_as_of?, options[:as_of])
+
+    substance_classification.include_flags
   end
 end
