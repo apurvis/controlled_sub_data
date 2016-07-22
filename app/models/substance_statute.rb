@@ -40,6 +40,8 @@ class SubstanceStatute < ActiveRecord::Base
     expiring_statutes.first
   end
 
+  # This checks if the substances are the same and whether the current SubstanceStatute's flags
+  # are a subset of the other SubstanceStatute's flags
   def regulates_same_substance_flags?(substance_statute)
     regulation_differences(substance_statute).empty?
   end
