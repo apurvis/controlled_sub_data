@@ -6,7 +6,7 @@ describe SubstanceStatute do
   let(:state_statute) { create(:state_statute) }
   let(:state_first_regulation) { state_statute.substance_statutes.first }
 
-  context 'regulates_same_as?' do
+  context 'comparisons' do
     let(:matching_regulation) { described_class.new(statute: state_statute, substance: federal_first_regulation.substance) }
 
     it 'identifies basic matches' do
@@ -22,7 +22,8 @@ describe SubstanceStatute do
       context 'direct comparison' do
         it 'identifies direct salt and isomer mismatches' do
           matching_regulation.include_salts = true
-          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([])
+          expect(matching_regulation.regulation_differences(federal_first_regulation)).to eq([described_class::DIFFERENT_SALTS])
         end
       end
 
@@ -35,7 +36,8 @@ describe SubstanceStatute do
         end
 
         it 'identifies salt and isomer mismatches from classifications' do
-          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
+          expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([])
+          expect(matching_regulation.regulation_differences(federal_first_regulation)).to eq([described_class::DIFFERENT_SALTS])
         end
 
         context 'with an as_of time' do
@@ -47,17 +49,10 @@ describe SubstanceStatute do
             amendment = StatuteAmendment.create(statute: federal_statute, start_date: federal_statute.start_date + 1.day)
             classification.statute = amendment
             classification.save
-            expect(federal_first_regulation.regulation_differences(matching_regulation, as_of: Date.today)).to eq([described_class::DIFFERENT_SALTS])
+            expect(matching_regulation.regulation_differences(federal_first_regulation, as_of: Date.today)).to eq([described_class::DIFFERENT_SALTS])
           end
         end
       end
-    end
-
-    it 'can identify multiple levels of mismatch' do
-      federal_first_regulation.schedule_level = 5
-      matching_regulation.include_salts = true
-      matching_regulation.schedule_level = 3
-      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
     end
   end
 

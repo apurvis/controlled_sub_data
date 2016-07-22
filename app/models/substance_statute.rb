@@ -40,7 +40,7 @@ class SubstanceStatute < ActiveRecord::Base
     expiring_statutes.first
   end
 
-  def regulates_same_as?(substance_statute)
+  def regulates_same_substance_flags?(substance_statute)
     regulation_differences(substance_statute).empty?
   end
 

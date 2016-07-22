@@ -33,7 +33,7 @@ class StatuteComparisonsController < ApplicationController
 
   def find_differences(statutes_1, statutes_2)
     statutes_1.map do |ss|
-      next nil if statutes_2.any? { |ss2| ss.regulates_same_as?(ss2) }
+      next nil if statutes_2.any? { |ss2| ss.regulates_same_substance_flags?(ss2) }
 
       if (same_substance = statutes_2.select { |ss2| ss.substance_id == ss2.substance_id }.first)
         { difference: ss.regulation_differences(same_substance, as_of: @as_of_date).join(', '), substance_statute: ss }
