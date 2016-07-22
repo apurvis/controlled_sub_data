@@ -9,7 +9,7 @@ describe SubstanceStatute do
   context 'comparisons' do
     let(:matching_regulation) { described_class.new(statute: state_statute, substance: federal_first_regulation.substance) }
 
-    it 'identifies basic matches' do
+    it 'finds no differences when the substances are the same' do
       expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([])
       expect(matching_regulation.regulation_differences(federal_first_regulation)).to eq([])
     end
@@ -56,6 +56,19 @@ describe SubstanceStatute do
     end
   end
 
+  context 'has_matching_alternate_name?' do
+    let(:name) { 'some_euro_thing'}
+
+    before do
+      SubstanceAlternateName.create(substance_statute: federal_first_regulation, name: name)
+      SubstanceAlternateName.create(substance_statute: state_first_regulation, name: name)
+    end
+
+    it 'notices they regulate the same name' do
+      expect(state_first_regulation.first_matching_alternate_name(federal_first_regulation)).to eq(name)
+    end
+  end
+
   context 'expirations' do
     let(:expiration_date) { '2000-05-01'.to_date }
     let(:expiring_statute) do
@@ -80,12 +93,8 @@ describe SubstanceStatute do
         Statute.create(duplicate_federal_as_of_date: expiration_date - 1.year, parent_id: federal_statute.id, start_date: expiration_date)
       end
 
-      it 'should not find the expiration if it expired in a different state' do
-
-      end
-
-      it 'should find the expiration if duped federal then expired' do
-      end
+      it 'should not find the expiration if it expired in a different state'
+      it 'should find the expiration if duped federal then expired'
     end
   end
 

@@ -58,6 +58,11 @@ class SubstanceStatute < ActiveRecord::Base
     end
   end
 
+  # Scan the alternate names, return the first match
+  def first_matching_alternate_name(substance_statute)
+    (substance_alternate_names.map { |n| n.name.downcase } & substance_statute.substance_alternate_names.map { |n| n.name.downcase }).first
+  end
+
   # These are the ones that come from the classification, not the SubstanceStatute itself
   def derived_include_flags(options = {})
     return [] unless substance_classification.try(:in_effect_as_of?, options[:as_of])
