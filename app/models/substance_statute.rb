@@ -1,5 +1,6 @@
 class SubstanceStatute < ActiveRecord::Base
   include IncludeFlags
+  include RomanScheduleLevel
 
   acts_as_paranoid
   audited
@@ -72,5 +73,9 @@ class SubstanceStatute < ActiveRecord::Base
     return [] unless substance_classification.try(:in_effect_as_of?, options[:as_of])
 
     substance_classification.include_flags
+  end
+
+  def schedule_level
+    read_attribute(:schedule_level) || substance_classification.try(:schedule_level)
   end
 end

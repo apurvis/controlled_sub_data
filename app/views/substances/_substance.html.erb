@@ -4,7 +4,7 @@
    <td class='monospace'><%= substance.chemical_formula %></td>
    <td><%= simple_format(substance.comment) %></td>
    <% if substance.current_classification('FEDERAL') %>
-      <td><%= link_to(substance.current_classification('FEDERAL').name, substance.current_classification('FEDERAL')) %></td>
+      <td><%= link_to(substance.current_classification('FEDERAL').to_s, substance.current_classification('FEDERAL')) %></td>
    <% else %>
       <td></td>
    <% end %>

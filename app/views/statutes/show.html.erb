@@ -124,7 +124,7 @@
                <% end %>
 
                <% if ss[:schedule_level] && ss[:schedule_level].is_a?(Integer) %>
-                  <td class='schedule_level'><%= link_to ScheduleLevelsController::LEVELS.keys[ss[:schedule_level] - 1], { controller: "schedule_levels", action: :show, id: ss[:schedule_level] } %></td>
+                  <td class='schedule_level'><%= link_to ss.roman_schedule_level, { controller: "schedule_levels", action: :show, id: ss[:schedule_level] } %></td>
                <% else %>
                   <td></td>
                <% end %>

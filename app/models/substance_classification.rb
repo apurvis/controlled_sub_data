@@ -1,5 +1,6 @@
 class SubstanceClassification < ActiveRecord::Base
   include IncludeFlags
+  include RomanScheduleLevel
 
   acts_as_paranoid
   audited
@@ -17,7 +18,7 @@ class SubstanceClassification < ActiveRecord::Base
   end
 
   def to_s
-    base_name = schedule_level ? "(#{ScheduleLevelsController::LEVELS.keys[schedule_level - 1]}) #{name}" : name
+    base_name = roman_schedule_level ? "(#{roman_schedule_level}) #{name}" : name
     base_name += " (#{state.upcase})" if statute
     base_name += " (Amended #{statute.start_date})" if self.is_a?(ClassificationAmendment) && statute
     base_name

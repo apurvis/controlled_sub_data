@@ -129,4 +129,22 @@ describe SubstanceStatute do
       end
     end
   end
+
+  context 'schedule levels' do
+    let(:level) { 4 }
+
+    it 'should find the local level' do
+      federal_first_regulation.schedule_level = level
+      expect(federal_first_regulation.schedule_level).to eq(level)
+    end
+
+    context 'with a classification' do
+      let(:classification) { SubstanceClassification.new(name: 'classy', schedule_level: level - 1) }
+
+      it 'should use the classification level' do
+        federal_first_regulation.substance_classification = classification
+        expect(federal_first_regulation.schedule_level).to eq(level - 1)
+      end
+    end
+  end
 end

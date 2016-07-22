@@ -15,7 +15,7 @@
    <h2>Established by this statute: <%= @substance_classification.statute ? link_to(@substance_classification.statute.formatted_name, @substance_classification.statute) : '' %></h2>
    <h2>At Level:
       <% if @substance_classification.schedule_level %>
-         <%= link_to "Schedule #{@roman_level}", { controller: 'schedule_levels', action: :show, id: @substance_classification.schedule_level } %>
+         <%= link_to "Schedule #{@substance_classification.roman_schedule_level}", { controller: 'schedule_levels', action: :show, id: @substance_classification.schedule_level } %>
       <% elsif @substance_classification.try(:substance_classification).try(:schedule_level) %>
          (Inherits Level <%= @substance_classification.substance_classification.schedule_level %> from <%= link_to(@substance_classification.substance_classification.to_s, @substance_classification.substance_classification) %>)
       <% end %>

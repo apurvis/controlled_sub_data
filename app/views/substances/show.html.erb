@@ -121,7 +121,9 @@
                      <% else %>
                         <td></td>
                      <% end %>
-                     <td class='button'><%= substance_statute.schedule_level ? ScheduleLevelsController::LEVELS.keys[substance_statute.schedule_level - 1] : '' %></td>
+                     <td class='button'>
+                        <%= substance_statute.schedule_level ? substance_statute.roman_schedule_level : '' %>
+                     </td>
                      <td><%= simple_format(substance_statute.comment) %></td>
                      <% if substance_statute.has_include_flags? %>
                         <td class='addition'><small><%= substance_statute.include_flags_string %><small></td>
