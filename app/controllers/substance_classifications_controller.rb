@@ -3,7 +3,11 @@ class SubstanceClassificationsController < ApplicationController
   before_action :vip_only, except: [:index, :show]
 
   def index
-    @classifications = SubstanceClassification.where(type: nil).order(:name, :schedule_level).includes(:classification_amendments).all
+    @classifications = SubstanceClassification.where(type: nil).
+                                               joins('LEFT JOIN statutes ON statutes.id = substance_classifications.statute_id').
+                                               order('statutes.state', :schedule_level, :name).
+                                               includes(:classification_amendments).
+                                               all
     @unclassified_count = SubstanceStatute.where(substance_classification_id: nil).size
   end
 
