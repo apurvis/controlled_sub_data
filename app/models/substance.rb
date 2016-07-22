@@ -65,11 +65,6 @@ class Substance < ActiveRecord::Base
     iupac.split(' = ').last.strip.gsub(/'''|''/, '')
   end
 
-  def wikipedia_info_box
-    info_box_data = wikipedia_pages['revisions'].first['*']
-    info_box_data.split("\n")
-  end
-
   def wikipedia_pages
     wikipedia_id = wikipedia_page['query']['pages'].first.first
     wikipedia_page['query']['pages'][wikipedia_id]
@@ -103,5 +98,12 @@ class Substance < ActiveRecord::Base
 
   def to_s
     name
+  end
+
+  private
+
+  def wikipedia_info_box
+    info_box_data = wikipedia_pages['revisions'].first['*']
+    info_box_data.split("\n")
   end
 end
