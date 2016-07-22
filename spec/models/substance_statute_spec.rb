@@ -18,12 +18,6 @@ describe SubstanceStatute do
       expect(federal_first_regulation.regulation_differences(state_first_regulation)).to eq([described_class::DIFFERENT_SUBSTANCES])
     end
 
-    it 'identifies schedule level mismatches' do
-      federal_first_regulation.schedule_level = 5
-      matching_regulation.schedule_level = 1
-      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SCHEDULE])
-    end
-
     context 'salt and isomer changes' do
       context 'direct comparison' do
         it 'identifies direct salt and isomer mismatches' do
@@ -63,7 +57,7 @@ describe SubstanceStatute do
       federal_first_regulation.schedule_level = 5
       matching_regulation.include_salts = true
       matching_regulation.schedule_level = 3
-      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS, described_class::DIFFERENT_SCHEDULE])
+      expect(federal_first_regulation.regulation_differences(matching_regulation)).to eq([described_class::DIFFERENT_SALTS])
     end
   end
 

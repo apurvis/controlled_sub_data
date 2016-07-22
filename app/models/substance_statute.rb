@@ -14,7 +14,6 @@ class SubstanceStatute < ActiveRecord::Base
 
   DIFFERENT_SUBSTANCES = 'Different substances'
   DIFFERENT_SALTS = 'Different salt/isomer flags'
-  DIFFERENT_SCHEDULE = 'Different schedule levels'
 
   # This won't really work in the case where a substance is added, then expired, then added again
   def expiring_amendment(options = {})
@@ -52,7 +51,6 @@ class SubstanceStatute < ActiveRecord::Base
       differences << DIFFERENT_SUBSTANCES
     else
       differences << DIFFERENT_SALTS unless include_flags(options).sort == substance_statute.include_flags(options).sort
-      differences << DIFFERENT_SCHEDULE unless schedule_level == substance_statute.schedule_level
     end
 
     differences

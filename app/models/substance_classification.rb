@@ -10,7 +10,7 @@ class SubstanceClassification < ActiveRecord::Base
 
   delegate :state, to: :statute
 
-  validates :name, uniqueness: { scope: [:schedule_level, :statute] }
+  validates :name, uniqueness: { case_sensitive: false, scope: [:schedule_level, :statute] }
 
   def substances
     substance_statutes.map { |ss| ss.substance }.uniq.sort { |a,b| a.name <=> b.name }
