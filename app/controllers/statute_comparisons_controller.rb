@@ -1,6 +1,6 @@
 class StatuteComparisonsController < ApplicationController
   ONLY_HERE = 'Only Regulated Here'
-  ALTERNATE_MATCH = 'Matches by alternate name'
+  ALTERNATE_MATCH = 'Alternate Name Match:'
 
   def index
     @states = Statute.pluck(:state).uniq
