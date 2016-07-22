@@ -3,7 +3,7 @@
   <%= select(:compare, :state_one, @states) %><br/>
   <%= label_tag(:compare_to, 'TO') %>
   <%= select(:compare, :state_two, @states) %><br/>
-  <%= label_tag(:as_of_date, 'AS OF') %>
+  <%= label_tag(:as_of_date, 'AS OF (LEAVE BLANK FOR TODAY)') %>
   <%= date_field(:compare, :as_of_date) %><br/>
   <%= submit_tag('Compare') %>
 <% end %>

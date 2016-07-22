@@ -30,7 +30,7 @@ describe SubstanceStatute do
         let(:classification) { SubstanceClassification.create(name: 'opiates', include_salts: true) }
 
         before do
-          matching_regulation.substance_classification_id = classification.id
+          matching_regulation.substance_classification = classification
           matching_regulation.save
         end
 
@@ -44,8 +44,8 @@ describe SubstanceStatute do
           end
 
           it 'identifies salt and isomer mismatches from classifications with an as of date' do
-            amendment = StatuteAmendment.create(parent_id: federal_statute.id, start_date: federal_statute.start_date + 1.day)
-            classification.statute_id = amendment.id
+            amendment = StatuteAmendment.create(statute: federal_statute, start_date: federal_statute.start_date + 1.day)
+            classification.statute = amendment
             classification.save
             expect(federal_first_regulation.regulation_differences(matching_regulation, as_of: Date.today)).to eq([described_class::DIFFERENT_SALTS])
           end
