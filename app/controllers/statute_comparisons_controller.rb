@@ -6,11 +6,12 @@ class StatuteComparisonsController < ApplicationController
   def new
     @state_one = params[:compare][:state_one]
     @state_two = params[:compare][:state_two]
+    @as_of_date = params[:compare][:as_of_date].try(:to_date)
+
     if @state_one == @state_two
       flash.alert = 'Please choose different states to compare.'
       redirect_to statute_comparisons_path
     end
-    @as_of_date = params[:compare][:as_of_date].try(:to_date)
 
     # Avoid the amendments because their regulations are found in the effective_substance_statutes method
     @state_one_statutes = Statute.where(state: @state_one).where(type: nil)
@@ -32,17 +33,14 @@ class StatuteComparisonsController < ApplicationController
 
   def find_differences(statutes_1, statutes_2)
     statutes_1.map do |ss|
-      if statutes_2.any? { |ss2| ss2.regulates_same_as?(ss) }
-        nil
+      next nil if statutes_2.any? { |ss2| ss.regulates_same_as?(ss2) }
+
+      if (same_substance = statutes_2.select { |ss2| ss.substance_id == ss2.substance_id }.first)
+        { difference: ss.regulation_differences(same_substance, as_of: @as_of_date).join(', '), substance_statute: ss }
       else
-        same_substance = statutes_2.select { |ss2| ss.substance_id == ss2.substance_id }.first
-        if same_substance
-          { difference: ss.regulation_differences(same_substance, as_of: @as_of_date).join(', '), substance_statute: ss }
-        else
-          { difference: 'Only Regulated Here', substance_statute:  ss }
-        end
+        { difference: 'Only Regulated Here', substance_statute:  ss }
       end
-    end.compact.sort do |a,b|
+    end.compact.sort do |a, b|
       if a[:difference] < b[:difference]
         -1
       elsif a[:difference] > b[:difference]

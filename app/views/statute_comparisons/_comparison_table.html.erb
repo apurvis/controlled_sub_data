@@ -4,6 +4,7 @@
       <th>Difference</th>
       <th>Statute</th>
    </tr>
+
    <% comparisons.each do |c| %>
       <tr>
          <td><%= link_to c[:substance_statute].substance.name, c[:substance_statute].substance %></td>

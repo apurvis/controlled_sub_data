@@ -13,7 +13,7 @@ class SubstanceStatute < ActiveRecord::Base
   scope :expirations, -> { where(is_expiration: true) }
 
   DIFFERENT_SUBSTANCES = 'Different substances'
-  DIFFERENT_SALTS = 'Different salt/isomer flags'
+  DIFFERENT_SALTS = 'Extra salt/isomer flags'
 
   # This won't really work in the case where a substance is added, then expired, then added again
   def expiring_amendment(options = {})
@@ -46,11 +46,10 @@ class SubstanceStatute < ActiveRecord::Base
 
   # Comparison method
   def regulation_differences(substance_statute, options = {})
-    raise ArgumentError("Takes a SubstanceStatute") unless substance_statute.is_a?(SubstanceStatute)
-
     return [DIFFERENT_SUBSTANCES] if substance_id != substance_statute.substance_id
 
-    if include_flags(options).sort == substance_statute.include_flags(options).sort
+    other_include_flags = substance_statute.include_flags(options)
+    if include_flags(options).all? { |f| other_include_flags.include?(f) }
       []
     else
       [DIFFERENT_SALTS]
