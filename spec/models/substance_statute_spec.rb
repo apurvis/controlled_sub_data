@@ -56,16 +56,29 @@ describe SubstanceStatute do
     end
   end
 
-  context 'has_matching_alternate_name?' do
+  context 'first_matching_alternate_name' do
     let(:name) { 'some_euro_thing'}
+    let!(:state_fan) { SubstanceAlternateName.create(substance_statute: state_first_regulation, name: name) }
 
-    before do
-      SubstanceAlternateName.create(substance_statute: federal_first_regulation, name: name)
-      SubstanceAlternateName.create(substance_statute: state_first_regulation, name: name)
+    it 'should find no alternate name matches' do
+      expect(state_first_regulation.first_matching_alternate_name(federal_first_regulation)).to be_nil
     end
 
-    it 'notices they regulate the same name' do
-      expect(state_first_regulation.first_matching_alternate_name(federal_first_regulation)).to eq(name)
+    context 'with alternate name matches' do
+      let!(:federal_san) { SubstanceAlternateName.create(substance_statute: federal_first_regulation, name: name) }
+
+      it 'notices they regulate the same name' do
+        expect(state_first_regulation.first_matching_alternate_name(federal_first_regulation)).to eq(federal_san)
+      end
+    end
+
+    context 'with an actual substance match' do
+      let(:new_substance) { create(:substance, name: name) }
+
+      it 'finds the substance with the matching name' do
+        federal_first_regulation.substance = new_substance
+        expect(state_first_regulation.first_matching_alternate_name(federal_first_regulation)).to eq(new_substance)
+      end
     end
   end
 

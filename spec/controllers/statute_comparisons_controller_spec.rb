@@ -17,11 +17,11 @@ describe StatuteComparisonsController do
     get :new, compare: { state_one: federal_statute.state, state_two: state_statute.state }
 
     expect(assigns(:state_one_only)).to eq(federal_statute.substance_statutes.map do |ss|
-      { difference: described_class::::ONLY_HERE, substance_statute: ss }
+      { difference: described_class::ONLY_HERE, substance_statute: ss }
     end)
 
     expect(assigns(:state_two_only)).to eq(state_statute.substance_statutes.map do |ss|
-      { difference: described_class::::ONLY_HERE, substance_statute: ss }
+      { difference: described_class::ONLY_HERE, substance_statute: ss }
     end)
   end
 end

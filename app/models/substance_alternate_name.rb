@@ -10,4 +10,8 @@ class SubstanceAlternateName < ActiveRecord::Base
   validates :name, presence: true
 
   delegate :statute, to: :substance_statute, allow_nil: true
+
+  def to_s
+    name
+  end
 end

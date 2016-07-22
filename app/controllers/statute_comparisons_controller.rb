@@ -1,5 +1,6 @@
 class StatuteComparisonsController < ApplicationController
   ONLY_HERE = 'Only Regulated Here'
+  ALTERNATE_MATCH = 'Matches by alternate name'
 
   def index
     @states = Statute.pluck(:state).uniq
@@ -41,8 +42,8 @@ class StatuteComparisonsController < ApplicationController
         { difference: ss.regulation_differences(same_substance, as_of: @as_of_date).join(', '), substance_statute: ss }
       else
         if statutes_2.any? { |ss2| ss.first_matching_alternate_name(ss2) }
-          matching_alternate_name = statutes_2.map { |ss2| ss.first_matching_alternate_name(ss2) }.compact.first
-          { difference: "Matches only alternate name #{matching_alternate_name}", substance_statute: ss }
+          matching_obj = statutes_2.map { |ss2| ss.first_matching_alternate_name(ss2) }.compact.first
+          { difference: "#{ALTERNATE_MATCH} ", substance_statute: ss, match: matching_obj }
         else
           { difference: ONLY_HERE, substance_statute: ss }
         end

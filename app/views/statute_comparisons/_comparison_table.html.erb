@@ -10,8 +10,8 @@
          <td><%= link_to c[:substance_statute].substance.name, c[:substance_statute].substance %></td>
          <% if c[:difference] == StatuteComparisonsController::ONLY_HERE %>
             <td class='expiration'><%= c[:difference] %></td>
-         <% elsif c[:difference] =~ /alternate name/ %>
-            <td class='addition'><%= c[:difference] %></td>
+         <% elsif c[:difference] =~ /#{StatuteComparisonsController::ALTERNATE_MATCH}/ %>
+            <td class='addition'><%= c[:difference] %><%= link_to c[:match].to_s, c[:match] %></td>
          <% else %>
             <td class='middle'><%= c[:difference] %></td>
          <% end %>

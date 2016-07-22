@@ -58,11 +58,13 @@ class SubstanceStatute < ActiveRecord::Base
     end
   end
 
-  # Scan the alternate names, return the first match
+  # Scan the alternate names, return the first match - either a Substance or a SubstanceAlternateName
   def first_matching_alternate_name(substance_statute)
     names_for_this_substance = [substance.name.downcase] + substance_alternate_names.map { |n| n.name.downcase }
-    names_for_that_substance = [substance_statute.substance.name.downcase] + substance_statute.substance_alternate_names.map { |n| n.name.downcase }
-    (names_for_this_substance & names_for_that_substance).first
+    return substance_statute.substance if names_for_this_substance.include?(substance_statute.substance.name.downcase)
+
+    substance_statute.substance_alternate_names.each { |san| return san if names_for_this_substance.include?(san.name.downcase) }
+    nil
   end
 
   # These are the ones that come from the classification, not the SubstanceStatute itself
