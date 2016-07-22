@@ -74,7 +74,7 @@ class SubstanceStatutesController < ApplicationController
   def possible_classifications_for(state)
     SubstanceClassification.joins(:statute).
                             where(['statutes.state = ?', state]).
-                            where(['substance_classifications.type IS NULL OR substance_classifications.type <> ?', 'ClassificationAmendment']).
+                            where(type: nil).
                             sort { |a,b| a.to_s <=> b.to_s }
   end
 end
