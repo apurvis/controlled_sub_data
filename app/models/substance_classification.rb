@@ -11,7 +11,7 @@ class SubstanceClassification < ActiveRecord::Base
 
   delegate :state, to: :statute
 
-  validates :name, uniqueness: { case_sensitive: false, scope: [:schedule_level, :statute] }, :if => :validate_name?
+  validates :name, uniqueness: { conditions: -> { where(deleted_at: nil) }, case_sensitive: false, scope: [:schedule_level, :statute] }, :if => :validate_name?
 
   def substances
     substance_statutes.map { |ss| ss.substance }.uniq.sort { |a,b| a.name <=> b.name }
