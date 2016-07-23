@@ -4,14 +4,16 @@ class SubstancesController < ApplicationController
 
   def index
     if params[:search]
-      @substances = Substance.joins('LEFT JOIN substance_statutes ON substance_statutes.substance_id=substances.id
-                                     LEFT JOIN substance_alternate_names ON substance_alternate_names.substance_statute_id=substance_statutes.id')
-                             .where("LOWER(substances.name) LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR LOWER(substance_alternate_names.name) LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR LOWER(substances.chemical_formula) LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR chemical_formula_smiles_format LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR LOWER(substance_statutes.comment) LIKE '%#{params[:search][:substring].downcase}%'
-                                  OR LOWER(substances.comment) LIKE '%#{params[:search][:substring].downcase}%'")
+      substance_ids = Substance.select('substances.id')
+                               .joins('LEFT JOIN substance_statutes ON substance_statutes.substance_id=substances.id')
+                               .joins('LEFT JOIN substance_alternate_names ON substance_alternate_names.substance_statute_id=substance_statutes.id')
+                               .where("LOWER(substances.name) LIKE '%#{params[:search][:substring].downcase}%'
+                                    OR LOWER(substance_alternate_names.name) LIKE '%#{params[:search][:substring].downcase}%'
+                                    OR LOWER(substances.chemical_formula) LIKE '%#{params[:search][:substring].downcase}%'
+                                    OR chemical_formula_smiles_format LIKE '%#{params[:search][:substring].downcase}%'
+                                    OR LOWER(substance_statutes.comment) LIKE '%#{params[:search][:substring].downcase}%'
+                                    OR LOWER(substances.comment) LIKE '%#{params[:search][:substring].downcase}%'").to_a
+      @substances = Substance.where(id: substance_ids)
     else
       @substances = Substance.includes(substance_statutes: [:substance_alternate_names, :statute, :substance_classification])
     end

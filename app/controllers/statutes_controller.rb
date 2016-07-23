@@ -4,17 +4,9 @@ class StatutesController < ApplicationController
 
   def index
     if params[:search]
-      @as_of_date = params[:search][:as_of_date].try(:to_date)
-
-      if params[:search][:substance_id].blank? && params[:search][:state].blank?
-        flash.alert = 'Must specify either a substance or a state to search'
+      if params[:search][:state].blank?
+        flash.alert = 'Choose a state to search'
         redirect_to statute_searches_path
-      elsif !params[:search][:substance_id].blank? && !params[:search][:state].blank?
-        flash.alert = 'Can only search by substance or by state, not both.'
-        redirect_to statute_searches_path
-      elsif !params[:search][:substance_id].blank?
-        @substance = Substance.where(id: params[:search][:substance_id]).first
-        @statutes = @substance.regulated_by_statutes(@as_of_date)
       else
         @statutes = Statute.where(state: params[:search][:state], type: nil).all
         if @statutes.empty?
@@ -24,7 +16,7 @@ class StatutesController < ApplicationController
           flash.alert = "More than 1 statute found for #{params[:search][:state]}; this is not well supported yet."
           redirect_to statute_searches_path
         else
-          redirect_to statute_path(@statutes.first, as_of_date: @as_of_date)
+          redirect_to statute_path(@statutes.first, as_of_date: params[:search][:as_of_date].try(:to_date))
         end
       end
     else
