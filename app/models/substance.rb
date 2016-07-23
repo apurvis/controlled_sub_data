@@ -10,8 +10,8 @@ class Substance < ActiveRecord::Base
   has_many :statutes, -> { order 'statutes.start_date ASC' }, { through: :substance_statutes }
 
   validates_uniqueness_of :name, case_sensitive: false, conditions: -> { where(deleted_at: nil) }
-  validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true
-  validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true
+  validates_uniqueness_of :chemical_formula, allow_nil: true, allow_blank: true, conditions: -> { where(deleted_at: nil) }
+  validates_uniqueness_of :chemical_formula_smiles_format, allow_nil: true, allow_blank: true, conditions: -> { where(deleted_at: nil) }
 
   def alternate_names
     substance_statutes.map { |ss| ss.substance_alternate_names }.flatten
