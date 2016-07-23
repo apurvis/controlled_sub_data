@@ -1,7 +1,8 @@
 <tr>
+   <th>State</th>
+   <th>Schedule Level</th>
    <th>Name</th>
    <th>Established By</th>
-   <th>Schedule Level</th>
    <th>Comment</th>
    <th>Number of Links to Category</th>
    <th>Include Flags</th>
@@ -11,9 +12,8 @@
 
 <% classifications.each do |c| %>
    <tr>
-      <td><%= link_to c.to_s, substance_classification_path(c) %></td>
       <% if c.statute %>
-         <td><%= link_to(c.statute.formatted_name, c.statute) %></td>
+         <td><%= c.statute.state %></td>
       <% else %>
          <td class='expiration'>Unknown</td>
       <% end %>
@@ -24,6 +24,14 @@
          <td>Inherited</td>
       <% else %>
          <td class='expiration'></td>
+      <% end %>
+
+      <td><%= link_to c.to_s, substance_classification_path(c) %></td>
+
+      <% if c.statute %>
+         <td><%= link_to(c.statute.formatted_name, c.statute) %></td>
+      <% else %>
+         <td class='expiration'>Unknown</td>
       <% end %>
 
       <td><%= c.comment %></td>
