@@ -43,9 +43,13 @@ class StatuteComparisonsController < ApplicationController
       else
         if statutes_2.any? { |ss2| ss.first_matching_alternate_name(ss2) }
           matching_obj = statutes_2.map { |ss2| ss.first_matching_alternate_name(ss2) }.compact.first
-          { difference: "#{ALTERNATE_MATCH} ", substance_statute: ss, match: matching_obj }
+          {
+            difference: "#{ALTERNATE_MATCH} ",
+            substance_statute: ss,
+            match: matching_obj
+          }
         else
-          { difference: ONLY_HERE, substance_statute: ss }
+          { difference: ONLY_HERE,
         end
       end
     end.compact.sort do |a, b|
