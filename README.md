@@ -107,3 +107,5 @@ This application requires:
 - Rails 4.2.3
 
 There is a ```.ruby-version``` file in the root of the project if you are a user of [RVM](https://rvm.io/workflow/projects).
+
+test
