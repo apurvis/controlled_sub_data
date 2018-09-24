@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.5.1'
 
 gem 'audited-activerecord', '~> 4.0'
 gem 'awesome_print'
