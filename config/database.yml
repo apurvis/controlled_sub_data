@@ -35,6 +35,4 @@ test:
 
 production:
   <<: *default
-  database: controlled_sub_data_production
-  username: controlled_sub_data
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  url: <%= ENV['HEROKU_POSTGRESQL_NAVY_URL'] %>
