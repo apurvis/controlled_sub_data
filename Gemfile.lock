@@ -158,7 +158,7 @@ GEM
       activerecord (>= 4.0, < 5.3)
     pg (0.21.0)
     public_suffix (3.0.3)
-    puma (3.12.0)
+    puma (3.12.2)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.10)
